@@ -1,9 +1,9 @@
 
-;;; fruity-forest-theme.el --- Emacs theme with a dark background.
+;;; natural-vibration-theme.el --- Emacs theme with a dark background.
 
-;; Copyright (C) 2014 , Filip Górny
+;; Copyright (C) 2014 , Nemis
 
-;; Author: Filip Górny
+;; Author: Nemis
 ;; 
 ;; Version: 0.1
 ;; Package-Requires: ((emacs "24"))
@@ -29,29 +29,29 @@
 
 ;;; Code:
 
- (deftheme fruity-forest)
+ (deftheme natural-vibration)
  (let ((class '((class color) (min-colors 89)))
-       (fg1 "#dbdbdb")
-       (fg2 "#c7c7c7")
-       (fg3 "#b4b4b4")
-       (fg4 "#a1a1a1")
-       (bg1 "#141414")
-       (bg2 "#282828")
-       (bg3 "#484848")
-       (bg4 "#696969")
-       (key2 "#46a52d")
-       (key3 "#218708")
+       (fg1 "#ffffff")
+       (fg2 "#e8e8e8")
+       (fg3 "#d1d1d1")
+       (fg4 "#bbbbbb")
+       (bg1 "#181818")
+       (bg2 "#272727")
+       (bg3 "#373737")
+       (bg4 "#474747")
+       (key2 "#028a7f")
+       (key3 "#e06d63")
        (builtin "#ffffff")
-       (keyword "#1f9900")
+       (keyword "#ff7b70")
        (const   "#d9d9d9")
-       (comment "#5c5c5c")
+       (comment "#c2a1a1")
        (func    "#ffffff")
-       (str     "#ffc300")
+       (str     "#96cf00")
        (type    "#ebebeb")
-       (var     "#ed0707")
+       (var     "#ffd600")
        (warning "#ff0000"))
    (custom-theme-set-faces
-   'fruity-forest
+   'natural-vibration
         `(default ((,class (:background ,bg1 :foreground ,fg1))))
         `(font-lock-builtin-face ((,class (:foreground ,builtin))))
         `(font-lock-comment-face ((,class (:foreground ,comment))))
@@ -247,10 +247,10 @@
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory (file-name-directory load-file-name))))
 
-(provide-theme 'fruity-forest)
+(provide-theme 'natural-vibration)
 
 ;; Local Variables:
 ;; no-byte-compile: t
 ;; End:
 
-;;; fruity-forest-theme.el ends here
+;;; natural-vibration-theme.el ends here
