@@ -21,6 +21,9 @@ re-downloaded in order to locate PACKAGE."
 ; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'natural-vibration t)
+(set-face-attribute 'vertical-border 
+                    nil 
+                    :foreground "#333333") 
 
 ; global preferences
 (setq inhibit-startup-message t)
@@ -31,7 +34,11 @@ re-downloaded in order to locate PACKAGE."
 ; line numbers
 (global-linum-mode t)
 (setq linum-format "%d ")
+<<<<<<< HEAD
 (set-face-foreground 'linum "#111111")
+=======
+(set-face-foreground 'linum "#222222")
+>>>>>>> 20523004d71c260a72415e50d6469d999766778c
 
 ; evil
 (require-package 'evil)
