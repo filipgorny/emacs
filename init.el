@@ -35,7 +35,6 @@ re-downloaded in order to locate PACKAGE."
 (global-linum-mode t)
 (setq linum-format "%d ")
 (set-face-foreground 'linum "#444444")
->>>>>>> 20523004d71c260a72415e50d6469d999766778c
 
 ; evil
 (require-package 'evil)
