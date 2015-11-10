@@ -1,5 +1,6 @@
-(require 'package) ;
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
+(require 'package) ;
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
@@ -34,29 +35,19 @@ re-downloaded in order to locate PACKAGE."
 ; line numbers
 (global-linum-mode t)
 (setq linum-format "%d ")
-(set-face-foreground 'linum "#444444")
+(set-face-foreground 'linum "#664444")
 
 ; evil
 (require-package 'evil)
 (require 'evil)
 (evil-mode t)
+
+; powerline
 (require-package 'powerline)
 (require 'powerline)
 (require-package 'powerline-evil)
 (require 'powerline-evil)
 (powerline-evil-vim-theme)
-(require-package 'neotree)
-(require 'neotree)
-(global-set-key (kbd "M-q") 'neotree-toggle)
-;(add-to-list 'evil-emacs-state-modes 'nav-mode)
-;(evil-set-initial-state 'nav-mode 'emacs)
-;(define-key neotree-mode-map [return] 'neo-node-do-enter)
-(add-hook 'neotree-mode-hook
-	  (lambda ()
-	    (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
-	    (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
-	    (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-            (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
 
 
 (defun visit-term-buffer ()
@@ -87,3 +78,51 @@ re-downloaded in order to locate PACKAGE."
 (defun prev-window ()
   (interactive)
   (other-window -1))
+
+; enter normal mode when changin buffer
+(add-hook `buffer-list-update-hook
+  (lambda ()
+   (evil-normal-state)))
+
+; cursor color
+(set-cursor-color "#ffffaa")
+
+; exit to normal mode after saving buffer
+(add-hook `before-save-hook
+  (lambda ()
+    (evil-normal-state)))
+
+; force moving caret to beginning of the intentation
+(require-package 'mwim)
+(require 'mwim)
+(global-set-key (kbd "<home>") 'mwim-beginning-of-code-or-line)
+(global-set-key (kbd "<end>") 'mwim-end-of-code-or-line)
+
+; relative line numbers
+(require-package 'linum-relative)
+(require 'linum-relative)
+(linum-relative-on)
+
+; force insert mode when entering mini buffer
+(add-hook 'minibuffer-setup-hook
+  (lambda ()
+    (evil-insert-state)))
+
+; file structure navigation
+(require-package 'sr-speedbar)
+(require 'sr-speedbar)
+(global-set-key (kbd "M-q") 'sr-speedbar-toggle)
+(eval-after-load 'sr-speedbar
+    '(setq speedbar-hide-button-brackets-flag t
+           speedbar-show-unknown-files t
+           speedbar-smart-directory-expand-flag t
+           speedbar-directory-button-trim-method 'trim
+           speedbar-use-images nil
+           speedbar-indentation-width 2
+           speedbar-use-imenu-flag t
+           sr-speedbar-width 40
+           sr-speedbar-width-x 40
+           sr-speedbar-auto-refresh nil
+           sr-speedbar-skip-other-window-p t
+           sr-speedbar-right-side nil))
+
