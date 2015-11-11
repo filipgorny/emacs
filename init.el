@@ -26,21 +26,28 @@ re-downloaded in order to locate PACKAGE."
                     nil 
                     :foreground "#333333") 
 
-; global preferences
+;; global preferences
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq inhibit-startup-message t)
 (menu-bar-mode -1)
 (toggle-scroll-bar -1) 
 (tool-bar-mode -1)
+(require 'ido)
+(ido-mode t)
+(electric-pair-mode 1)
 
 ; line numbers
 (global-linum-mode t)
 (setq linum-format "%d ")
-(set-face-foreground 'linum "#664444")
+(set-face-foreground 'linum "#444444")
 
 ; evil
 (require-package 'evil)
 (require 'evil)
 (evil-mode t)
+(setq evil-insert-state-cursor '((bar . 5) "#ff5500")
+      evil-normal-state-cursor '(box "#ffff55")
+      evil-visual-state-cursor '(box "#44ff44"))
 
 ; powerline
 (require-package 'powerline)
@@ -48,7 +55,6 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'powerline-evil)
 (require 'powerline-evil)
 (powerline-evil-vim-theme)
-
 
 (defun visit-term-buffer ()
   "Create or visit a terminal buffer."
@@ -67,9 +73,22 @@ re-downloaded in order to locate PACKAGE."
 
 (global-set-key (kbd "<f12>") 'visit-term-buffer) ; opening terminal window
 
+;; autocomplete
+(require-package 'auto-complete)
+(require 'auto-complete)
+(ac-config-default)
+
+
+
+;; syntax checking while typing
+(require-package 'flycheck)
+(require 'flycheck)
+
 ; php support
 (require-package 'php-mode)
 (require 'php-mode)
+(require-package 'php-extras)
+(require 'php-extras)
 
 ; switching between windows
 (global-set-key (kbd "C--") 'previous-buffer)
@@ -78,11 +97,6 @@ re-downloaded in order to locate PACKAGE."
 (defun prev-window ()
   (interactive)
   (other-window -1))
-
-; enter normal mode when changin buffer
-(add-hook `buffer-list-update-hook
-  (lambda ()
-   (evil-normal-state)))
 
 ; cursor color
 (set-cursor-color "#ffffaa")
@@ -103,7 +117,7 @@ re-downloaded in order to locate PACKAGE."
 (require 'linum-relative)
 (linum-relative-on)
 
-; force insert mode when entering mini buffer
+;; force insert mode when entering mini buffer
 (add-hook 'minibuffer-setup-hook
   (lambda ()
     (evil-insert-state)))
@@ -125,4 +139,34 @@ re-downloaded in order to locate PACKAGE."
            sr-speedbar-auto-refresh nil
            sr-speedbar-skip-other-window-p t
            sr-speedbar-right-side nil))
+
+; select just closed directory
+;(add-hook 'speedbar-visiting-file-hook
+;  (lambda ()
+;      (setq s-current-file)
+;    ))
+
+
+
+;; Highlight the current line in speedbar
+(add-hook 'speedbar-mode-hook '(lambda () (hl-line-mode 1)))
+
+;; disable linum for speedbar
+(add-hook 'speedbar-mode-hook (lambda () (linum-mode -1)))
+
+;; navigation left and right
+(evil-define-key 'normal speedbar-mode-map
+  (kbd "h")
+  (lambda ()
+    (interactive)
+    (speedbar-up-directory)
+    (message scurrentfile)
+    (speedbar-find-selected-file scurrentfile)))
+(evil-define-key 'normal speedbar-mode-map
+  (kbd "l")
+  (lambda ()
+    (interactive)
+    (speedbar-edit-line)))
+
+; zaznaczanie plikow i ostatnio edytowanych linijek
 
