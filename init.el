@@ -122,51 +122,83 @@ re-downloaded in order to locate PACKAGE."
   (lambda ()
     (evil-insert-state)))
 
-; file structure navigation
-(require-package 'sr-speedbar)
-(require 'sr-speedbar)
-(global-set-key (kbd "M-q") 'sr-speedbar-toggle)
-(eval-after-load 'sr-speedbar
-    '(setq speedbar-hide-button-brackets-flag t
-           speedbar-show-unknown-files t
-           speedbar-smart-directory-expand-flag t
-           speedbar-directory-button-trim-method 'trim
-           speedbar-use-images nil
-           speedbar-indentation-width 2
-           speedbar-use-imenu-flag t
-           sr-speedbar-width 40
-           sr-speedbar-width-x 40
-           sr-speedbar-auto-refresh nil
-           sr-speedbar-skip-other-window-p t
-           sr-speedbar-right-side nil))
+;; projecttile
+(require-package 'projectile)
+(require 'projectile)
+(projectile-global-mode)
 
-; select just closed directory
-;(add-hook 'speedbar-visiting-file-hook
-;  (lambda ()
-;      (setq s-current-file)
-;    ))
+;; project explorer
+(require-package 'neotree)
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(global-set-key (kbd "M-q") 'neotree-toggle)
+;(global-set-key (kbd "M-q")
+;		(lambda ()
+;		  (if (neotree-opened)
+;                    (lambda ()
+;                      (setq neotree-opened nil)
+;                      (pop-to-buffer (neo-global--get-buffer))
+;		  (setq neotree-opened t)
+;		  (neotree-toggle)))
+
+(add-hook 'neotree-mode-hook
+          (lambda ()
+            (evil-insert-state)))
+	      
+;; tabbar
+(require-package 'tabbar)
+(require 'tabbar)
+(tabbar-mode t)
+(setq tabbar-background-color "#000000") ;; the color of the tabbar background
+(custom-set-faces
+ '(tabbar-default ((t (:inherit variable-pitch :background "#000000" :foreground "#444444" :weight bold))))
+ '(tabbar-button ((t (:inherit tabbar-default :foreground "dark red"))))
+ '(tabbar-button-highlight ((t (:inherit tabbar-default))))
+ '(tabbar-highlight ((t (:underline t))))
+ '(tabbar-selected ((t (:inherit tabbar-default :background "#000000" :foreground "#888877"))))
+ '(tabbar-separator ((t (:inherit tabbar-default :background "#222222"))))
+ '(tabbar-unselected ((t (:inherit tabbar-default)))))
+(global-set-key (kbd "M--") 'tabbar-backward-tab)
+(global-set-key (kbd "M-=") 'tabbar-forward-tab)
+
+;;
+;; Change padding of the tabs
+;; we also need to set separator to avoid overlapping tabs by highlighted tabs
+(custom-set-variables
+ '(tabbar-separator (quote (0.5))))
+;; adding spaces
+(defun tabbar-buffer-tab-label (tab)
+  "Return a label for TAB.
+That is, a string used to represent it on the tab bar."
+  (let ((label  (if tabbar--buffer-show-groups
+                    (format "[%s]  " (tabbar-tab-tabset tab))
+                  (format "%s  " (tabbar-tab-value tab)))))
+    ;; Unless the tab bar auto scrolls to keep the selected tab
+    ;; visible, shorten the tab label to keep as many tabs as possible
+    ;; in the visible area of the tab bar.
+    (if tabbar-auto-scroll-flag
+        label
+      (tabbar-shorten
+       label (max 1 (/ (window-width)
+                       (length (tabbar-view
+                                (tabbar-current-tabset)))))))))
+
+(tabbar-mode 1)
 
 
+(defadvice tabbar-buffer-tab-label (after fixup_tab_label_space_and_flag activate)
+   (setq ad-return-value
+         (if (and (buffer-modified-p (tabbar-tab-value tab))
+                  (buffer-file-name (tabbar-tab-value tab)))
+             (concat " + " (concat ad-return-value " "))
+           (concat " " (concat ad-return-value " ")))))
+(defun ztl-modification-state-change ()
+   (tabbar-set-template tabbar-current-tabset nil)
+   (tabbar-display-update))
+(defun ztl-on-buffer-modification ()
+   (set-buffer-modified-p t)
+   (ztl-modification-state-change))
+(add-hook 'after-save-hook 'ztl-modification-state-change)
+(add-hook 'first-change-hook 'ztl-on-buffer-modification)
 
-;; Highlight the current line in speedbar
-(add-hook 'speedbar-mode-hook '(lambda () (hl-line-mode 1)))
-
-;; disable linum for speedbar
-(add-hook 'speedbar-mode-hook (lambda () (linum-mode -1)))
-
-;; navigation left and right
-(evil-define-key 'normal speedbar-mode-map
-  (kbd "h")
-  (lambda ()
-    (interactive)
-    (speedbar-up-directory)
-    (message scurrentfile)
-    (speedbar-find-selected-file scurrentfile)))
-(evil-define-key 'normal speedbar-mode-map
-  (kbd "l")
-  (lambda ()
-    (interactive)
-    (speedbar-edit-line)))
-
-; zaznaczanie plikow i ostatnio edytowanych linijek
 
