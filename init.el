@@ -37,12 +37,12 @@ re-downloaded in order to locate PACKAGE."
 (ido-mode t)
 (electric-pair-mode 1)
 ;(desktop-save-mode nil)
-(set-fringe-styl no-fringes)
+(set-fringe-mode 0)
 
 ; line numbers
 (global-linum-mode t)
 (setq linum-format "%d ")
-(set-face-foreground 'linum "#333344")
+(set-face-foreground 'linum "#282828")
 
 ; evil
 (require-package 'evil)
