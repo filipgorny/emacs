@@ -1,6 +1,6 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
-(require 'package) ;
+(require 'package);
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
@@ -24,29 +24,32 @@ re-downloaded in order to locate PACKAGE."
 (load-theme 'natural-vibration t)
 (set-face-attribute 'vertical-border 
                     nil 
-                    :foreground "#333333") 
+                    :foreground "#222222") 
+(set-face-attribute 'default nil :height 110 :family "Source Code Pro")
 
 ;; global preferences
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq inhibit-startup-message t)
-(menu-bar-mode -1)
+(if (not window-system) (menu-bar-mode -1))
 (toggle-scroll-bar -1) 
 (tool-bar-mode -1)
 (require 'ido)
 (ido-mode t)
 (electric-pair-mode 1)
+;(desktop-save-mode nil)
+(set-fringe-styl no-fringes)
 
 ; line numbers
 (global-linum-mode t)
 (setq linum-format "%d ")
-(set-face-foreground 'linum "#444444")
+(set-face-foreground 'linum "#333344")
 
 ; evil
 (require-package 'evil)
 (require 'evil)
 (evil-mode t)
-(setq evil-insert-state-cursor '((bar . 5) "#ff5500")
-      evil-normal-state-cursor '(box "#ffff55")
+(setq evil-insert-state-cursor '((bar . 2) "#ffff00")
+      evil-normal-state-cursor '(hbox "#88ff88")
       evil-visual-state-cursor '(box "#44ff44"))
 
 ; powerline
@@ -62,7 +65,7 @@ re-downloaded in order to locate PACKAGE."
   (if (not (get-buffer "*ansi-term*"))
       (progn
         (split-window-sensibly (selected-window))
-        (other-window 1)
+        (othe-window 1)
         (ansi-term (getenv "SHELL")))
     (switch-to-buffer-other-window "*ansi-term*"))
     (progn
@@ -78,8 +81,6 @@ re-downloaded in order to locate PACKAGE."
 (require 'auto-complete)
 (ac-config-default)
 
-
-
 ;; syntax checking while typing
 (require-package 'flycheck)
 (require 'flycheck)
@@ -89,17 +90,6 @@ re-downloaded in order to locate PACKAGE."
 (require 'php-mode)
 (require-package 'php-extras)
 (require 'php-extras)
-
-; switching between windows
-(global-set-key (kbd "C--") 'previous-buffer)
-(global-set-key (kbd "C-=") 'next-buffer)
-
-(defun prev-window ()
-  (interactive)
-  (other-window -1))
-
-; cursor color
-(set-cursor-color "#ffffaa")
 
 ; exit to normal mode after saving buffer
 (add-hook `before-save-hook
@@ -127,78 +117,34 @@ re-downloaded in order to locate PACKAGE."
 (require 'projectile)
 (projectile-global-mode)
 
-;; project explorer
+; remove annoying messages
+;(load "nodesktopsaveorsessionwarning")
+
+; ido
+(require 'ido)
+(ido-mode t)
+
+; neotree
 (require-package 'neotree)
 (require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
 (global-set-key (kbd "M-q") 'neotree-toggle)
-;(global-set-key (kbd "M-q")
-;		(lambda ()
-;		  (if (neotree-opened)
-;                    (lambda ()
-;                      (setq neotree-opened nil)
-;                      (pop-to-buffer (neo-global--get-buffer))
-;		  (setq neotree-opened t)
-;		  (neotree-toggle)))
-
+(global-set-key [F8] 'neotree-toggle)
 (add-hook 'neotree-mode-hook
-          (lambda ()
-            (evil-insert-state)))
-	      
-;; tabbar
-(require-package 'tabbar)
-(require 'tabbar)
-(tabbar-mode t)
-(setq tabbar-background-color "#000000") ;; the color of the tabbar background
-(custom-set-faces
- '(tabbar-default ((t (:inherit variable-pitch :background "#000000" :foreground "#444444" :weight bold))))
- '(tabbar-button ((t (:inherit tabbar-default :foreground "dark red"))))
- '(tabbar-button-highlight ((t (:inherit tabbar-default))))
- '(tabbar-highlight ((t (:underline t))))
- '(tabbar-selected ((t (:inherit tabbar-default :background "#000000" :foreground "#888877"))))
- '(tabbar-separator ((t (:inherit tabbar-default :background "#222222"))))
- '(tabbar-unselected ((t (:inherit tabbar-default)))))
-(global-set-key (kbd "M--") 'tabbar-backward-tab)
-(global-set-key (kbd "M-=") 'tabbar-forward-tab)
+    (lambda ()
+      (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+      (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
+      (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+      (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
+(setq projectile-switch-project-action 'neotree-projectile-action)
 
-;;
-;; Change padding of the tabs
-;; we also need to set separator to avoid overlapping tabs by highlighted tabs
-(custom-set-variables
- '(tabbar-separator (quote (0.5))))
-;; adding spaces
-(defun tabbar-buffer-tab-label (tab)
-  "Return a label for TAB.
-That is, a string used to represent it on the tab bar."
-  (let ((label  (if tabbar--buffer-show-groups
-                    (format "[%s]  " (tabbar-tab-tabset tab))
-                  (format "%s  " (tabbar-tab-value tab)))))
-    ;; Unless the tab bar auto scrolls to keep the selected tab
-    ;; visible, shorten the tab label to keep as many tabs as possible
-    ;; in the visible area of the tab bar.
-    (if tabbar-auto-scroll-flag
-        label
-      (tabbar-shorten
-       label (max 1 (/ (window-width)
-                       (length (tabbar-view
-                                (tabbar-current-tabset)))))))))
+; tabs
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq indent-line-function 'insert-tab)
 
-(tabbar-mode 1)
+; switching buffers
+(global-set-key (kbd "M--") 'previous-buffer)
+(global-set-key (kbd "M-=") 'next-buffer)
 
-
-(defadvice tabbar-buffer-tab-label (after fixup_tab_label_space_and_flag activate)
-   (setq ad-return-value
-         (if (and (buffer-modified-p (tabbar-tab-value tab))
-                  (buffer-file-name (tabbar-tab-value tab)))
-             (concat " + " (concat ad-return-value " "))
-           (concat " " (concat ad-return-value " ")))))
-(defun ztl-modification-state-change ()
-   (tabbar-set-template tabbar-current-tabset nil)
-   (tabbar-display-update))
-(defun ztl-on-buffer-modification ()
-   (set-buffer-modified-p t)
-   (ztl-modification-state-change))
-(add-hook 'after-save-hook 'ztl-modification-state-change)
-(add-hook 'first-change-hook 'ztl-on-buffer-modification)
-
-
+; answer yes or no, changed to y-or-n (yes!!! for god sake yes)
+(defalias 'yes-or-no-p 'y-or-n-p)
