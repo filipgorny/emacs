@@ -25,7 +25,7 @@ re-downloaded in order to locate PACKAGE."
 (set-face-attribute 'vertical-border 
                     nil 
                     :foreground "#222222") 
-(set-face-attribute 'default nil :height 110 :family "Source Code Pro")
+(set-face-attribute 'default nil :height 105 :family "Source Code Pro")
 
 ;; global preferences
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -59,20 +59,18 @@ re-downloaded in order to locate PACKAGE."
 (require 'powerline-evil)
 (powerline-evil-vim-theme)
 
-(defun visit-term-buffer ()
-  "Create or visit a terminal buffer."
-  (interactive)
-  (if (not (get-buffer "*ansi-term*"))
-      (progn
-        (split-window-sensibly (selected-window))
-        (othe-window 1)
-        (ansi-term (getenv "SHELL")))
-    (switch-to-buffer-other-window "*ansi-term*"))
-    (progn
-      (other-window -1)
-      (kill-buffer "*ansi-term*" t)
-    )
-  )
+;(defun visit-term-buffer ()
+;  "Create or visit a terminal buffer."
+;  (interactive)
+;  (if (not (get-buffer "*ansi-term*"))
+;      (lambda () 
+;        (split-window-sensibly (selected-window))
+;        (othe-window 1)
+;        (ansi-term (getenv "SHELL"))
+;        (switch-to-buffer-other-window "*ansi-term*"))
+;    (lambda ()
+;      (other-window -1)
+;      (kill-buffer "*ansi-term*" t)))
 
 (global-set-key (kbd "<f12>") 'visit-term-buffer) ; opening terminal window
 
@@ -84,6 +82,11 @@ re-downloaded in order to locate PACKAGE."
 ;; syntax checking while typing
 (require-package 'flycheck)
 (require 'flycheck)
+(require-package 'flymake-easy)
+(require'flymake-easy)
+(require-package 'flymake-jslint)
+(require 'flymake-jslint)
+(add-hook 'js-mode-hook 'flymake-jslint-load)
 
 ; php support
 (require-package 'php-mode)
@@ -127,8 +130,24 @@ re-downloaded in order to locate PACKAGE."
 ; neotree
 (require-package 'neotree)
 (require 'neotree)
-(global-set-key (kbd "M-q") 'neotree-toggle)
-(global-set-key [F8] 'neotree-toggle)
+(setq navigation-opened nil)
+
+(defun toggle-neotree ()
+  (interactive)
+  (if navigation-opened
+      (progn
+        (if (string= (buffer-name (current-buffer)) (buffer-name (neo-global--get-buffer)))
+            (progn
+              (neotree-hide)
+              (setq navigation-opened nil))
+           (switch-to-buffer-other-window (neo-global--get-buffer))))
+    (progn
+      (neotree-toggle)
+      (setq navigation-opened t))))
+
+(global-set-key (kbd "C-e") 'toggle-neotree)
+(global-set-key (kbd "M-q") 'toggle-neotree)
+(global-set-key [F8] 'toggle-neotree)
 (add-hook 'neotree-mode-hook
     (lambda ()
       (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
