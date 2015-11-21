@@ -73,7 +73,7 @@ re-downloaded in order to locate PACKAGE."
   (message "Visiting terminal")
   (if (not term-opened)
       (progn 
-        (split-window-below)
+        (split-window-horizontally)
         (select-window (next-window))
         (switch-to-buffer term-buffer)
         (setq term-opened t))
@@ -81,7 +81,8 @@ re-downloaded in order to locate PACKAGE."
       (delete-windows-on term-buffer)
       (setq term-opened nil))))
 
-(global-set-key (kbd "M-0") 'visit-term-buffer)
+(global-set-key (kbd "M-1") 'visit-term-buffer)
+(global-set-key "\M-\d" 'visit-term-buffer)
 
 (eval-after-load "term"
   '(progn
@@ -112,8 +113,13 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'flymake-jslint)
 (require 'flymake-jslint)
 (add-hook 'js-mode-hook 'flymake-jslint-load)
+(require-package 'flymake-cursor)
+(require 'flymake-cursor)
+(custom-set-faces
+ '(flymake-errline ((((class color)) (:underline "#aa5555"))))
+ '(flymake-warnline ((((class color)) (:underline "#aa9955")))))
 
-; php support
+;; php support
 (require-package 'php-mode)
 (require 'php-mode)
 (require-package 'php-extras)
@@ -187,4 +193,7 @@ re-downloaded in order to locate PACKAGE."
 
 ; answer yes or no, changed to y-or-n (yes!!! for god sake yes)
 (defalias 'yes-or-no-p 'y-or-n-p)
- 
+
+;; scrolling
+(require-package 'smooth-scrolling)
+(require 'smooth-scrolling)
