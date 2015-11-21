@@ -12,7 +12,7 @@ If NO-REFRESH is non-nil, the available package lists will not be
 re-downloaded in order to locate PACKAGE."
   (if (package-installed-p package min-version)
       t
-    (if (or (assoc packaje package-archive-contents) no-refresh)
+    (if (or (assoc package package-archive-contents) no-refresh)
         (package-install package)
       (progn
         (package-refresh-contents)
@@ -60,10 +60,13 @@ re-downloaded in order to locate PACKAGE."
 (powerline-evil-vim-theme)
 
 ;; terminal
-(ansi-term (getenv "SHELL"))
+(require-package 'multi-term)
+(require 'multi-term)
+(setq multi-term-program (getenv "SHELL"))
 (setq system-uses-terminfo nil)
-(setq term-buffer (get-buffer "*ansi-term*"))
+(setq term-buffer (multi-term))
 (setq term-opened nil)
+(set-process-query-on-exit-flag (get-process "terminal<1>") nil)
 (defun visit-term-buffer ()
   "Create or visit a terminal buffer."
   (interactive)
@@ -84,6 +87,17 @@ re-downloaded in order to locate PACKAGE."
   '(progn
      (define-key term-raw-map (kbd "M-0") 'visit-term-buffer)
      ))
+
+;; run tests
+(defun tests-run ()
+  (interactive)
+  (let ((test-term-buffer (shell "/usr/bin/make test")))
+      (split-window-below)
+      (select-window (next-window))
+      (switch-to-buffer test-term)
+      (local-set-key [t] (delete-windows-on test-term-buffer))))
+
+(global-set-key (kbd "M-9") 'tests-run)
 
 ;; autocomplete
 (require-package 'auto-complete)
