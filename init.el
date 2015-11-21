@@ -12,7 +12,7 @@ If NO-REFRESH is non-nil, the available package lists will not be
 re-downloaded in order to locate PACKAGE."
   (if (package-installed-p package min-version)
       t
-    (if (or (assoc package package-archive-contents) no-refresh)
+    (if (or (assoc packaje package-archive-contents) no-refresh)
         (package-install package)
       (progn
         (package-refresh-contents)
@@ -41,8 +41,8 @@ re-downloaded in order to locate PACKAGE."
 
 ; line numbers
 (global-linum-mode t)
-(setq linum-format "%d ")
-(set-face-foreground 'linum "#282828")
+(setq linum-format " %d  ")
+(set-face-foreground 'linum "#232224")
 
 ; evil
 (require-package 'evil)
@@ -59,20 +59,31 @@ re-downloaded in order to locate PACKAGE."
 (require 'powerline-evil)
 (powerline-evil-vim-theme)
 
-;(defun visit-term-buffer ()
-;  "Create or visit a terminal buffer."
-;  (interactive)
-;  (if (not (get-buffer "*ansi-term*"))
-;      (lambda () 
-;        (split-window-sensibly (selected-window))
-;        (othe-window 1)
-;        (ansi-term (getenv "SHELL"))
-;        (switch-to-buffer-other-window "*ansi-term*"))
-;    (lambda ()
-;      (other-window -1)
-;      (kill-buffer "*ansi-term*" t)))
+;; terminal
+(ansi-term (getenv "SHELL"))
+(setq system-uses-terminfo nil)
+(setq term-buffer (get-buffer "*ansi-term*"))
+(setq term-opened nil)
+(defun visit-term-buffer ()
+  "Create or visit a terminal buffer."
+  (interactive)
+  (message "Visiting terminal")
+  (if (not term-opened)
+      (progn 
+        (split-window-below)
+        (select-window (next-window))
+        (switch-to-buffer term-buffer)
+        (setq term-opened t))
+    (progn
+      (delete-windows-on term-buffer)
+      (setq term-opened nil))))
 
-(global-set-key (kbd "<f12>") 'visit-term-buffer) ; opening terminal window
+(global-set-key (kbd "M-0") 'visit-term-buffer)
+
+(eval-after-load "term"
+  '(progn
+     (define-key term-raw-map (kbd "M-0") 'visit-term-buffer)
+     ))
 
 ;; autocomplete
 (require-package 'auto-complete)
@@ -104,11 +115,6 @@ re-downloaded in order to locate PACKAGE."
 (require 'mwim)
 (global-set-key (kbd "<home>") 'mwim-beginning-of-code-or-line)
 (global-set-key (kbd "<end>") 'mwim-end-of-code-or-line)
-
-; relative line numbers
-(require-package 'linum-relative)
-(require 'linum-relative)
-(linum-relative-on)
 
 ;; force insert mode when entering mini buffer
 (add-hook 'minibuffer-setup-hook
@@ -145,7 +151,7 @@ re-downloaded in order to locate PACKAGE."
       (neotree-toggle)
       (setq navigation-opened t))))
 
-(global-set-key (kbd "C-e") 'toggle-neotree)
+(global-set-key (kbd "C-q") 'toggle-neotree)
 (global-set-key (kbd "M-q") 'toggle-neotree)
 (global-set-key [F8] 'toggle-neotree)
 (add-hook 'neotree-mode-hook
@@ -167,3 +173,4 @@ re-downloaded in order to locate PACKAGE."
 
 ; answer yes or no, changed to y-or-n (yes!!! for god sake yes)
 (defalias 'yes-or-no-p 'y-or-n-p)
+ 

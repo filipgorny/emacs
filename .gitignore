@@ -5,4 +5,7 @@ ac-comphist.dat
 session.*
 projectile-bookmarks.eld
 ido.last
+custom.el
+recentf
+var
 
