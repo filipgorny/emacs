@@ -42,7 +42,7 @@ re-downloaded in order to locate PACKAGE."
 ; line numbers
 (global-linum-mode t)
 (setq linum-format " %d  ")
-(set-face-foreground 'linum "#232224")
+(set-face-foreground 'linum "#303030")
 
 ; evil
 (require-package 'evil)
@@ -116,8 +116,28 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'flymake-cursor)
 (require 'flymake-cursor)
 (custom-set-faces
- '(flymake-errline ((((class color)) (:underline "#aa5555"))))
- '(flymake-warnline ((((class color)) (:underline "#aa9955")))))
+`(flymake-errline
+     ((((supports :underline (:style wave)))
+       (:underline (:style wave :color ,"#664444")
+                   :foreground unspecified
+                   :background unspecified
+                   :inherit unspecified))
+      (t (:foreground ,"#664444" :weight bold :underline t))))
+   `(flymake-warnline
+     ((((supports :underline (:style wave)))
+       (:underline (:style wave :color ,"#666644")
+                   :foreground unspecified
+                   :background unspecified
+                   :inherit unspecified))
+      (t (:forground ,"#666644" :weight bold :underline t))))
+   `(flymake-infoline
+     ((((supports :underline (:style wave)))
+       (:underline (:style wave :color ,"#446644")
+                   :foreground unspecified
+                   :background unspecified
+                   :inherit unspecified))
+      (t (:forground ,"#446644" :weight bold :underline t)))))
+
 
 ;; php support
 (require-package 'php-mode)
@@ -197,3 +217,11 @@ re-downloaded in order to locate PACKAGE."
 ;; scrolling
 (require-package 'smooth-scrolling)
 (require 'smooth-scrolling)
+
+;; javascript
+(load "javascript")
+
+;; highlight current line
+(global-hl-line-mode 1)
+(set-face-background 'hl-line "#222222")
+(set-face-foreground 'highlight nil)
