@@ -22,16 +22,16 @@ re-downloaded in order to locate PACKAGE."
 ; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'natural-vibration t)
-(set-face-attribute 'vertical-border 
-                    nil 
-                    :foreground "#222222") 
+(set-face-attribute 'vertical-border
+                    nil
+                    :foreground "#222222")
 (set-face-attribute 'default nil :height 105 :family "Source Code Pro")
 
 ;; global preferences
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq inhibit-startup-message t)
 (if (not window-system) (menu-bar-mode -1))
-(toggle-scroll-bar -1) 
+(toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (require 'ido)
 (ido-mode t)
@@ -72,7 +72,7 @@ re-downloaded in order to locate PACKAGE."
   (interactive)
   (message "Visiting terminal")
   (if (not term-opened)
-      (progn 
+      (progn
         (split-window-horizontally)
         (select-window (next-window))
         (switch-to-buffer term-buffer)
@@ -225,3 +225,38 @@ re-downloaded in order to locate PACKAGE."
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "#222222")
 (set-face-foreground 'highlight nil)
+
+;; avoid esc key
+(require-package 'key-chord)
+(require 'key-chord)
+(setq key-chord-two-keys-delay 0.5)
+(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+(key-chord-mode 1)
+
+;; Mute bell
+(setq ring-bell-function #'ignore)
+
+;; Display file path in the title bar
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+
+;; Make the minibuffer prompt's font bigger
+(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup)
+(defun my-minibuffer-setup ()
+  (set (make-local-variable 'face-remapping-alist)
+       '((default :height 1.5 :foreground "white"))))
+
+;; Display tabs and trailing spaces
+(global-whitespace-mode t)
+(setq-default whitespace-style '(face tab trailing))
+
+;; Highlight matching parentheses
+(show-paren-mode t)
+
+;; Backup and autosave files in temporary directory
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
