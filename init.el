@@ -1,6 +1,10 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
+(add-to-list 'load-path "~/.emacs.d/packages")
+
 
 (require 'package);
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
@@ -11,11 +15,11 @@
 If NO-REFRESH is non-nil, the available package lists will not be
 re-downloaded in order to locate PACKAGE."
   (if (package-installed-p package min-version)
-      t
-    (if (or (assoc package package-archive-contents) no-refresh)
-        (package-install package)
+          t
+      (if (or (assoc package package-archive-contents) no-refresh)
+              (package-install package)
       (progn
-        (package-refresh-contents)
+          (package-refresh-contents)
         (require-package package min-version t)))))
 (package-initialize)
 
@@ -25,12 +29,15 @@ re-downloaded in order to locate PACKAGE."
 (set-face-attribute 'vertical-border
                     nil
                     :foreground "#222222")
-(set-face-attribute 'default nil :height 105 :family "Source Code Pro")
+;;(set-face-attribute 'default nil :height 105 :family "Source Code Pro")
+;;(set-face-attribute 'default nil :height 105 :family "DejaVu Sans Mono")
+(set-face-attribute 'default nil :height 110 :family "Monospace")
 
 ;; global preferences
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq inhibit-startup-message t)
-(if (not window-system) (menu-bar-mode -1))
+;; (if (not window-system) (menu-bar-mode -1))
+(menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (require 'ido)
@@ -59,46 +66,60 @@ re-downloaded in order to locate PACKAGE."
 (require 'powerline-evil)
 (powerline-evil-vim-theme)
 
+;; side windows
+(setq side-window-current-buffer nil)
+(setq side-window nil)
+
+(defun f-close-side-windows ()
+    (progn
+        (if side-window
+                (delete-window side-window))
+        (setq side-window nil)
+        (setq side-window-current-buffer nil)))
+
+(defun f-clear-side ()
+    (progn
+        (neotree-hide)
+        (f-close-side-windows)))
+
+(defun f-toggle-side-window (buffer)
+    (interactive)
+    (setq target-buffer (get-buffer buffer))
+    (if (eq side-window-current-buffer target-buffer)
+            (progn
+                (f-close-side-windows)
+                )
+        (progn
+            (f-clear-side)
+            (split-window-right)
+            (select-window (next-window))
+            (switch-to-buffer buffer)
+            (setq side-window-current-buffer target-buffer)
+            (setq side-window (selected-window))
+            )
+            ))
+
 ;; terminal
-(require-package 'multi-term)
-(require 'multi-term)
-(setq multi-term-program (getenv "SHELL"))
 (setq system-uses-terminfo nil)
-(setq term-buffer (multi-term))
-(setq term-opened nil)
-(set-process-query-on-exit-flag (get-process "terminal<1>") nil)
-(defun visit-term-buffer ()
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+;;(set-process-query-on-exit-flag (get-process "terminal<1>") nil)
+(setq term-buffer nil)
+
+(defun f-side-terminal-open ()
   "Create or visit a terminal buffer."
   (interactive)
-  (message "Visiting terminal")
-  (if (not term-opened)
+  (if (not term-buffer)
       (progn
-        (split-window-horizontally)
-        (select-window (next-window))
-        (switch-to-buffer term-buffer)
-        (setq term-opened t))
-    (progn
-      (delete-windows-on term-buffer)
-      (setq term-opened nil))))
+        (setq t-current-window (get-buffer-window (current-buffer)))
+        (setq t-current-buffer (current-buffer))
+        (setq term-buffer (generate-new-buffer "shell"))
+        (shell term-buffer)
+        (select-window t-current-window)
+        (switch-to-buffer t-current-buffer)))
+    (f-toggle-side-window term-buffer))
 
-(global-set-key (kbd "M-1") 'visit-term-buffer)
-(global-set-key "\M-\d" 'visit-term-buffer)
 
-(eval-after-load "term"
-  '(progn
-     (define-key term-raw-map (kbd "M-0") 'visit-term-buffer)
-     ))
-
-;; run tests
-(defun tests-run ()
-  (interactive)
-  (let ((test-term-buffer (shell "/usr/bin/make test")))
-      (split-window-below)
-      (select-window (next-window))
-      (switch-to-buffer test-term)
-      (local-set-key [t] (delete-windows-on test-term-buffer))))
-
-(global-set-key (kbd "M-9") 'tests-run)
+(global-set-key "\M-\d" 'f-side-terminal-open)
 
 ;; autocomplete
 (require-package 'auto-complete)
@@ -161,46 +182,34 @@ re-downloaded in order to locate PACKAGE."
   (lambda ()
     (evil-insert-state)))
 
-;; projecttile
-(require-package 'projectile)
-(require 'projectile)
-(projectile-global-mode)
-
-; remove annoying messages
-;(load "nodesktopsaveorsessionwarning")
 
 ; ido
 (require 'ido)
 (ido-mode t)
 
-; neotree
+;; neotree
 (require-package 'neotree)
 (require 'neotree)
-(setq navigation-opened nil)
+(setq neo-window-position 'right)
+(setq neo-window-width 70)
 
-(defun toggle-neotree ()
+(defun f-neotree-toggle ()
+  "Toggle show the NeoTree window."
   (interactive)
-  (if navigation-opened
-      (progn
-        (if (string= (buffer-name (current-buffer)) (buffer-name (neo-global--get-buffer)))
-            (progn
-              (neotree-hide)
-              (setq navigation-opened nil))
-           (switch-to-buffer-other-window (neo-global--get-buffer))))
-    (progn
-      (neotree-toggle)
-      (setq navigation-opened t))))
+  (f-close-side-windows)
+  (if (neo-global--window-exists-p)
+      (neotree-hide)
+      (neotree-show)))
 
-(global-set-key (kbd "C-q") 'toggle-neotree)
-(global-set-key (kbd "M-q") 'toggle-neotree)
-(global-set-key [F8] 'toggle-neotree)
+(global-set-key (kbd "M-q") 'f-neotree-toggle)
+(global-set-key (kbd "C-q") 'f-toggle-neotree)
+
 (add-hook 'neotree-mode-hook
     (lambda ()
-      (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+        (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
       (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
       (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
       (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
-(setq projectile-switch-project-action 'neotree-projectile-action)
 
 ; tabs
 (setq-default indent-tabs-mode nil)
@@ -217,6 +226,11 @@ re-downloaded in order to locate PACKAGE."
 ;; scrolling
 (require-package 'smooth-scrolling)
 (require 'smooth-scrolling)
+
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
 
 ;; javascript
 (load "javascript")
@@ -242,16 +256,6 @@ re-downloaded in order to locate PACKAGE."
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
-;; Make the minibuffer prompt's font bigger
-(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup)
-(defun my-minibuffer-setup ()
-  (set (make-local-variable 'face-remapping-alist)
-       '((default :height 1.5 :foreground "white"))))
-
-;; Display tabs and trailing spaces
-(global-whitespace-mode t)
-(setq-default whitespace-style '(face tab trailing))
-
 ;; Highlight matching parentheses
 (show-paren-mode t)
 
@@ -260,3 +264,61 @@ re-downloaded in order to locate PACKAGE."
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
+;; web mode
+(load "web-mode")
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.twig\\'" . web-mode))
+
+;; snippets
+(require-package 'yasnippet)
+(require 'yasnippet)
+(yas-global-mode t)
+(add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets")
+
+;; smart matching parents
+(require-package 'smartparens)
+(require 'smartparens)
+(add-hook 'php-mode-hook #'smartparens-mode)
+
+;; typescript
+(load "TypeScript")
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+(require-package 'tss)
+(require 'tss)
+(tss-config-default)
+
+
+;; projectile
+(require-package 'projectile)
+(require 'projectile)
+(setq projectile-indexing-method 'native)
+(setq projectile-switch-project-action 'neotree-projectile-action)
+;;(setq neo-smart-open t) ;; neotree smart open
+
+;; bajery
+(setq visible-bell 1) ;; should blink instead of sounding
+(add-hook 'before-save-hook 'delete-trailing-whitespace) ;; trail whitespace
+
+;; my keybindings
+(global-set-key (kbd "C-x p") 'projectile-switch-project)
+(global-set-key (kbd "C-x j") 'end-of-buffer)
+
+;; indentation
+(electric-indent-mode 1)
+;;(require-package 'auto-indent-mode)
+;;(require 'auto-indent-mode)
+;;(auto-indent-global-mode)
+;;(setq auto-indent-assign-indent-level 4) ; Changes the indent level to
+
+
+;; saving last place
+(require 'saveplace)
+(setq-default save-place t)

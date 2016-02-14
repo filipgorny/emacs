@@ -4,7 +4,7 @@
 ;; Copyright (C) 2014 , Nemis
 
 ;; Author: Nemis
-;; 
+;;
 ;; Version: 0.1
 ;; Package-Requires: ((emacs "24"))
 ;; Created with emacs-theme-generator, https://github.com/mswift42/theme-creator.
@@ -35,9 +35,9 @@
        (fg2 "#e8e8e8")
        (fg3 "#d1d1d1")
        (fg4 "#bbbbbb")
-       (bg1 "#1d1d1d")
-       (bg2 "#2f2f2f")
-       (bg3 "#333333")
+       (bg1 "#151515")
+       (bg2 "#2d2d2d")
+       (bg3 "#323232")
        (bg4 "#4f4f4f")
        (key2 "#028a7f")
        (key3 "#e06d63")
@@ -137,7 +137,7 @@
         `(js3-function-param-face ((,class (:foreground ,key3))))
         `(js3-jsdoc-tag-face ((,class (:foreground ,keyword))))
         `(js3-instance-member-face ((,class (:foreground ,const))))
-	`(warning ((,class (:foreground ,warning)))) 
+	`(warning ((,class (:foreground ,warning))))
 	`(ac-completion-face ((,class (:underline t :foreground ,keyword))))
 	`(info-quoted-name ((,class (:foreground ,builtin))))
 	`(info-string ((,class (:foreground ,str))))
