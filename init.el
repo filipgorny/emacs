@@ -167,8 +167,14 @@ re-downloaded in order to locate PACKAGE."
 (require 'php-mode)
 (require-package 'php-extras)
 (require 'php-extras)
+(defface font-lock-sigil-face
+  '((t (:foreground "#96cf00")))
+  "Face to display sigils in.")
+(font-lock-add-keywords 'php-mode
+  '(("\\(\\$\\)[_a-zA-Z]" 1 'font-lock-sigil-face)))
 
-; exit to normal mode after saving buffer
+
+;; exit to normal mode after saving buffer
 (add-hook `before-save-hook
   (lambda ()
     (evil-normal-state)))
@@ -183,7 +189,6 @@ re-downloaded in order to locate PACKAGE."
 (add-hook 'minibuffer-setup-hook
   (lambda ()
     (evil-insert-state)))
-
 
 ; ido
 (require 'ido)
@@ -316,3 +321,14 @@ re-downloaded in order to locate PACKAGE."
 ;; saving last place
 (require 'saveplace)
 (setq-default save-place t)
+
+;; tags
+(require-package 'ggtags)
+(require 'ggtags)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'php-mode 'c++-mode 'java-mode 'js-mode 'javascript-mode 'web-mode)
+              (ggtags-mode 1))))
+(global-set-key (kbd "<C-down-mouse-1>") 'ggtags-find-tag-mouse)
+(global-set-key (kbd "<mouse-8>") 'previous-buffer)
+(global-set-key (kbd "<drag-mouse-9>") 'next-buffer)

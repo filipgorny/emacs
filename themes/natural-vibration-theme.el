@@ -46,9 +46,9 @@
        (const   "#d9d9d9")
        (comment "#c2a1a1")
        (func    "#ffffff")
-       (str     "#96cf00")
+       (str     "#ffd600")
        (type    "#ebebeb")
-       (var     "#ffd600")
+       (var     "#96cf00")
        (warning "#ff0000"))
    (custom-theme-set-faces
    'natural-vibration
