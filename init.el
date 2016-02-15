@@ -29,9 +29,9 @@ re-downloaded in order to locate PACKAGE."
 (set-face-attribute 'vertical-border
                     nil
                     :foreground "#222222")
-;;(set-face-attribute 'default nil :height 105 :family "Source Code Pro")
+(set-face-attribute 'default nil :height 108 :family "Source Code Pro")
 ;;(set-face-attribute 'default nil :height 105 :family "DejaVu Sans Mono")
-(set-face-attribute 'default nil :height 110 :family "Monospace")
+;;(set-face-attribute 'default nil :height 105 :family "Monospace")
 
 ;; global preferences
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -46,10 +46,11 @@ re-downloaded in order to locate PACKAGE."
 ;(desktop-save-mode nil)
 (set-fringe-mode 0)
 
-; line numbers
+;; line numbers
 (global-linum-mode t)
-(setq linum-format " %d  ")
 (set-face-foreground 'linum "#303030")
+(load "linum-current-number")
+;;(setq linum-format " %3d  ")
 
 ; evil
 (require-package 'evil)
@@ -94,6 +95,7 @@ re-downloaded in order to locate PACKAGE."
             (split-window-right)
             (select-window (next-window))
             (switch-to-buffer buffer)
+            (linum-mode -1)
             (setq side-window-current-buffer target-buffer)
             (setq side-window (selected-window))
             )
@@ -244,10 +246,19 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'key-chord)
 (require 'key-chord)
 (setq key-chord-two-keys-delay 0.5)
-(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "jj" '(lambda ()
+                                                (interactive)
+                                                (evil-normal-state)
+                                                (save-buffer)))
 (key-chord-mode 1)
+(global-set-key (kbd "C-x p") 'projectile-switch-project)
+(global-set-key (kbd "C-x j") 'end-of-buffer)
+(define-key evil-normal-state-map "\C-j"  'evil-window-down)
+(define-key evil-normal-state-map "\C-k"  'evil-window-up)
+(define-key evil-normal-state-map "\C-h"  'evil-window-left)
+(define-key evil-normal-state-map "\C-l"  'evil-window-right)
 
-;; Mute bell
+;; mute bell
 (setq ring-bell-function #'ignore)
 
 ;; Display file path in the title bar
@@ -277,24 +288,12 @@ re-downloaded in order to locate PACKAGE."
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.twig\\'" . web-mode))
 
-;; snippets
-(require-package 'yasnippet)
-(require 'yasnippet)
-(yas-global-mode t)
-(add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets")
-
-;; smart matching parents
-(require-package 'smartparens)
-(require 'smartparens)
-(add-hook 'php-mode-hook #'smartparens-mode)
-
 ;; typescript
 (load "TypeScript")
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
 (require-package 'tss)
 (require 'tss)
 (tss-config-default)
-
 
 ;; projectile
 (require-package 'projectile)
@@ -307,17 +306,12 @@ re-downloaded in order to locate PACKAGE."
 (setq visible-bell 1) ;; should blink instead of sounding
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ;; trail whitespace
 
-;; my keybindings
-(global-set-key (kbd "C-x p") 'projectile-switch-project)
-(global-set-key (kbd "C-x j") 'end-of-buffer)
-
 ;; indentation
 (electric-indent-mode 1)
 ;;(require-package 'auto-indent-mode)
 ;;(require 'auto-indent-mode)
 ;;(auto-indent-global-mode)
 ;;(setq auto-indent-assign-indent-level 4) ; Changes the indent level to
-
 
 ;; saving last place
 (require 'saveplace)
