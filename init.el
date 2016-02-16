@@ -29,21 +29,16 @@ re-downloaded in order to locate PACKAGE."
 (set-face-attribute 'vertical-border
                     nil
                     :foreground "#222222")
-(set-face-attribute 'default nil :height 108 :family "Source Code Pro")
+(set-face-attribute 'default nil :height 109 :family "Source Code Pro")
 ;;(set-face-attribute 'default nil :height 105 :family "DejaVu Sans Mono")
 ;;(set-face-attribute 'default nil :height 105 :family "Monospace")
 
 ;; global preferences
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq inhibit-startup-message t)
-;; (if (not window-system) (menu-bar-mode -1))
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(require 'ido)
-(ido-mode t)
-(electric-pair-mode 1)
-;(desktop-save-mode nil)
 (set-fringe-mode 0)
 
 ;; line numbers
@@ -179,7 +174,7 @@ re-downloaded in order to locate PACKAGE."
   (lambda ()
     (evil-normal-state)))
 
-; force moving caret to beginning of the intentation
+;; force moving caret to beginning of the intentation
 (require-package 'mwim)
 (require 'mwim)
 (global-set-key (kbd "<home>") 'mwim-beginning-of-code-or-line)
@@ -189,10 +184,6 @@ re-downloaded in order to locate PACKAGE."
 (add-hook 'minibuffer-setup-hook
   (lambda ()
     (evil-insert-state)))
-
-; ido
-(require 'ido)
-(ido-mode t)
 
 ;; neotree
 (require-package 'neotree)
@@ -247,21 +238,6 @@ re-downloaded in order to locate PACKAGE."
 (set-face-background 'hl-line "#222222")
 (set-face-foreground 'highlight nil)
 
-;; avoid esc key
-(require-package 'key-chord)
-(require 'key-chord)
-(setq key-chord-two-keys-delay 0.5)
-(key-chord-define evil-insert-state-map "jj" '(lambda ()
-                                                (interactive)
-                                                (evil-normal-state)
-                                                (save-buffer)))
-(key-chord-mode 1)
-(global-set-key (kbd "C-x p") 'projectile-switch-project)
-(global-set-key (kbd "C-x j") 'end-of-buffer)
-(define-key evil-normal-state-map "\C-j"  'evil-window-down)
-(define-key evil-normal-state-map "\C-k"  'evil-window-up)
-(define-key evil-normal-state-map "\C-h"  'evil-window-left)
-(define-key evil-normal-state-map "\C-l"  'evil-window-right)
 
 ;; mute bell
 (setq ring-bell-function #'ignore)
@@ -332,3 +308,52 @@ re-downloaded in order to locate PACKAGE."
 (global-set-key (kbd "<C-down-mouse-1>") 'ggtags-find-tag-mouse)
 (global-set-key (kbd "<mouse-8>") 'previous-buffer)
 (global-set-key (kbd "<drag-mouse-9>") 'next-buffer)
+(setq ggtags-completing-read-function nil)
+
+;; helm
+(require-package 'helm)
+(require 'helm)
+(helm-mode 1)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(require-package 'helm-projectile)
+(require 'helm-projectile)
+(helm-projectile-on)
+
+;; avoid esc key
+(require-package 'key-chord)
+(require 'key-chord)
+(setq key-chord-two-keys-delay 0.5)
+(key-chord-define evil-insert-state-map "jj" '(lambda ()
+                                                (interactive)
+                                                (evil-normal-state)
+                                                (save-buffer)))
+(key-chord-mode 1)
+(global-set-key (kbd "C-x p") 'helm-projectile-switch-project)
+(global-set-key (kbd "C-x j") 'end-of-buffer)
+(define-key evil-normal-state-map "\C-j"  'evil-window-down)
+(define-key evil-normal-state-map "\C-k"  'evil-window-up)
+(define-key evil-normal-state-map "\C-h"  'evil-window-left)
+(define-key evil-normal-state-map "\C-l"  'evil-window-right)
+(key-chord-define evil-normal-state-map "00" 'delete-window)
+(key-chord-define evil-normal-state-map "pp" 'helm-projectile-switch-project)
+(global-set-key (kbd "C-s") 'save-buffer)
+; search forward with Ctrl-F
+(global-set-key (kbd "C-f") 'isearch-forward)
+(define-key evil-normal-state-map "\C-f" 'isearch-forward)
+(define-key isearch-mode-map (kbd "C-f") (lookup-key isearch-mode-map "\C-s"))
+(define-key minibuffer-local-isearch-map (kbd "C-f")
+  (lookup-key minibuffer-local-isearch-map "\C-s"))
+; search forward (regexp) with Ctrl-Shift-F
+(global-set-key (kbd "C-S-f") 'isearch-forward-regexp)
+(define-key isearch-mode-map (kbd "C-S-f") (lookup-key isearch-mode-map "\C-M-r"))
+(define-key minibuffer-local-isearch-map (kbd "C-S-f")
+  (lookup-key minibuffer-local-isearch-map "\C-M-r"))
+
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-y") 'redo)
+(define-key evil-normal-state-map "\C-z"  'undo)
+(define-key evil-normal-state-map "\C-y"  'redo)
+(define-key evil-insert-state-map "\C-z"  '(lambda ()
+                                             (undo)
+                                             (evil-normal-state))
+(define-key evil-insert-state-map "\C-y"  'redo)
