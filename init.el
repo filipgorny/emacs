@@ -354,6 +354,7 @@ re-downloaded in order to locate PACKAGE."
 (define-key evil-normal-state-map "\C-z"  'undo)
 (define-key evil-normal-state-map "\C-y"  'redo)
 (define-key evil-insert-state-map "\C-z"  '(lambda ()
+                                             (interactive)
                                              (undo)
-                                             (evil-normal-state))
+                                             (evil-normal-state)))
 (define-key evil-insert-state-map "\C-y"  'redo)
