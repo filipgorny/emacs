@@ -1,7 +1,6 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/packages")
 
-
 (require 'package);
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -29,9 +28,9 @@ re-downloaded in order to locate PACKAGE."
 (set-face-attribute 'vertical-border
                     nil
                     :foreground "#222222")
-(set-face-attribute 'default nil :height 109 :family "Source Code Pro")
-;;(set-face-attribute 'default nil :height 105 :family "DejaVu Sans Mono")
-;;(set-face-attribute 'default nil :height 105 :family "Monospace")
+;;(set-face-attribute 'default nil :height 110 :family "Source Code Pro" :weight 'normal)
+(set-face-attribute 'default nil :height 108 :family "Droid Sans Mono")
+;; (set-face-attribute 'default nil :height 110 :family "Monospace")
 
 ;; global preferences
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -54,13 +53,6 @@ re-downloaded in order to locate PACKAGE."
 (setq evil-insert-state-cursor '((bar . 2) "#ffff00")
       evil-normal-state-cursor '(hbox "#88ff88")
       evil-visual-state-cursor '(box "#44ff44"))
-
-; powerline
-(require-package 'powerline)
-(require 'powerline)
-(require-package 'powerline-evil)
-(require 'powerline-evil)
-(powerline-evil-vim-theme)
 
 ;; side windows
 (setq side-window-current-buffer nil)
@@ -93,13 +85,14 @@ re-downloaded in order to locate PACKAGE."
             (linum-mode -1)
             (setq side-window-current-buffer target-buffer)
             (setq side-window (selected-window))
+            (set-window-margins nil 1)
             )
             ))
 
-;; terminal
-(setq system-uses-terminfo nil)
+;; terminal colors
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-;;(set-process-query-on-exit-flag (get-process "terminal<1>") nil)
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(setq system-uses-terminfo nil)
 (setq term-buffer nil)
 
 (defun f-side-terminal-open ()
@@ -115,8 +108,8 @@ re-downloaded in order to locate PACKAGE."
         (switch-to-buffer t-current-buffer)))
     (f-toggle-side-window term-buffer))
 
-
 (global-set-key "\M-\d" 'f-side-terminal-open)
+
 
 ;; autocomplete
 (require-package 'auto-complete)
@@ -134,27 +127,13 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'flymake-cursor)
 (require 'flymake-cursor)
 (custom-set-faces
-`(flymake-errline
-     ((((supports :underline (:style wave)))
-       (:underline (:style wave :color ,"#664444")
-                   :foreground unspecified
-                   :background unspecified
-                   :inherit unspecified))
-      (t (:foreground ,"#664444" :weight bold :underline t))))
-   `(flymake-warnline
-     ((((supports :underline (:style wave)))
-       (:underline (:style wave :color ,"#666644")
-                   :foreground unspecified
-                   :background unspecified
-                   :inherit unspecified))
-      (t (:forground ,"#666644" :weight bold :underline t))))
-   `(flymake-infoline
-     ((((supports :underline (:style wave)))
-       (:underline (:style wave :color ,"#446644")
-                   :foreground unspecified
-                   :background unspecified
-                   :inherit unspecified))
-      (t (:forground ,"#446644" :weight bold :underline t)))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flymake-errline ((((supports :underline (:style wave))) (:underline (:style wave :color "#664444") :foreground unspecified :background unspecified :inherit unspecified)) (t (:foreground "#664444" :weight bold :underline t))))
+ '(flymake-infoline ((((supports :underline (:style wave))) (:underline (:style wave :color "#446644") :foreground unspecified :background unspecified :inherit unspecified)) (t (:forground "#446644" :weight bold :underline t))))
+ '(flymake-warnline ((((supports :underline (:style wave))) (:underline (:style wave :color "#666644") :foreground unspecified :background unspecified :inherit unspecified)) (t (:forground "#666644" :weight bold :underline t)))))
 
 
 ;; php support
@@ -207,7 +186,8 @@ re-downloaded in order to locate PACKAGE."
         (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
       (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
       (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-      (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
+      (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)
+      (set-window-margins nil 2)))
 
 ; tabs
 (setq-default indent-tabs-mode nil)
@@ -225,7 +205,7 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'smooth-scrolling)
 (require 'smooth-scrolling)
 
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
@@ -260,6 +240,8 @@ re-downloaded in order to locate PACKAGE."
 ;; web mode
 (load "web-mode")
 (require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -268,6 +250,12 @@ re-downloaded in order to locate PACKAGE."
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.twig\\'" . web-mode))
+(setq web-mode-enable-current-element-highlight t)
+(setq web-mode-enable-auto-pairing t)
+(setq web-mode-enable-css-colorization t)
+(setq web-mode-enable-block-face t)
+(setq web-mode-enable-current-element-highlight t)
+(set-face-background 'web-mode-current-element-highlight-face "#000001")
 
 ;; typescript
 (load "TypeScript")
@@ -279,9 +267,9 @@ re-downloaded in order to locate PACKAGE."
 ;; projectile
 (require-package 'projectile)
 (require 'projectile)
-(setq projectile-indexing-method 'native)
+(projectile-global-mode)
+(setq projectile-indexing-method 'alien)
 (setq projectile-switch-project-action 'neotree-projectile-action)
-;;(setq neo-smart-open t) ;; neotree smart open
 
 ;; bajery
 (setq visible-bell 1) ;; should blink instead of sounding
@@ -310,44 +298,27 @@ re-downloaded in order to locate PACKAGE."
 (global-set-key (kbd "<drag-mouse-9>") 'next-buffer)
 (setq ggtags-completing-read-function nil)
 
-;; helm
-(require-package 'helm)
-(require 'helm)
-(helm-mode 1)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(require-package 'helm-projectile)
-(require 'helm-projectile)
-(helm-projectile-on)
+;; ido
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
 
 ;; avoid esc key
 (require-package 'key-chord)
 (require 'key-chord)
-(setq key-chord-two-keys-delay 0.5)
+(setq key-chord-two-keys-delay 0.2)
 (key-chord-define evil-insert-state-map "jj" '(lambda ()
                                                 (interactive)
-                                                (evil-normal-state)
-                                                (save-buffer)))
+                                                (evil-normal-state)))
 (key-chord-mode 1)
-(global-set-key (kbd "C-x p") 'helm-projectile-switch-project)
+(global-set-key (kbd "C-x p") 'projectile-switch-project)
 (global-set-key (kbd "C-x j") 'end-of-buffer)
 (define-key evil-normal-state-map "\C-j"  'evil-window-down)
 (define-key evil-normal-state-map "\C-k"  'evil-window-up)
 (define-key evil-normal-state-map "\C-h"  'evil-window-left)
 (define-key evil-normal-state-map "\C-l"  'evil-window-right)
-(key-chord-define evil-normal-state-map "00" 'delete-window)
-(key-chord-define evil-normal-state-map "pp" 'helm-projectile-switch-project)
-(global-set-key (kbd "C-s") 'save-buffer)
-; search forward with Ctrl-F
-(global-set-key (kbd "C-f") 'isearch-forward)
-(define-key evil-normal-state-map "\C-f" 'isearch-forward)
-(define-key isearch-mode-map (kbd "C-f") (lookup-key isearch-mode-map "\C-s"))
-(define-key minibuffer-local-isearch-map (kbd "C-f")
-  (lookup-key minibuffer-local-isearch-map "\C-s"))
-; search forward (regexp) with Ctrl-Shift-F
-(global-set-key (kbd "C-S-f") 'isearch-forward-regexp)
-(define-key isearch-mode-map (kbd "C-S-f") (lookup-key isearch-mode-map "\C-M-r"))
-(define-key minibuffer-local-isearch-map (kbd "C-S-f")
-  (lookup-key minibuffer-local-isearch-map "\C-M-r"))
+(key-chord-define-global "00" 'delete-window)
+(key-chord-define-global "ss" 'save-buffer)
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-y") 'redo)
@@ -358,3 +329,21 @@ re-downloaded in order to locate PACKAGE."
                                              (undo)
                                              (evil-normal-state)))
 (define-key evil-insert-state-map "\C-y"  'redo)
+
+;; restart emacs
+(require-package 'restart-emacs)
+(require 'restart-emacs)
+
+;; powerline
+(require-package 'smart-mode-line)
+(require 'smart-mode-line)
+(require-package 'smart-mode-line-powerline-theme)
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
+(sml/apply-theme 'powerline)
+(custom-theme-set-faces
+ 'smart-mode-line-powerline
+ '(mode-line-inactive ((((background dark)) :foreground "gray60" :background "Black"
+                          :slant italic)
+                         (((background light)) :foreground "gray60" :background "Black"
+                          :slant italic))))
