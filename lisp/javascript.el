@@ -57,15 +57,15 @@
 
 (defun my-js2-mode-hook ()
   (require 'js)
-  (setq js-indent-level 4
+  (setq js-indent-level 2
         indent-tabs-mode nil
-        c-basic-offset 4)
+        c-basic-offset 2)
   (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
-  (set (make-local-variable 'indent-line-function) 
+  (set (make-local-variable 'indent-line-function)
 'my-js2-indent-function)
   (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
-  (define-key js2-mode-map [(meta control \;)] 
+  (define-key js2-mode-map [(meta control \;)]
     '(lambda()
        (interactive)
        (insert "/* -----[ ")
@@ -89,4 +89,3 @@
     (newline-and-indent)))
 
 (add-hook 'post-self-insert-hook 'java-autoindent)
-

@@ -1,5 +1,6 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/packages")
+(add-to-list 'load-path "~/.emacs.d/vendor")
 
 (require 'package);
 (add-to-list 'package-archives
@@ -7,7 +8,7 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (defun require-package (package &optional min-version no-refresh)
   "Install given PACKAGE, optionally requiring MIN-VERSION.
@@ -28,14 +29,17 @@ re-downloaded in order to locate PACKAGE."
 (set-face-attribute 'vertical-border
                     nil
                     :foreground "#222222")
-;;(set-face-attribute 'default nil :height 110 :family "Source Code Pro" :weight 'normal)
-(set-face-attribute 'default nil :height 108 :family "Droid Sans Mono")
+(set-face-attribute 'default nil :height 110 :family "Source Code Pro" :weight 'normal)
+;;(set-face-attribute 'default nil :height 112 :family "Roboto Mono" :embolden t)
 ;; (set-face-attribute 'default nil :height 110 :family "Monospace")
+;; (set-default-font "DejaVu Sans Mono 11")
+;;(custom-set-faces '(default ((t (:height 110 :family "DejaVu Sans Mono" :embolden t)))))
+(set-default 'line-spacing 4)
 
 ;; global preferences
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (setq inhibit-startup-message t)
-(menu-bar-mode -1)
+(menu-bar-mode -1   )
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (set-fringe-mode 0)
@@ -58,7 +62,7 @@ re-downloaded in order to locate PACKAGE."
 (setq side-window-current-buffer nil)
 (setq side-window nil)
 
-(defun f-close-side-windows ()
+    (defun f-close-side-windows ()
     (progn
         (if side-window
                 (delete-window side-window))
@@ -89,32 +93,12 @@ re-downloaded in order to locate PACKAGE."
             )
             ))
 
-;; terminal colors
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(setq system-uses-terminfo nil)
-(setq term-buffer nil)
-
-(defun f-side-terminal-open ()
-  "Create or visit a terminal buffer."
-  (interactive)
-  (if (not term-buffer)
-      (progn
-        (setq t-current-window (get-buffer-window (current-buffer)))
-        (setq t-current-buffer (current-buffer))
-        (setq term-buffer (generate-new-buffer "shell"))
-        (shell term-buffer)
-        (select-window t-current-window)
-        (switch-to-buffer t-current-buffer)))
-    (f-toggle-side-window term-buffer))
-
-(global-set-key "\M-\d" 'f-side-terminal-open)
-
-
 ;; autocomplete
 (require-package 'auto-complete)
 (require 'auto-complete)
 (ac-config-default)
+(load "auto-complete-etags.el")
+(ac-linum-workaround)
 
 ;; syntax checking while typing
 (require-package 'flycheck)
@@ -137,16 +121,10 @@ re-downloaded in order to locate PACKAGE."
 
 
 ;; php support
-(require-package 'php-mode)
-(require 'php-mode)
-(require-package 'php-extras)
-(require 'php-extras)
-(defface font-lock-sigil-face
-  '((t (:foreground "#96cf00")))
-  "Face to display sigils in.")
-(font-lock-add-keywords 'php-mode
-  '(("\\(\\$\\)[_a-zA-Z]" 1 'font-lock-sigil-face)))
+(load "php")
 
+;; javascript support
+(load "javascript")
 
 ;; exit to normal mode after saving buffer
 (add-hook `before-save-hook
@@ -168,7 +146,7 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'neotree)
 (require 'neotree)
 (setq neo-window-position 'right)
-(setq neo-window-width 70)
+(setq neo-window-width 60)
 
 (defun f-neotree-toggle ()
   "Toggle show the NeoTree window."
@@ -178,27 +156,21 @@ re-downloaded in order to locate PACKAGE."
       (neotree-hide)
       (neotree-show)))
 
-(global-set-key (kbd "M-q") 'f-neotree-toggle)
-(global-set-key (kbd "C-q") 'f-toggle-neotree)
-
 (add-hook 'neotree-mode-hook
-    (lambda ()
-        (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+          (lambda ()
+              (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
       (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
       (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
       (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)
-      (set-window-margins nil 2)))
+      (message "neotree opened")
+      (set-window-margins nil 4)))
 
 ; tabs
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 
-; switching buffers
-(global-set-key (kbd "M--") 'previous-buffer)
-(global-set-key (kbd "M-=") 'next-buffer)
-
-; answer yes or no, changed to y-or-n (yes!!! for god sake yes)
+                                        ; answer yes or no, changed to y-or-n (yes!!! for god sake yes)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; scrolling
@@ -210,12 +182,17 @@ re-downloaded in order to locate PACKAGE."
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
+(setq redisplay-dont-pause t
+  scroll-margin 1
+  scroll-conservatively 10000
+  scroll-preserve-screen-position 1)
+
 ;; javascript
 (load "javascript")
 
 ;; highlight current line
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#222222")
+(set-face-background 'hl-line "#141414")
 (set-face-foreground 'highlight nil)
 
 
@@ -250,12 +227,13 @@ re-downloaded in order to locate PACKAGE."
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.twig\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.hs\\'" . web-mode))
 (setq web-mode-enable-current-element-highlight t)
 (setq web-mode-enable-auto-pairing t)
 (setq web-mode-enable-css-colorization t)
 (setq web-mode-enable-block-face t)
-(setq web-mode-enable-current-element-highlight t)
-(set-face-background 'web-mode-current-element-highlight-face "#000001")
+        (setq web-mode-enable-current-element-highlight t)
+(load "html")
 
 ;; typescript
 (load "TypeScript")
@@ -264,25 +242,27 @@ re-downloaded in order to locate PACKAGE."
 (require 'tss)
 (tss-config-default)
 
-;; projectile
+;; projectts management
 (require-package 'projectile)
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-indexing-method 'alien)
 (setq projectile-switch-project-action 'neotree-projectile-action)
+(setq projectile-remember-window-configs t)
 
 ;; bajery
 (setq visible-bell 1) ;; should blink instead of sounding
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ;; trail whitespace
 
 ;; indentation
-(electric-indent-mode 1)
-;;(require-package 'auto-indent-mode)
-;;(require 'auto-indent-mode)
-;;(auto-indent-global-mode)
-;;(setq auto-indent-assign-indent-level 4) ; Changes the indent level to
+(electric-indent-mode nil)
+(require-package 'auto-indent-mode)
+(require 'auto-indent-mode)
+(auto-indent-global-mode)
+(setq auto-indent-assign-indent-level 4) ; Changes the indent level to
+(setq auto-indent-disabled-modes-list (list 'shell-mode))
 
-;; saving last place
+;; save cursor position
 (require 'saveplace)
 (setq-default save-place t)
 
@@ -294,6 +274,7 @@ re-downloaded in order to locate PACKAGE."
             (when (derived-mode-p 'php-mode 'c++-mode 'java-mode 'js-mode 'javascript-mode 'web-mode)
               (ggtags-mode 1))))
 (global-set-key (kbd "<C-down-mouse-1>") 'ggtags-find-tag-mouse)
+;;(global-set-key (kbd "<C-mouse-1>") 'ggtags-find-tag-mouse)
 (global-set-key (kbd "<mouse-8>") 'previous-buffer)
 (global-set-key (kbd "<drag-mouse-9>") 'next-buffer)
 (setq ggtags-completing-read-function nil)
@@ -317,8 +298,6 @@ re-downloaded in order to locate PACKAGE."
 (define-key evil-normal-state-map "\C-k"  'evil-window-up)
 (define-key evil-normal-state-map "\C-h"  'evil-window-left)
 (define-key evil-normal-state-map "\C-l"  'evil-window-right)
-(key-chord-define-global "00" 'delete-window)
-(key-chord-define-global "ss" 'save-buffer)
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-y") 'redo)
@@ -347,3 +326,70 @@ re-downloaded in order to locate PACKAGE."
                           :slant italic)
                          (((background light)) :foreground "gray60" :background "Black"
                           :slant italic))))
+
+;; snippets
+(load "snippets")
+
+;; org mode
+(load "org-assistant")
+(load "org-mouse")
+
+;; perspective
+(require-package 'perspective)
+(require 'perspective)
+(persp-mode)
+
+;; transparency
+(set-frame-parameter (selected-frame) 'alpha '(98 98))
+(add-to-list 'default-frame-alist '(alpha 98 98))
+
+;; custom common keybindings
+(load "keybindings")
+
+;; disable backup autosaves
+(setq make-backup-files nil)
+
+;; auto save on lost focus
+(defun save-all ()
+    (interactive)
+        (message "Autosaving after focus out...")
+        (save-some-buffers t))
+
+(add-hook 'focus-out-hook 'save-all)
+
+;; terminal colors
+(load "f-shell")
+
+;; color brackets
+(require-package 'rainbow-delimiters)
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(custom-set-faces
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#ffaa00"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#99ff99"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#aa88ff"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#88ffff"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#88ff00"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#ffff66"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "#44ff44"))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "#22ff22"))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "#00ff00"))))
+ '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
+ '(show-paren-match ((((class color) (background light)) (:background "azure2")))))
+
+;; navitation between windows and buffers
+(load "navigation")
+
+;; indentation guide lines
+
+;; auto pair
+(require-package 'autopair)
+(require 'autopair)
+(autopair-global-mode)
+
+; Override the default x-select-text function because it doesn't
+; respect x-select-enable-clipboard on OS X.
+(defun x-select-text (text))
+(setq x-select-enable-clipboard nil)
+(setq x-select-enable-primary nil)
+(setq mouse-drag-copy-region nil)

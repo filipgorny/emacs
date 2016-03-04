@@ -1,4 +1,3 @@
-
 ;;; natural-vibration-theme.el --- Emacs theme with a dark background.
 
 ;; Copyright (C) 2014 , Nemis
@@ -31,20 +30,20 @@
 
  (deftheme natural-vibration)
  (let ((class '((class color) (min-colors 89)))
-       (fg1 "#fafafa")
+       (fg1 "#fdfdfd")
        (fg2 "#f2f2f2")
        (fg3 "#d1d1d1")
        (fg4 "#bbbbbb")
-       (bg1 "#151515")
-       (bg2 "#2d2d2d")
+       (bg1 "#0e0e0e")
+       (bg2 "#131313")
        (bg3 "#323232")
        (bg4 "#4f4f4f")
        (key2 "#028a7f")
        (key3 "#e06d63")
-       (builtin "#ffffff")
-       (keyword "#ff3b30")
+       (builtin "#fafafa")
+       (keyword "#ff1d1d")
        (const   "#d9d9d9")
-       (comment "#c2a1a1")
+       (comment "#666666")
        (func    "#ffffff")
        (str     "#ffd600")
        (type    "#ebebeb")

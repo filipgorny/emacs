@@ -1,0 +1,10 @@
+(defun nemis/switch-buffer (direction)
+    (interactive)
+    (if (direction)
+            (next-buffer)
+        (previous-buffer)
+        )
+    )
+
+(global-set-key (kbd "M--") 'previous-buffer)
+(global-set-key (kbd "M-=") 'next-buffer)
