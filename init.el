@@ -2,6 +2,9 @@
 (add-to-list 'load-path "~/.emacs.d/packages")
 (add-to-list 'load-path "~/.emacs.d/vendor")
 
+(toggle-debug-on-error t)
+(load "debug-helper")
+
 (require 'package);
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -20,7 +23,7 @@ re-downloaded in order to locate PACKAGE."
               (package-install package)
       (progn
           (package-refresh-contents)
-        (require-package package min-version t)))))
+          (require-package package min-version t)))))
 (package-initialize)
 
 ; theme
@@ -29,10 +32,10 @@ re-downloaded in order to locate PACKAGE."
 (set-face-attribute 'vertical-border
                     nil
                     :foreground "#222222")
-(set-face-attribute 'default nil :height 110 :family "Source Code Pro" :weight 'normal)
+(set-face-attribute 'default nil :height 105 :family "Source Code Pro" :weight 'normal)
 ;;(set-face-attribute 'default nil :height 112 :family "Roboto Mono" :embolden t)
 ;; (set-face-attribute 'default nil :height 110 :family "Monospace")
-;; (set-default-font "DejaVu Sans Mono 11")
+;; (set-default-font "Dej   aVu Sans Mono 11")
 ;;(custom-set-faces '(default ((t (:height 110 :family "DejaVu Sans Mono" :embolden t)))))
 (set-default 'line-spacing 4)
 
@@ -49,29 +52,41 @@ re-downloaded in order to locate PACKAGE."
 (set-face-foreground 'linum "#303030")
 (load "linum-current-number")
 ;;(setq linum-format " %3d  ")
+;; line numbers
+(global-linum-mode t)
+(set-face-foreground 'linum "#303030")
+(load "linum-current-number")
+;;(setq linum-format " %3d  ")
 
-; evil
-(require-package 'evil)
-(require 'evil)
-(evil-mode t)
-(setq evil-insert-state-cursor '((bar . 2) "#ffff00")
-      evil-normal-state-cursor '(hbox "#88ff88")
-      evil-visual-state-cursor '(box "#44ff44"))
+;; help to debug startup
+(require-package 'bug-hunter)
+(require 'bug-hunter)
+
 
 ;; side windows
 (setq side-window-current-buffer nil)
 (setq side-window nil)
 
-    (defun f-close-side-windows ()
+(defun f-minimap-show ()
+    ;;(sublimity-map-show)
+    )
+
+(defun f-minimap-kill ()
+    ;;(sublimity-map-kill)
+    )
+
+(defun f-close-side-windows ()
     (progn
         (if side-window
-                (delete-window side-window))
+            (delete-window side-window))
         (setq side-window nil)
-        (setq side-window-current-buffer nil)))
+        (setq side-window-current-buffer nil))
+    (f-minimap-show))
 
 (defun f-clear-side ()
     (progn
-        (neotree-hide)
+        (f-minimap-kill)
+        ;;(sr-speedbar-close)
         (f-close-side-windows)))
 
 (defun f-toggle-side-window (buffer)
@@ -80,7 +95,7 @@ re-downloaded in order to locate PACKAGE."
     (if (eq side-window-current-buffer target-buffer)
             (progn
                 (f-close-side-windows)
-                )
+                (f-minimap-show))
         (progn
             (f-clear-side)
             (split-window-right)
@@ -89,16 +104,24 @@ re-downloaded in order to locate PACKAGE."
             (linum-mode -1)
             (setq side-window-current-buffer target-buffer)
             (setq side-window (selected-window))
-            (set-window-margins nil 1)
-            )
-            ))
+            (set-window-margins nil 1))))
 
-;; autocomplete
-(require-package 'auto-complete)
-(require 'auto-complete)
-(ac-config-default)
-(load "auto-complete-etags.el")
-(ac-linum-workaround)
+(defun f-sidebar-toggle ()
+  (interactive)
+  (f-close-side-windows)
+  (if (sr-speedbar-window-exist-p sr-speedbar-window)
+          (progn
+              (sr-speedbar-close)
+              (f-minimap-show))
+      (progn
+          (f-minimap-kill)
+          (sr-speedbar-open)
+          (sr-speedbar-select-window))))
+
+(defun f-sidebar-focus ()
+    (interactive)
+    (if (boundp 'sr-speedbar-window)
+            (select-window sr-speedbar-window)))
 
 ;; syntax checking while typing
 (require-package 'flycheck)
@@ -126,46 +149,25 @@ re-downloaded in order to locate PACKAGE."
 ;; javascript support
 (load "javascript")
 
-;; exit to normal mode after saving buffer
-(add-hook `before-save-hook
-  (lambda ()
-    (evil-normal-state)))
-
 ;; force moving caret to beginning of the intentation
 (require-package 'mwim)
 (require 'mwim)
 (global-set-key (kbd "<home>") 'mwim-beginning-of-code-or-line)
 (global-set-key (kbd "<end>") 'mwim-end-of-code-or-line)
 
-;; force insert mode when entering mini buffer
-(add-hook 'minibuffer-setup-hook
-  (lambda ()
-    (evil-insert-state)))
-
 ;; neotree
-(require-package 'neotree)
-(require 'neotree)
-(setq neo-window-position 'right)
-(setq neo-window-width 60)
+;;(require-package 'neotree)
+;;(require 'neotree)
+;;(setq neo-window-position 'right)
+;;(setq neo-window-width 60)
 
-(defun f-neotree-toggle ()
-  "Toggle show the NeoTree window."
-  (interactive)
-  (f-close-side-windows)
-  (if (neo-global--window-exists-p)
-      (neotree-hide)
-      (neotree-show)))
+;;(add-hook 'neotree-mode-hook
+          ;;(lambda ()
+            ;;  (set-window-margins nil 4)
+              ;;(define-key neotree-mode-map (kbd "SPC") 'neotree-enter)
+              ;;(define-key neotree-mode-map (kbd "j") 'next-line)
+              ;;(define-key neotree-mode-map (kbd "k") 'previous-line)))
 
-(add-hook 'neotree-mode-hook
-          (lambda ()
-              (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
-      (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
-      (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-      (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)
-      (message "neotree opened")
-      (set-window-margins nil 4)))
-
-; tabs
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
@@ -232,7 +234,7 @@ re-downloaded in order to locate PACKAGE."
 (setq web-mode-enable-auto-pairing t)
 (setq web-mode-enable-css-colorization t)
 (setq web-mode-enable-block-face t)
-        (setq web-mode-enable-current-element-highlight t)
+(setq web-mode-enable-current-element-highlight t)
 (load "html")
 
 ;; typescript
@@ -247,7 +249,6 @@ re-downloaded in order to locate PACKAGE."
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-indexing-method 'alien)
-(setq projectile-switch-project-action 'neotree-projectile-action)
 (setq projectile-remember-window-configs t)
 
 ;; bajery
@@ -260,7 +261,7 @@ re-downloaded in order to locate PACKAGE."
 (require 'auto-indent-mode)
 (auto-indent-global-mode)
 (setq auto-indent-assign-indent-level 4) ; Changes the indent level to
-(setq auto-indent-disabled-modes-list (list 'shell-mode))
+(setq auto-indent-disabled-modes-list (list 'shell-mode 'neotree-mode))
 
 ;; save cursor position
 (require 'saveplace)
@@ -288,26 +289,12 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'key-chord)
 (require 'key-chord)
 (setq key-chord-two-keys-delay 0.2)
-(key-chord-define evil-insert-state-map "jj" '(lambda ()
-                                                (interactive)
-                                                (evil-normal-state)))
+
 (key-chord-mode 1)
 (global-set-key (kbd "C-x p") 'projectile-switch-project)
 (global-set-key (kbd "C-x j") 'end-of-buffer)
-(define-key evil-normal-state-map "\C-j"  'evil-window-down)
-(define-key evil-normal-state-map "\C-k"  'evil-window-up)
-(define-key evil-normal-state-map "\C-h"  'evil-window-left)
-(define-key evil-normal-state-map "\C-l"  'evil-window-right)
-
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-y") 'redo)
-(define-key evil-normal-state-map "\C-z"  'undo)
-(define-key evil-normal-state-map "\C-y"  'redo)
-(define-key evil-insert-state-map "\C-z"  '(lambda ()
-                                             (interactive)
-                                             (undo)
-                                             (evil-normal-state)))
-(define-key evil-insert-state-map "\C-y"  'redo)
 
 ;; restart emacs
 (require-package 'restart-emacs)
@@ -380,16 +367,53 @@ re-downloaded in order to locate PACKAGE."
 ;; navitation between windows and buffers
 (load "navigation")
 
-;; indentation guide lines
-
 ;; auto pair
-(require-package 'autopair)
-(require 'autopair)
-(autopair-global-mode)
+(require-package 'smartparens)
+(require 'smartparens)
+(smartparens-mode)
 
-; Override the default x-select-text function because it doesn't
-; respect x-select-enable-clipboard on OS X.
-(defun x-select-text (text))
-(setq x-select-enable-clipboard nil)
-(setq x-select-enable-primary nil)
-(setq mouse-drag-copy-region nil)
+;; copy paste issues
+(require-package 'simpleclip)
+(require 'simpleclip)
+(simpleclip-mode 1)
+
+;; cursor style
+(setq-default cursor-type '(bar . 3))
+(set-cursor-color "#ff4422")
+;;(load "heartblink")
+
+;; mark active window
+(require-package 'hiwin)
+(require 'hiwin)
+(hiwin-activate)
+(set-face-background 'hiwin-face "#090909")
+
+;; side bar
+(require-package 'sr-speedbar)
+(require 'sr-speedbar)
+(custom-set-variables
+ '(speedbar-show-unknown-files t)
+ )
+(setq sr-speedbar-right-side nil)
+(lambda ()
+    (sr-speedbar-close)
+    (setq sr-speedbar-width 30)
+    (sr-speedbar-open))
+
+(require-package 'projectile-speedbar)
+(require 'projectile-speedbar)
+(global-set-key (kbd "M-<f2>") 'projectile-speedbar-open-current-buffer-in-tree)
+(define-key speedbar-key-map (kbd "j") 'speedbar-next)
+(define-key speedbar-key-map (kbd "k") 'speedbar-prev)
+(define-key speedbar-key-map (kbd "S") 'speedbar-edit-line)
+(add-hook
+ 'speedbar-mode-hook
+ '(lambda ()
+    (linum-mode 0)))
+(sr-speedbar-refresh-turn-off)
+(f-sidebar-toggle)
+
+;; dont ask about shell when exiting
+(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+  "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+  (flet ((process-list ())) ad-do-it))

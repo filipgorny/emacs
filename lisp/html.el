@@ -12,8 +12,8 @@
    ((t (:foreground "#ffaaaa")))))
 
 (defun nemis/bind-web-mode-keys ()
-    (define-key evil-normal-state-map (kbd "SPC") 'web-mode-fold-or-unfold)
-    (define-key evil-normal-state-map (kbd "C-SPC") 'web-mode-element-select))
+    (define-key web-mode-map (kbd "M-o") 'web-mode-fold-or-unfold)
+    (define-key web-mode-map (kbd "C-SPC") 'web-mode-element-select))
 
 
 (add-hook 'web-mode-hook 'nemis/bind-web-mode-keys)
