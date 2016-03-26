@@ -3,6 +3,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . js2-mode))
 
 (defun my-js2-indent-function ()
   (interactive)
@@ -81,11 +82,3 @@
   (message "My JS2 hook"))
 
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
-
-;; semilicon
-
-(defun java-autoindent ()
-  (when (and (eq major-mode 'java-mode) (looking-back "[{;]"))
-    (newline-and-indent)))
-
-(add-hook 'post-self-insert-hook 'java-autoindent)

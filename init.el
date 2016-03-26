@@ -2,10 +2,9 @@
 (add-to-list 'load-path "~/.emacs.d/packages")
 (add-to-list 'load-path "~/.emacs.d/vendor")
 
-(toggle-debug-on-error t)
-(load "debug-helper")
+;;(toggle-debug-on-error 1)
 
-(require 'package);
+(require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
@@ -62,6 +61,8 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'bug-hunter)
 (require 'bug-hunter)
 
+;; persisting variables
+(load "f-persistence")
 
 ;; side windows
 (setq side-window-current-buffer nil)
@@ -126,22 +127,7 @@ re-downloaded in order to locate PACKAGE."
 ;; syntax checking while typing
 (require-package 'flycheck)
 (require 'flycheck)
-(require-package 'flymake-easy)
-(require'flymake-easy)
-(require-package 'flymake-jslint)
-(require 'flymake-jslint)
-(add-hook 'js-mode-hook 'flymake-jslint-load)
-(require-package 'flymake-cursor)
-(require 'flymake-cursor)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(flymake-errline ((((supports :underline (:style wave))) (:underline (:style wave :color "#664444") :foreground unspecified :background unspecified :inherit unspecified)) (t (:foreground "#664444" :weight bold :underline t))))
- '(flymake-infoline ((((supports :underline (:style wave))) (:underline (:style wave :color "#446644") :foreground unspecified :background unspecified :inherit unspecified)) (t (:forground "#446644" :weight bold :underline t))))
- '(flymake-warnline ((((supports :underline (:style wave))) (:underline (:style wave :color "#666644") :foreground unspecified :background unspecified :inherit unspecified)) (t (:forground "#666644" :weight bold :underline t)))))
-
+(global-flycheck-mode)
 
 ;; php support
 (load "php")
@@ -155,24 +141,8 @@ re-downloaded in order to locate PACKAGE."
 (global-set-key (kbd "<home>") 'mwim-beginning-of-code-or-line)
 (global-set-key (kbd "<end>") 'mwim-end-of-code-or-line)
 
-;; neotree
-;;(require-package 'neotree)
-;;(require 'neotree)
-;;(setq neo-window-position 'right)
-;;(setq neo-window-width 60)
 
-;;(add-hook 'neotree-mode-hook
-          ;;(lambda ()
-            ;;  (set-window-margins nil 4)
-              ;;(define-key neotree-mode-map (kbd "SPC") 'neotree-enter)
-              ;;(define-key neotree-mode-map (kbd "j") 'next-line)
-              ;;(define-key neotree-mode-map (kbd "k") 'previous-line)))
-
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq indent-line-function 'insert-tab)
-
-                                        ; answer yes or no, changed to y-or-n (yes!!! for god sake yes)
+;; answer yes or no, changed to y-or-n (yes!!! for god sake yes)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; scrolling
@@ -189,14 +159,10 @@ re-downloaded in order to locate PACKAGE."
   scroll-conservatively 10000
   scroll-preserve-screen-position 1)
 
-;; javascript
-(load "javascript")
-
 ;; highlight current line
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "#141414")
 (set-face-foreground 'highlight nil)
-
 
 ;; mute bell
 (setq ring-bell-function #'ignore)
@@ -244,13 +210,6 @@ re-downloaded in order to locate PACKAGE."
 (require 'tss)
 (tss-config-default)
 
-;; projectts management
-(require-package 'projectile)
-(require 'projectile)
-(projectile-global-mode)
-(setq projectile-indexing-method 'alien)
-(setq projectile-remember-window-configs t)
-
 ;; bajery
 (setq visible-bell 1) ;; should blink instead of sounding
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ;; trail whitespace
@@ -261,7 +220,7 @@ re-downloaded in order to locate PACKAGE."
 (require 'auto-indent-mode)
 (auto-indent-global-mode)
 (setq auto-indent-assign-indent-level 4) ; Changes the indent level to
-(setq auto-indent-disabled-modes-list (list 'shell-mode 'neotree-mode))
+(setq auto-indent-disabled-modes-list (list 'shell-mode 'neotree-mode 'speedbar-mode))
 
 ;; save cursor position
 (require 'saveplace)
@@ -275,6 +234,7 @@ re-downloaded in order to locate PACKAGE."
             (when (derived-mode-p 'php-mode 'c++-mode 'java-mode 'js-mode 'javascript-mode 'web-mode)
               (ggtags-mode 1))))
 (global-set-key (kbd "<C-down-mouse-1>") 'ggtags-find-tag-mouse)
+(global-set-key (kbd "<C-mouse-1>") 'ggtags-find-tag-mouse)
 ;;(global-set-key (kbd "<C-mouse-1>") 'ggtags-find-tag-mouse)
 (global-set-key (kbd "<mouse-8>") 'previous-buffer)
 (global-set-key (kbd "<drag-mouse-9>") 'next-buffer)
@@ -291,10 +251,8 @@ re-downloaded in order to locate PACKAGE."
 (setq key-chord-two-keys-delay 0.2)
 
 (key-chord-mode 1)
-(global-set-key (kbd "C-x p") 'projectile-switch-project)
 (global-set-key (kbd "C-x j") 'end-of-buffer)
-(global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-y") 'redo)
+(global-set-key (kbd "C-x u") 'beginning-of-buffer)
 
 ;; restart emacs
 (require-package 'restart-emacs)
@@ -321,11 +279,6 @@ re-downloaded in order to locate PACKAGE."
 (load "org-assistant")
 (load "org-mouse")
 
-;; perspective
-(require-package 'perspective)
-(require 'perspective)
-(persp-mode)
-
 ;; transparency
 (set-frame-parameter (selected-frame) 'alpha '(98 98))
 (add-to-list 'default-frame-alist '(alpha 98 98))
@@ -336,15 +289,7 @@ re-downloaded in order to locate PACKAGE."
 ;; disable backup autosaves
 (setq make-backup-files nil)
 
-;; auto save on lost focus
-(defun save-all ()
-    (interactive)
-        (message "Autosaving after focus out...")
-        (save-some-buffers t))
-
-(add-hook 'focus-out-hook 'save-all)
-
-;; terminal colors
+;; terminal
 (load "f-shell")
 
 ;; color brackets
@@ -382,38 +327,32 @@ re-downloaded in order to locate PACKAGE."
 (set-cursor-color "#ff4422")
 ;;(load "heartblink")
 
-;; mark active window
-(require-package 'hiwin)
-(require 'hiwin)
-(hiwin-activate)
-(set-face-background 'hiwin-face "#090909")
 
-;; side bar
-(require-package 'sr-speedbar)
-(require 'sr-speedbar)
-(custom-set-variables
- '(speedbar-show-unknown-files t)
- )
-(setq sr-speedbar-right-side nil)
-(lambda ()
-    (sr-speedbar-close)
-    (setq sr-speedbar-width 30)
-    (sr-speedbar-open))
-
-(require-package 'projectile-speedbar)
-(require 'projectile-speedbar)
-(global-set-key (kbd "M-<f2>") 'projectile-speedbar-open-current-buffer-in-tree)
-(define-key speedbar-key-map (kbd "j") 'speedbar-next)
-(define-key speedbar-key-map (kbd "k") 'speedbar-prev)
-(define-key speedbar-key-map (kbd "S") 'speedbar-edit-line)
-(add-hook
- 'speedbar-mode-hook
- '(lambda ()
-    (linum-mode 0)))
-(sr-speedbar-refresh-turn-off)
-(f-sidebar-toggle)
 
 ;; dont ask about shell when exiting
 (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
+
+;; tabs
+(load "f-tabbar")
+
+;; autocomplete
+(require-package 'auto-complete)
+(require 'auto-complete)
+(ac-config-default)
+(ac-linum-workaround)
+
+;; delete selected text when typing
+(delete-selection-mode 1)
+
+;; side bar
+(load "sidebar")
+
+;; projects navigation
+(load "projects")
+
+;; undo/redo simplification
+(require-package 'undo-tree)
+(require 'undo-tree)
+(global-undo-tree-mode)
