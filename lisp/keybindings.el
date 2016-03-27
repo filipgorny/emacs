@@ -45,7 +45,6 @@ See: `xah-forward-block'"
       (define-key map (kbd "S-C-x") 'simpleclip-cut)
       (define-key map (kbd "C-a") 'mark-whole-buffer)
       (define-key map (kbd "C-x C-f") 'find-file)
-      (define-key map (kbd "M-q") 'f-sidebar-focus)
       (define-key map (kbd "C-q") 'f-sidebar-toggle)
       (define-key map (kbd "C-d") 'kill-whole-line)
       (define-key map (kbd "C-z") 'undo)

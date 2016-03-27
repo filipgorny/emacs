@@ -1,30 +1,18 @@
 (setq f-workspace-current nil)
-(setq f-workspace-current-buffers '())
 
 (defstruct f-project name opened-files)
 
-(defun f-workspace-buffer-remember-opened (x)
-    (if (not (memq x f-workspace-current-buffers))
-            (add-to-list 'f-workspace-current-buffers x)))
-
-(defun f-workspace-buffer-opened ()
-    (f-workspace-buffer-remember-opened (buffer-name)))
-
-(defun f-workspace-buffer-closed ()
-    (let (buffer (get-buffer))
-        (setq f-workspace-current-buffers (remove buffer f-workspace-current-buffers))))
-
-(add-hook 'find-file-hook 'f-workspace-buffer-opened)
-(add-hook 'kill-buffer-hook 'f-workspace-buffer-closed)
-
 (defun f-workspace-current-filenames ()
-    (mapcar (lambda (x) (buffer-file-name (get-buffer x))) f-workspace-current-buffers))
+    (setq buffers '())
+    (mapcar (lambda (x)
+	      (setq b (buffer-file-name x))
+	      (when b
+		      (add-to-list 'buffers b)))
+	      (buffer-list))
+    buffers)
 
 (defun f-workspace-key (name)
-    (catch 'err
-        (if (not f-workspace-current)
-                (throw 'err "Not in a project."))
-        (concat "project " name)))
+    (concat "project " name))
 
 (defun f-workspace-current-key ()
     (f-workspace-key f-workspace-current))
@@ -39,14 +27,24 @@
             (f-persist-put (f-workspace-current-key) project))))
 
 (defun f-workspace-load (name)
-    (message (concat "Loading " (f-workspace-key name))))
+    (let ((newkey (f-workspace-key name)))
+	(message newkey)
+	(let ((openedproject (f-persist-get newkey)))
+	    (mapc (lambda (file)
+		      (message (concat "Reopening file " file))
+		      (find-file-noselect file))
+		  (f-project-opened-files openedproject)))))
+
+(defun f-workspace--is-special-buffer (buf-name)
+    (or (string-equal "*" (substring buf-name 0 1)) (string-equal "*" (substring buf-name 1 2)) (string-equal buf-name "shell")))
 
 (defun f-workspace-clear ()
-      (mapc '(lambda (x)
-                 (if (get-buffer x)
-                         (progn
-                             (kill-buffer (get-buffer x))))) f-workspace-current-buffers))
+    (mapc (lambda (buf)
+	      (if (not (f-workspace--is-special-buffer (buffer-name buf)))
+		      (kill-buffer buf)))
+	  (buffer-list)))
 
+;; todo - select the tab that was visible before
 (defun f-workspace-open (project-dir)
         (if (not (file-exists-p project-dir))
             (progn
@@ -54,9 +52,9 @@
         (progn
             (f-workspace-load project-dir)
             (f-sidebar-dir-switch project-dir)
-            (setq f-workspace-current project-dir)
-            (ggtags-mode 1)
-            (ggtags-update-tags))))
+            (setq f-workspace-current project-dir))))
+            ;; (ggtags-mode 1)
+            ;; (ggtags-update-tags))))
 
 (defun f-workspace-switch (project-dir)
     (interactive "sEnter project name: ")
@@ -64,14 +62,10 @@
     (f-workspace-clear)
     (f-workspace-open project-dir))
 
-
 (global-set-key (kbd "C-x p") 'f-workspace-switch)
 (global-set-key (kbd "C-x C-p") 'f-workspace-switch)
 
-(defun f-sidebar-dir-switch (dir)
-    (setq default-directory dir)
-    (message (concat "Changing sidebar directory" dir))
-    (sr-speedbar-refresh))
+
 
 (add-hook 'kill-emacs-hook (lambda ()
                                (f-workspace-save)))

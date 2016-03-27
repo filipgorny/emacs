@@ -103,26 +103,10 @@ re-downloaded in order to locate PACKAGE."
             (select-window (next-window))
             (switch-to-buffer buffer)
             (linum-mode -1)
+	    (tabbar-local-mode nil)
             (setq side-window-current-buffer target-buffer)
             (setq side-window (selected-window))
             (set-window-margins nil 1))))
-
-(defun f-sidebar-toggle ()
-  (interactive)
-  (f-close-side-windows)
-  (if (sr-speedbar-window-exist-p sr-speedbar-window)
-          (progn
-              (sr-speedbar-close)
-              (f-minimap-show))
-      (progn
-          (f-minimap-kill)
-          (sr-speedbar-open)
-          (sr-speedbar-select-window))))
-
-(defun f-sidebar-focus ()
-    (interactive)
-    (if (boundp 'sr-speedbar-window)
-            (select-window sr-speedbar-window)))
 
 ;; syntax checking while typing
 (require-package 'flycheck)
@@ -140,7 +124,6 @@ re-downloaded in order to locate PACKAGE."
 (require 'mwim)
 (global-set-key (kbd "<home>") 'mwim-beginning-of-code-or-line)
 (global-set-key (kbd "<end>") 'mwim-end-of-code-or-line)
-
 
 ;; answer yes or no, changed to y-or-n (yes!!! for god sake yes)
 (defalias 'yes-or-no-p 'y-or-n-p)

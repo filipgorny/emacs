@@ -15,8 +15,8 @@
                 (setq term-buffer (generate-new-buffer "shell"))
                 (shell term-buffer)
                 (select-window t-current-window)
-                (switch-to-buffer t-current-buffer)))
-    (f-toggle-side-window term-buffer))
+                (switch-to-buffer t-current-buffer))
+	(f-toggle-side-window term-buffer)))
 
 (global-set-key "\M-\d" 'f-side-terminal-open)
 

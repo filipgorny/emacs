@@ -8,12 +8,14 @@
         (erase-buffer)
         (prin1 value)
         (insert (prin1-to-string value))
-	(save-buffer)))
+	(save-buffer)
+	(kill-buffer)))
 
 (defun f-persist-get (name)
     (with-current-buffer (find-file-noselect (concat vardir (f-generate-key name)))
-        (read (buffer-string))
-	(kill-buffer))
+        (let ((value (read (buffer-string))))
+	    (kill-buffer)
+	    value)))
 
 (lambda ()
     (f-persist-put "foo" "bar")
