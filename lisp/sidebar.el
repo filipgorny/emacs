@@ -1,0 +1,30 @@
+(require-package 'direx)
+
+(setq sidebar/window nil)
+(setq sidebar/project-root)
+(setq sidebar/screen-window)
+
+(defun sidebar/open ()
+  (interactive)
+  (if (not (window-live-p sidebar/window))
+      (progn
+	(setq sidebar/buffer-before (current-buffer))
+	(if (projectile-project-p)
+	    (direx-project:jump-to-project-root)
+	  (direx:jump-to-directory))
+	(setq sidebar/screen-window (split-window-right))
+	(adjust-window-trailing-edge (selected-window) (- 35 (window-width)) t)
+	(setq sidebar/window (selected-window))
+	(set-window-dedicated-p sidebar/window t)
+	(linum-mode -1)
+	(select-window sidebar/screen-window)
+	(switch-to-buffer sidebar/buffer-before)
+	)))
+
+(defun sidebar/goto-project-root ()
+  (interactive)
+  (setq sidebar/project-root (projectile-project-root))
+  (select-window sidebar/window)
+  (direx:find-directory-reuse sidebar/project-root))
+
+(setq projectile-switch-project-action 'sidebar/goto-project-root)

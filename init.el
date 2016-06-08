@@ -1,16 +1,14 @@
 ;; packages
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t) ; Org-mode's repository
+(package-initialize)
 
 (defun require-package (package &optional min-version no-refresh)
   "Install given PACKAGE, optionally requiring MIN-VERSION.
 If NO-REFRESH is non-nil, the available package lists will not be
-re-downloaded in order to locate PACKAGE."
+jre-downloaded in order to locate PACKAGE."
   (if (package-installed-p package min-version)
           t
       (if (or (assoc package package-archive-contents) no-refresh)
@@ -19,8 +17,6 @@ re-downloaded in order to locate PACKAGE."
           (package-refresh-contents)
           (require-package package min-version t))))
   (require package))
-
-(package-initialize)
 
 ;; common system properties
 (setq backup-directory-alist
@@ -33,8 +29,13 @@ re-downloaded in order to locate PACKAGE."
 
 ;; libraries
 (add-to-list 'load-path "~/.emacs.d/vendor/")
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
-(load "header")
+;; header line
+(setq header-title-format
+      (list (format "%s %%S: %%j " (system-name))
+       '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+(set-face-background 'header-line "#151515")
 
 ;; common properties for gui
 (tool-bar-mode -1)
@@ -53,43 +54,33 @@ re-downloaded in order to locate PACKAGE."
 (load-theme 'natural-vibration t)
 (set-face-attribute 'default nil :font "Hack" :height 110)
 (set-face-attribute 'mode-line nil :box nil :height 110)
-(set-face-background 'mode-line "#223")
-(set-face-foreground 'mode-line "#769")
+(set-face-background 'mode-line "#151515")
+(set-face-foreground 'mode-line "#444")
 (scroll-bar-mode -1)
 (set-cursor-color "#ff3311")
-(setq cursor-type '(bar . 6))
 (set-face-attribute 'fringe nil
                       :foreground (face-foreground 'default)
                       :background (face-background 'default))
 
-;; cua mode
+(set-face-attribute 'vertical-border
+                     nil
+                     :foreground "#232323")
+
+;; modern key shortcuts
 (cua-mode t)
 (setq cua-auto-tabify-rectangles nil) ;; Don't tabify after rectangle commands
 (transient-mark-mode 1) ;; No region when it is not highlighted
 (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
+(global-set-key (kbd "C-s") 'save-buffer)
+(global-set-key (kbd "C-f") 'isearch-forward)
+(define-key isearch-mode-map "\C-f" 'isearch-repeat-forward)
 
 ;; autocomplete
 (require-package 'auto-complete)
+(ac-config-default)
 
 ;; common keybindings
-(defun jump-notspecial-buffer (direction)
-  (if (> direction 0)
-      (switch-to-next-buffer)
-    (switch-to-prev-buffer))
-  (while (string= (substring (buffer-name) 0 1) "*")
-    (if (> direction 0)
-	(switch-to-next-buffer)
-      (switch-to-prev-buffer)
-      ))
-  )
-
-(defun previous-notspecial-buffer ()
-  (jump-notspecial-buffer -1)
-  )
-
-(defun next-notspecial-buffer ()
-  (jump-notspecial-buffer 1)
-  )
+(global-set-key (kbd "C-x j") 'end-of-buffer)
 
 (global-set-key (kbd "C-d") 'kill-whole-line)
 (defvar homerow-navigation-minor-mode-map
@@ -101,10 +92,12 @@ re-downloaded in order to locate PACKAGE."
         (define-key map (kbd "M-d") 'end-of-line)
         (define-key map (kbd "M-a") 'beginning-of-line)
         (define-key map (kbd "M-s") 'back-to-indentation)
-	(define-key map (kbd "M-=") 'next-notspecial-buffer)
-	(define-key map (kbd "M--") 'previous-notspecial-buffer)
+	(define-key map (kbd "M-=") 'next-buffer)
+	(define-key map (kbd "M--") 'previous-buffer)
+	(define-key map (kbd "M-u") '(lambda () (scroll-down 20)))
+	(define-key map (kbd "M-i") '(lambda () (scroll-up 20)))
         map)
-    "f-navigation-minor-mode keymap.")
+    "homerow-navigation-minor-mode keymap.")
 
 (define-minor-mode homerow-navigation-minor-mode
     "A minor mode so that my key settings override annoying major modes."
@@ -113,28 +106,32 @@ re-downloaded in order to locate PACKAGE."
 
 (homerow-navigation-minor-mode 1)
 
-(global-set-key (kbd "M-RET") 'toggle-max-frame)
-
 ;; line numbers
 (require 'linum)
 (global-linum-mode)
 (setq linum-format " %d")
-(custom-set-variables '(linum-format (quote "%3d")))
-(custom-set-faces '(linum ((t (:foreground "#223" :background nil)))))
+(if (window-system)
+    (progn
+      (custom-set-variables '(linum-format (quote "%4d")))
+      (custom-set-faces '(linum ((t (:foreground "#223" :background nil))))))
+  (progn
+    (custom-set-variables '(linum-format (quote "%4d ")))
+    (custom-set-faces '(linum ((t (:foreground "#333" :background nil)))))))
+(ac-linum-workaround)
 
 ;; rainbow delimeters
 (require-package 'rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (custom-set-faces
- '(rainbow-delimiters-depth-1-face ((t (:foreground "#ffaa00"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "#99ff99"))))
- '(rainbow-delimiters-depth-3-face ((t (:foregrjjound "#aa88ff"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "#88ffff"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "#88ff00"))))
- '(rainbow-delimiters-depth-6-face ((t (:foreground "#ffff66"))))
- '(rainbow-delimiters-depth-7-face ((t (:foreground "#44ff44"))))
- '(rainbow-delimiters-depth-8-face ((t (:foreground "#22ff22"))))
- '(rainbow-delimiters-depth-9-face ((t (:foreground "#00ff00"))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#dd8800"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#cc7700"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#bb6600"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#aa5500"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#994400"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#883300"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "#772200"))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "#661100"))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "#550000"))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
  '(show-paren-match ((((class color) (background light)) (:background "azure2")))))
 
@@ -144,5 +141,52 @@ re-downloaded in order to locate PACKAGE."
 (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 (helm-mode 1)
+(defun fu/helm-find-files-navigate-forward (orig-fun &rest args)
+  (if (file-directory-p (helm-get-selection))
+      (apply orig-fun args)
+    (helm-maybe-exit-minibuffer)))
+(advice-add 'helm-execute-persistent-action :around #'fu/helm-find-files-navigate-forward)
+(define-key helm-find-files-map (kbd "<return>") 'helm-execute-persistent-action)
+(defun fu/helm-find-files-navigate-back (orig-fun &rest args)
+  (if (= (length helm-pattern) (length (helm-find-files-initial-input)))
+      (helm-find-files-up-one-level 1)
+    (apply orig-fun args)))
+(advice-add 'helm-ff-delete-char-backward :around #'fu/helm-find-files-navigate-back)
+(defadvice helm-display-mode-line (after undisplay-header activate)
+  (setq header-line-format nil))
 
+;; emacs restarting
+(require-package 'restart-emacs)
+(global-set-key (kbd "C-9") 'restart-emacs)
 
+;; projectile
+(require-package 'projectile)
+(require-package 'helm-projectile)
+(projectile-global-mode)
+(global-set-key (kbd "C-x p") 'helm-projectile-switch-project)
+
+;; frame format
+(setq frame-title-format
+      '("%S" (buffer-file-name "%f"
+                   (dired-directory dired-directory "%b"))))
+
+;; org mode
+(setq org-src-fontify-natively t)
+
+;; popwin
+(require-package 'popwin)
+(popwin-mode 1)
+
+;; showparen mode
+(require 'paren)
+(show-paren-mode 1)
+(set-face-background 'show-paren-match (face-background 'default))
+(set-face-foreground 'show-paren-match "#0f0")
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold :underline t)
+
+;; own plugins
+;;(load "sidebar")
+(load "fullmode")
+(load "php")
+(load "savenote")
+(load "rename")
