@@ -1,11 +1,21 @@
 (require-package 'php-mode)
-(require 'php-mode)
 
 (defface font-lock-sigil-face
-  '((t (:foreground "#96cf00")))
+  '((t (:foreground "#8888ff")))
   "Face to display sigils in.")
 (font-lock-add-keywords 'php-mode
-			'(("\\(\\$\\)[_a-zA-Z]" 1 'font-lock-sigil-face)))
+			'("\\(\\$\\)[_a-zA-Z]" 1 'font-lock-sigil-face))
+(font-lock-add-keywords 'php-mode
+			'("$this" 1 'font-lock-variable-name-face))
+
+(make-face 'php-comment-face)
+(set-face-foreground 'php-comment-face "LightGrey")
+(make-face 'php-variable-face)
+(set-face-foreground 'php-variable-face "#8888ff")
+(add-hook 'php-mode-hook 
+	  (lambda ()
+	    (set (make-local-variable 'font-lock-comment-face) 'php-comment-face)
+	    (set (make-local-variable 'font-lock-variable-name-face) 'php-variable-face)))
 
 (require-package 'yasnippet)
 

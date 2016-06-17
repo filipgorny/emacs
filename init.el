@@ -10,7 +10,6 @@
 If NO-REFRESH is non-nil, the available package lists will not be
 jre-downloaded in order to locate PACKAGE."
   (if (package-installed-p package min-version)
-          t
       (if (or (assoc package package-archive-contents) no-refresh)
               (package-install package)
       (progn
@@ -123,6 +122,11 @@ jre-downloaded in order to locate PACKAGE."
 (require-package 'rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(linum ((t (:foreground "#223" :background nil))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "#dd8800"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "#cc7700"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "#bb6600"))))
@@ -133,7 +137,8 @@ jre-downloaded in order to locate PACKAGE."
  '(rainbow-delimiters-depth-8-face ((t (:foreground "#661100"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "#550000"))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
- '(show-paren-match ((((class color) (background light)) (:background "azure2")))))
+ '(show-paren-match ((((class color) (background light)) (:background "azure2"))))
+ '(term ((t (:background "#000000" :foreground "#fdfdfd")))))
 
 ;; helm
 (require-package 'helm)
@@ -159,12 +164,6 @@ jre-downloaded in order to locate PACKAGE."
 (require-package 'restart-emacs)
 (global-set-key (kbd "C-9") 'restart-emacs)
 
-;; projectile
-(require-package 'projectile)
-(require-package 'helm-projectile)
-(projectile-global-mode)
-(global-set-key (kbd "C-x p") 'helm-projectile-switch-project)
-
 ;; frame format
 (setq frame-title-format
       '("%S" (buffer-file-name "%f"
@@ -184,9 +183,21 @@ jre-downloaded in order to locate PACKAGE."
 (set-face-foreground 'show-paren-match "#0f0")
 (set-face-attribute 'show-paren-match nil :weight 'extra-bold :underline t)
 
+;; recent files
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(global-set-key (kbd "C-x C-r") 'helm-recentf)
+
 ;; own plugins
 ;;(load "sidebar")
 (load "fullmode")
 (load "php")
 (load "savenote")
 (load "rename")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(linum-format (quote "%4d")))
