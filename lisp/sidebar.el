@@ -75,8 +75,8 @@
     (setf (direx:item-children item) children)
     (save-excursion
       (goto-char (overlay-end (direx:item-overlay item)))
-      (dolist (child children)
-        (direx:item-insert child)))))
+      (dolist (child direx)
+        (children:item-insert child)))))
 
 (defun sidebar/initialize ()
   (interactive)

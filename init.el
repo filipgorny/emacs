@@ -1,8 +1,9 @@
 ;; packages
 (require 'package)
-(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t) ; Org-mode's repository
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 
 (defun require-package (package &optional min-version no-refresh)
@@ -11,11 +12,13 @@ If NO-REFRESH is non-nil, the available package lists will not be
 jre-downloaded in order to locate PACKAGE."
   (if (package-installed-p package min-version)
       (if (or (assoc package package-archive-contents) no-refresh)
-              (package-install package)
+	  (progn
+	    ;;(package-refresh-contents)
+	    (package-install package))
       (progn
           (package-refresh-contents)
           (require-package package min-version t))))
-  (require package))
+   (require package))
 
 ;; common system properties
 (setq backup-directory-alist
@@ -80,13 +83,16 @@ jre-downloaded in order to locate PACKAGE."
 
 ;; common keybindings
 (global-set-key (kbd "C-x j") 'end-of-buffer)
-
+(global-set-key (kbd "C-a") 'mark-whole-buffer)
 (global-set-key (kbd "C-d") 'kill-whole-line)
 (defvar homerow-navigation-minor-mode-map
     (let ((map (make-sparse-keymap)))
-        (define-key map (kbd "M-h") 'backward-char)
+      (define-key map (kbd "M-h") 'backward-char)
         (define-key map (kbd "M-j") 'next-line)
-        (define-key map (kbd "M-k") 'previous-line)
+        (define-key map (kbd "M-k") '(lambda ()
+				       (interactive)
+				       (previous-line)))
+				       ;; (indent-according-to-mode)))
         (define-key map (kbd "M-l") 'forward-char)
         (define-key map (kbd "M-d") 'end-of-line)
         (define-key map (kbd "M-a") 'beginning-of-line)
@@ -95,28 +101,31 @@ jre-downloaded in order to locate PACKAGE."
 	(define-key map (kbd "M--") 'previous-buffer)
 	(define-key map (kbd "M-u") '(lambda () (scroll-down 20)))
 	(define-key map (kbd "M-i") '(lambda () (scroll-up 20)))
+	(define-key map (kbd "M-w") '(lambda () (forward-word)))
         map)
     "homerow-navigation-minor-mode keymap.")
 
 (define-minor-mode homerow-navigation-minor-mode
-    "A minor mode so that my key settings override annoying major modes."
-    :init-value t
-    :lighter "homerow-navigation")
+  "A minor mode so that my key settings override annoying major modes."
+  :init-value t
+  :lighter "homerow-navigation")
 
 (homerow-navigation-minor-mode 1)
 
 ;; line numbers
 (require 'linum)
 (global-linum-mode)
-(setq linum-format " %d")
 (if (window-system)
     (progn
-      (custom-set-variables '(linum-format (quote "%4d")))
+      (custom-set-variables '(linum-format (quote "%4d ")))
       (custom-set-faces '(linum ((t (:foreground "#223" :background nil))))))
   (progn
     (custom-set-variables '(linum-format (quote "%4d ")))
     (custom-set-faces '(linum ((t (:foreground "#333" :background nil)))))))
 (ac-linum-workaround)
+
+;; fringe
+(fringe-mode -1)
 
 ;; rainbow delimeters
 (require-package 'rainbow-delimiters)
@@ -127,15 +136,15 @@ jre-downloaded in order to locate PACKAGE."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(linum ((t (:foreground "#223" :background nil))))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "#dd8800"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "#cc7700"))))
- '(rainbow-delimiters-depth-3-face ((t (:foreground "#bb6600"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "#aa5500"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "#994400"))))
- '(rainbow-delimiters-depth-6-face ((t (:foreground "#883300"))))
- '(rainbow-delimiters-depth-7-face ((t (:foreground "#772200"))))
- '(rainbow-delimiters-depth-8-face ((t (:foreground "#661100"))))
- '(rainbow-delimiters-depth-9-face ((t (:foreground "#550000"))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#ddee00"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#ccdd00"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#bbaa00"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#aa9900"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#997700"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#885500"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "#774400"))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "#663300"))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "#552200"))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
  '(show-paren-match ((((class color) (background light)) (:background "azure2"))))
  '(term ((t (:background "#000000" :foreground "#fdfdfd")))))
@@ -189,15 +198,14 @@ jre-downloaded in order to locate PACKAGE."
 (setq recentf-max-menu-items 25)
 (global-set-key (kbd "C-x C-r") 'helm-recentf)
 
+;; vendors
+(load "yaml-mode")
+
 ;; own plugins
 ;;(load "sidebar")
 (load "fullmode")
 (load "php")
+(load "python-lang")
 (load "savenote")
 (load "rename")
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(linum-format (quote "%4d")))
+(load "commenting")

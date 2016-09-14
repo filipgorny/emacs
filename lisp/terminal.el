@@ -8,6 +8,12 @@
                              "M-x"
                              "C-z"
 			     "M-w"
+			     "M-1"
+			     "C-c"
+			     "S-C-v"
+			     "S-C-c"
+			     "M-2"
+			     "M-1"
 			     ))
       ;; required to configure properly the environment
       ;; with AnSiT? variables in .bashrc
@@ -27,7 +33,7 @@
 
 ;;
 
-(set-face-attribute 'term nil :background "#181818")
+(set-face-attribute 'term nil :background "#0d0d0d")
 
 ;;
 
@@ -41,4 +47,5 @@
       (multi-term-dedicated-select)
       (linum-mode -1))))
 
-(global-set-key (kbd "M-w") 'terminal/toggle)
+(global-set-key (kbd "M-2") 'terminal/toggle)
+(setq multi-term-dedicated-window-height 22)
