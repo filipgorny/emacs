@@ -1,0 +1,17 @@
+auto-save-list/*
+elpa/*
+*~
+ac-comphist.dat
+session.*
+projectile-bookmarks.eld
+ido.last
+custom.el
+recentf
+var
+.#*
+*#*
+var/*
+data*
+G*
+places
+
