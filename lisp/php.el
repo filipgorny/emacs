@@ -8,4 +8,4 @@
                                  (global-set-key (kbd "M-q") 'f-neotree-toggle)))
 
 (require-package 'php-mode)
-(require 'php-mode)
+

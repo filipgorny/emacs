@@ -15,5 +15,19 @@
 ;; turn off alarm bell
 (setq ring-bell-function 'ignore)
 
-;; languages support
+;; common system properties
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+(tool-bar-mode -1)
+
+;; maximized frame
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
+;; subconfig files
+(load "packaging")
 (load "php")
+(load "setup-hlm")
+
