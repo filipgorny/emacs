@@ -1,0 +1,1 @@
+("~/.emacs.d/" "~/Projects/automation/php-project-assistant/" "~/Projects/devell/center/" "~/Projects/devell/center")
