@@ -43,24 +43,11 @@
 
 ;; maximized frame
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(initial-frame-alist (quote ((fullscreen . maximized))))
- '(package-selected-packages
-   (quote
-    (project-explorer yaml-mode workgroups twig-mode tabbar smartparens php-auto-yasnippets perspective js3-mode highlight-parentheses helm-projectile flymake-php ac-php))))
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
 ;; yasnippet
 ;(require-package 'yasnippet)
 ;(yas-global-mode 1)
-
-;; parentheses
-(require-package 'smartparens)
-(smartparens-global-mode t)
-(require-package 'highlight-parentheses)
-(highlight-parentheses-mode)
 
 ;; whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -75,6 +62,7 @@
       "projects"
       "cursor"
       "recent-files"
+      "brackets"
       ))
 
 (cl-loop for config in configs
