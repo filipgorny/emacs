@@ -27,6 +27,9 @@
 ;; theme
 (load "natural-vibration-theme")
 (scroll-bar-mode -1)
+(setq-default line-spacing 4)
+(global-hl-line-mode 1)
+(set-face-background 'hl-line "#1a1a1a")
 
 ;; turn off alarm bell
 (setq ring-bell-function 'ignore)
@@ -40,6 +43,7 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 
 ;; maximized frame
 (custom-set-variables
@@ -63,6 +67,7 @@
       "cursor"
       "recent-files"
       "brackets"
+      "modeline"
       ))
 
 (cl-loop for config in configs
