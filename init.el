@@ -1,11 +1,6 @@
-;; hide welcome screen
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
 (package-initialize)
 
+;; hide welcome screen
 (setq inhibit-startup-screen t)
 
 ;; cua mode
@@ -27,9 +22,10 @@
 ;; theme
 (load "natural-vibration-theme")
 (scroll-bar-mode -1)
-(setq-default line-spacing 4)
+(setq-default line-spacing 6)
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#171717")
+(set-face-background 'hl-line "#1d1d1d")
+(set-face-attribute 'default (selected-frame) :height 100)
 
 ;; turn off alarm bell
 (setq ring-bell-function 'ignore)
@@ -55,11 +51,19 @@
 
 ;; linum
 (global-linum-mode 1)
-(setq linum-format " %d")
-(set-face-foreground 'linum "#353531")
+(setq linum-format " %d ")
+(set-face-foreground 'linum "#3b3b3b")
 
 ;; whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; scrolling
+(progn
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 2))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 2) ;; keyboard scroll one line at a time
+)
 
 ;; subconfig files
 (setq configs '(

@@ -15,5 +15,5 @@
 (neotree-disable-mode-line)
 (neotree-disable-linum)
 
-(defadvice projectile-persp-switch-project (after projectile-persp-switch-project activate)
-  (neotree-dir default-directory))
+;(defadvice projectile-persp-switch-project (after projectile-persp-switch-project activate)
+;  (neotree-dir default-directory))
