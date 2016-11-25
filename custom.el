@@ -9,7 +9,7 @@
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (smart-mode-line rainbow-delimiters project-explorer yaml-mode workgroups twig-mode tabbar smartparens php-auto-yasnippets perspective js3-mode highlight-parentheses helm-projectile flymake-php ac-php))))
+    (neotree popwin pop-win direx "direx" smart-mode-line rainbow-delimiters project-explorer yaml-mode workgroups twig-mode tabbar smartparens php-auto-yasnippets perspective js3-mode highlight-parentheses helm-projectile flymake-php ac-php))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

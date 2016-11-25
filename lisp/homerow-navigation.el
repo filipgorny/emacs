@@ -7,13 +7,13 @@
   (interactive)
     (progn
       (previous-line)
-      (back-to-indentation-or-beginning)))
+      (back-to-indentation)))
 
 (defun cur-move-down ()
   (interactive)
   (progn
     (next-line)
-    (back-to-indentation-or-beginning)))
+    (back-to-indentation)))
 
 (defun cur-move-beginning ()
   (interactive)

@@ -29,7 +29,7 @@
 (scroll-bar-mode -1)
 (setq-default line-spacing 4)
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#1a1a1a")
+(set-face-background 'hl-line "#171717")
 
 ;; turn off alarm bell
 (setq ring-bell-function 'ignore)
@@ -53,6 +53,11 @@
 ;(require-package 'yasnippet)
 ;(yas-global-mode 1)
 
+;; linum
+(global-linum-mode 1)
+(setq linum-format " %d")
+(set-face-foreground 'linum "#353531")
+
 ;; whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -68,6 +73,7 @@
       "recent-files"
       "brackets"
       "modeline"
+      "sidebar"
       ))
 
 (cl-loop for config in configs

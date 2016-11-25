@@ -1,9 +1,15 @@
-((("tabbar-mode" .
+((("other-window" .
+   [1 0 0 0 0 0 0 0 0 0 0 0])
+  ("neotree-disable-linum" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("neotree-disable-mode-line" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0])
+  ("tabbar-mode" .
    [1 0 0 0 0 0 0 0 0 0 0])
   ("tabbar" .
    [1 0 0 0 0 0])
   ("progn" .
-   [1 0 0 0 0])
+   [2 0 0 0 0])
   ("get-register" .
    [0 0 0 0 0 0 1 0 0 0 0 0])
   ("kbd" .
@@ -15,7 +21,7 @@
   ("set-background-color" .
    [0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0])
   ("lambda" .
-   [2 0 0 0 0 0])
+   [3 0 0 0 0 0])
   ("buffer-list-update-hook" .
    [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0])
   ("colors" .
