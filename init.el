@@ -25,7 +25,8 @@
 (setq-default line-spacing 6)
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "#1a1a1a")
-(set-face-attribute 'default (selected-frame) :height 100)
+(set-face-attribute 'default (selected-frame) :height 95)
+;;(set-face-attribute 'default nil :family "Inconsolata" :height 100)
 
 ;; turn off alarm bell
 (setq ring-bell-function 'ignore)
@@ -54,14 +55,15 @@
 
 ;; scrolling
 (progn
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 2))) ;; one line at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-(setq scroll-step 2) ;; keyboard scroll one line at a time
+  (setq mouse-wheel-scroll-amount '(3 ((shift) . 3))) ;; scroll speed
+  (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+  (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+  (setq scroll-step 3) ;; keyboard scroll "speed"
 )
 
 ;; subconfig files
 (setq configs '(
+		"common"
 		"packaging"
 		"line-numbers"
 		"autocomplete"
@@ -79,6 +81,7 @@
 		"orgmode"
 		"organizer"
 		"notes"
+		"buffers-and-files-navigation"
 		))
 
 (cl-loop for config in configs

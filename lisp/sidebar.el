@@ -1,8 +1,8 @@
 (require-package 'neotree)
 (require-package 'all-the-icons)
 
-(setq neo-theme (if (display-graphic-p) 'icons))
-(neotree-toggle)
+;;(setq neo-theme (if (display-graphic-p) 'icons))
+(setq neo-theme (if (display-graphic-p) 'arrow))
 
 (setq sidebar-buffer-name " *NeoTree*")
 
@@ -21,8 +21,6 @@
   (linum-mode -1)
   (select-window previous-window))
 
-(sidebar-disable-mode-line)
-(sidebar-disable-linum)
 
 (defun sidebar-toggle-focus ()
   (interactive)
@@ -30,27 +28,23 @@
       (other-window 1)
     (select-window (sidebar-get-window))))
 
-(global-set-key (kbd "M-q") 'sidebar-toggle-focus)
-
 (defun sidebar-update-style ()
-  (setq sidebar-font-size 100)
+  (setq sidebar-font-size 90)
 
-  (setq sidebar-color-dir "#22aa22")
-
-  (setq neo-window-width 34)
+  (setq neo-window-width 42)
   (neotree-toggle)
   (neotree-toggle)
+
+  (setq line-spacing 3)
 
   (custom-set-faces
-   (set-face-attribute 'neo-button-face      nil :height sidebar-font-size)
-   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size)
-   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground sidebar-color-dir :weight 'bold)
+   (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#555" :background "#f00")
+   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#aa5")
+   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#aaa" :weight 'bold :background "#222")
    (set-face-attribute 'neo-header-face      nil :height sidebar-font-size)
-   (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#fff")
+   (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#666")
    )
   )
-
-(sidebar-update-style)
 
 (defun sidebar-open-project-dir ()
   "Open NeoTree using the git root."
@@ -64,3 +58,12 @@
   (message "Could not find git project root."))
 
 ;;(setq projectile-switch-project-action 'sidebar-open-project-dir)
+
+(neotree-show)
+
+(sidebar-disable-mode-line)
+(sidebar-disable-linum)
+
+(sidebar-update-style)
+
+(global-set-key (kbd "M-q") 'sidebar-toggle-focus)

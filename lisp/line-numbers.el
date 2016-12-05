@@ -1,5 +1,5 @@
 (global-linum-mode 1)
-(custom-set-variables '(linum-format (quote "%3d")))
+(custom-set-variables '(linum-format (quote " %3d ")))
 (set-face-foreground 'linum "#313131")
 (set-face-bold 'linum t)
 

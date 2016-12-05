@@ -12,8 +12,8 @@
 
 (defun projects-get-identifier ()
   (interactive)
-  (if (boundp 'projects-current-directory)
-      projects-current-directory))
+  (if (and (boundp 'projects-current-directory) projects-current-directory)
+      (replace-regexp-in-string "\/" "__" projects-current-directory)))
 
 (defun projects-is-project-open ()
   (not (eq (projects-get-identifier) nil)))
@@ -28,6 +28,7 @@
 (define-key projectile-mode-map (kbd "C-x C-p") 'projects-switch-project)
 
 (setq projectile-switch-project-action '(lambda ()
+					  (message (concat "Attempt to change the directory to " default-directory))
 					  (setq projects-current-directory default-directory)
 					  (neotree-dir default-directory)
 ;;					  (wg-switch-to-workgroup (default-directory))
