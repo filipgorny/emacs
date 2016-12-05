@@ -14,4 +14,4 @@
  '(show-paren-match ((((class color) (background light)) (:background "azure2")))))
 
 (require-package 'highlight-parentheses)
-(highlight-parentheses-mode)
+(global-highlight-parentheses-mode t)

@@ -1,0 +1,11 @@
+ls
+ls
+ps -A
+ls /dev
+ls
+ps -A
+ls /dev
+ls
+ls
+ls
+ssh devell.co

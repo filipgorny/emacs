@@ -1,4 +1,38 @@
-((("other-window" .
+((("org" .
+   [1 0 0])
+  ("org-mode" .
+   [1 0 0 0 0 0 0 0])
+  ("require" .
+   [1 0 0 0 0 0 0])
+  ("projects-is-project-open" .
+   [0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("or" .
+   [1 0])
+  ("and" .
+   [2 0 0])
+  ("not" .
+   [1 0 0])
+  ("boundp" .
+   [2 0 0 0 0 0])
+  ("forward-char" .
+   [0 0 0 0 0 0 0 0 0 0 1 0])
+  ("map" .
+   [2 0 0])
+  ("define-key" .
+   [1 0 0 0 0 0 1 0 0 0])
+  ("forward-word" .
+   [0 0 0 0 0 0 0 0 0 0 1 0])
+  ("backward-word" .
+   [0 0 0 0 0 0 0 0 0 0 0 1 0])
+  ("projects-get-identifier" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 3 1 0 0 1 0 0 0 0 0 0])
+  ("workgroups-mode" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 1 0])
+  ("projectile-project-root" .
+   [3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("wg-switch-to-workgroup" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0])
+  ("other-window" .
    [1 0 0 0 0 0 0 0 0 0 0 0])
   ("neotree-disable-linum" .
    [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
@@ -9,11 +43,11 @@
   ("tabbar" .
    [1 0 0 0 0 0])
   ("progn" .
-   [3 0 0 0 0])
+   [2 0 0 0 0])
   ("get-register" .
    [0 0 0 0 0 0 1 0 0 0 0 0])
   ("kbd" .
-   [1 0 0])
+   [3 0 0])
   ("l" .
    [1])
   ("global-set-key" .
@@ -21,7 +55,7 @@
   ("set-background-color" .
    [0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0])
   ("lambda" .
-   [3 0 0 0 0 0])
+   [4 0 0 0 0 0])
   ("buffer-list-update-hook" .
    [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0])
   ("colors" .
@@ -31,17 +65,17 @@
   ("get-random-color" .
    [0 0 0 0 0 0 2 1 1 0 0 0 0 0 0 0])
   ("defun" .
-   [4 0 0 0 0])
+   [5 0 0 0 0])
   ("c" .
    [1])
   ("setq" .
-   [7 0 0 0])
+   [10 0 0 0])
   ("let" .
    [3 0 0])
   ("load" .
    [2 0 0 0])
   ("nil" .
-   [1 0 0])
+   [4 0 0])
   ("project-explorer" .
    [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0])
   ("scroll-bar-mode" .
@@ -59,7 +93,7 @@
   ("code-parse-block-open" .
    [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0])
   ("eq" .
-   [2 0])
+   [4 0])
   ("name" .
    [4 0 0 0])
   ("code-parsing-state" .
@@ -85,8 +119,28 @@
   ("point-max" .
    [1 0 0 0 0 0 0 0 0])
   ("message" .
-   [1 0 0 0 0 0 0])
+   [7 0 0 0 0 0 0])
   ("do" .
    [1 0])
   ("hl-line" .
-   [0 0 0 0 0 1 0])))
+   [0 0 0 0 0 1 0])
+  ("projectile-project-p" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0])
+  ("projectile-switch-project-action" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0])
+  ("default-directory" .
+   [1 0 0 0 0 0 0 0 0 0 2 0 1 0 0 0 0])
+  ("neotree-dir" .
+   [1 0 0 0 0 0 0 0 0 0 0])
+  ("workgroups" .
+   [0 0 0 0 0 1 0 0 0 0])
+  ("wg-save-session" .
+   [0 0 0 0 0 1 0 0 0 0 0 0 0 0 0])
+  ("wg-save-session-as" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0])
+  ("if" .
+   [2 0])
+  ("interactive" .
+   [1 0 0 0 0 0 0 0 0 0 0])
+  ("projects-current-directory" .
+   [0 0 0 0 0 0 0 0 0 0 1 0 0 1 2 0 0 0 0 0 0 0 0 0 0 0])))

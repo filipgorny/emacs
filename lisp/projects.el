@@ -1,13 +1,34 @@
 (require-package 'projectile)
 (require-package 'helm-projectile)
-
+(require-package 'workgroups2)
+(workgroups-mode 1)
+(setq wg-session-file "~/.emacs.d/.emacs_workgroups")
 (setq projectile-completion-system 'helm)
-
-(require-package 'perspective)
-(persp-mode)
-(require-package 'persp-projectile)
-
 (projectile-mode)
 
-(define-key projectile-mode-map (kbd "C-x p") 'projectile-persp-switch-project)
-(define-key projectile-mode-map (kbd "C-x C-p") 'projectile-persp-switch-project)
+;; custom logic
+
+(setq projects-current-directory nil)
+
+(defun projects-get-identifier ()
+  (interactive)
+  (if (boundp 'projects-current-directory)
+      projects-current-directory))
+
+(defun projects-is-project-open ()
+  (not (eq (projects-get-identifier) nil)))
+
+(defun projects-switch-project ()
+  (interactive)
+  (if (projects-is-project-open)
+      (wg-save-session-as (projects-get-identifier)))
+  (projectile-switch-project))
+
+(define-key projectile-mode-map (kbd "C-x p") 'projects-switch-project)
+(define-key projectile-mode-map (kbd "C-x C-p") 'projects-switch-project)
+
+(setq projectile-switch-project-action '(lambda ()
+					  (setq projects-current-directory default-directory)
+					  (neotree-dir default-directory)
+;;					  (wg-switch-to-workgroup (default-directory))
+					  ))

@@ -19,15 +19,25 @@
   (interactive)
   (beginning-of-line))
 
+(defun cur-move-right ()
+  (interactive)
+  (forward-char))
+
+(defun cur-move-left ()
+  (interactive)
+  (backward-char))
+
 (global-set-key (kbd "C-x p") 'cur-move-up)
 
 ;; common keybindings
 (defvar homerow-navigation-minor-mode-map
     (let ((map (make-sparse-keymap)))
-      (define-key map (kbd "M-h") 'backward-char)
+      (define-key map (kbd "M-h") 'cur-move-left)
       (define-key map (kbd "M-j") 'cur-move-down)
       (define-key map (kbd "M-k") 'cur-move-up)
-      (define-key map (kbd "M-l") 'forward-char)
+      (define-key map (kbd "M-l") 'cur-move-right)
+      (define-key map (kbd "C-M-l") 'forward-word)
+      (define-key map (kbd "C-M-h") 'backward-word)
       (define-key map (kbd "M-d") 'end-of-line)
       (define-key map (kbd "M-a") 'cur-move-beginning)
       (define-key map (kbd "M-s") 'back-to-indentation)

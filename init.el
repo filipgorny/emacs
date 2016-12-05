@@ -24,7 +24,7 @@
 (scroll-bar-mode -1)
 (setq-default line-spacing 6)
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#1d1d1d")
+(set-face-background 'hl-line "#1a1a1a")
 (set-face-attribute 'default (selected-frame) :height 100)
 
 ;; turn off alarm bell
@@ -49,11 +49,6 @@
 ;(require-package 'yasnippet)
 ;(yas-global-mode 1)
 
-;; linum
-(global-linum-mode 1)
-(setq linum-format " %d ")
-(set-face-foreground 'linum "#3b3b3b")
-
 ;; whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -67,18 +62,24 @@
 
 ;; subconfig files
 (setq configs '(
-      "packaging"
-      "autocomplete"
-      "php"
-      "setup-hlm"
-      "homerow-navigation"
-      "projects"
-      "cursor"
-      "recent-files"
-      "brackets"
-      "modeline"
-      "sidebar"
-      ))
+		"packaging"
+		"line-numbers"
+		"autocomplete"
+		"php"
+		"setup-hlm"
+		"homerow-navigation"
+		"projects"
+		"cursor"
+		"recent-files"
+		"brackets"
+		"modeline"
+		"sidebar"
+		"highlight-symbol"
+		"terminal"
+		"orgmode"
+		"organizer"
+		"notes"
+		))
 
 (cl-loop for config in configs
 	 collect (load config))

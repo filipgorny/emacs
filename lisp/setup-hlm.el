@@ -21,3 +21,9 @@
 (defadvice helm-display-mode-line (after undisplay-header activate)
   (setq header-line-format nil))
 (message "helm loaded")
+
+;(add-to-list 'display-buffer-alist
+;                    `(,(rx bos "*helm" (* not-newline) "*" eos)
+;                         (display-buffer-in-side-window)
+;                         (inhibit-same-window . t)
+;                         (window-height . 0.4)))
