@@ -24,7 +24,7 @@
 (scroll-bar-mode -1)
 (setq-default line-spacing 6)
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#1a1a1a")
+(set-face-background 'hl-line "#1b1b1b")
 (set-face-attribute 'default (selected-frame) :height 95)
 ;;(set-face-attribute 'default nil :family "Inconsolata" :height 100)
 

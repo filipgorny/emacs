@@ -21,7 +21,6 @@
   (linum-mode -1)
   (select-window previous-window))
 
-
 (defun sidebar-toggle-focus ()
   (interactive)
   (if (eq (current-buffer) (get-buffer sidebar-buffer-name))
@@ -39,7 +38,7 @@
 
   (custom-set-faces
    (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#555" :background "#f00")
-   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#aa5")
+   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#aa5" :background "#220")
    (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#aaa" :weight 'bold :background "#222")
    (set-face-attribute 'neo-header-face      nil :height sidebar-font-size)
    (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#666")

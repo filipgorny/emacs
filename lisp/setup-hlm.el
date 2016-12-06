@@ -27,3 +27,7 @@
 ;                         (display-buffer-in-side-window)
 ;                         (inhibit-same-window . t)
 ;                         (window-height . 0.4)))
+
+(set-face-attribute 'helm-selection nil
+                    :background "purple"
+                    :foreground "black")
