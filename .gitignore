@@ -1,6 +1,8 @@
 auto-save-list
 elpa/*
 lisp/.#*
-./recentf
+recentf
 session*
 *.dat
+projects-data
+

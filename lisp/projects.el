@@ -6,30 +6,27 @@
 (setq projectile-completion-system 'helm)
 (projectile-mode)
 
-;; custom logic
-
-(setq projects-current-directory nil)
-
-(defun projects-get-identifier ()
-  (interactive)
-  (if (and (boundp 'projects-current-directory) projects-current-directory)
-      (replace-regexp-in-string "\/" "__" projects-current-directory)))
-
-(defun projects-is-project-open ()
-  (not (eq (projects-get-identifier) nil)))
-
-(defun projects-switch-project ()
-  (interactive)
-  (if (projects-is-project-open)
-      (wg-save-session-as (projects-get-identifier)))
-  (projectile-switch-project))
-
-(define-key projectile-mode-map (kbd "C-x p") 'projects-switch-project)
-(define-key projectile-mode-map (kbd "C-x C-p") 'projects-switch-project)
+(setq projects/sessions-dir "/home/filip/.emacs.d/projects-data/")
+(setq projects/current-directory nil)
 
 (setq projectile-switch-project-action '(lambda ()
-					  (message (concat "Attempt to change the directory to " default-directory))
-					  (setq projects-current-directory default-directory)
+					  (setq projects/current-directory default-directory)
 					  (neotree-dir default-directory)
-;;					  (wg-switch-to-workgroup (default-directory))
+					  (other-window 1)
+					  (wg-switch-to-workgroup projects/current-directory)
 					  ))
+
+(defun projects/switch ()
+  (interactive)
+  (if projects/current-directory
+      (progn
+  	(neotree-hide)
+  	(wg-save-session)
+  	(neotree-show)
+	(message "Session saved")))
+  (projectile-switch-project))
+
+;; keys binding
+
+(define-key projectile-mode-map (kbd "C-x p") 'projects/switch)
+(define-key projectile-mode-map (kbd "C-x C-p") 'projects/switch)

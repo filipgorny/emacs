@@ -13,5 +13,12 @@
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
  '(show-paren-match ((((class color) (background light)) (:background "azure2")))))
 
-(require-package 'highlight-parentheses)
-(global-highlight-parentheses-mode t)
+;;(require-package 'highlight-parentheses)
+;;(global-highlight-parentheses-mode nil)
+
+(show-paren-mode 1)
+(require 'paren)
+(setq show-paren-when-point-inside-paren t)
+(set-face-background 'show-paren-match "#414")
+(set-face-foreground 'show-paren-match "#def")
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold :underline t :box nil)

@@ -8,42 +8,34 @@
 ;; php mode
 (require-package 'php-mode)
 
-;; code parsing
-(setq code/blocks ())
-(setq code/parsing-state nil)
+;; find class
+(defun php/get-current-path ()
+  "/home/filip/Projects/oro/monolithic/application/commerce/app/cache")
 
-(defun code/set-parsing-state (name)
-  (setq code/parsing-state name))
+(defun php/get-project-root ()
+  (replace-regexp-in-string "\~\/" "/home/filip/" (php/find-composer-dir (php/get-current-path))))
 
-(defun code/tokenize ()
-  (split-string (buffer-substring-no-properties 1 (buffer-size))))
-;; use isearch to find first {
-;; save the position, add it to list of block openings positions
-;; repeat process to find block close } positions
-;; iterate over list of { and if there is } at the same position in } array, add a block info to block list
-;; block info structure should have: position start, position ends, parent block index in block list
+(defun php/get-source-directories ()
+  '("vendor" "src"))
 
-(defun code/parsing-in-state (name)
-  (eq (code/parsing-state name)))
+(defun php/get-source-paths (path)
+  (mapcar (lambda (el)
+	    (concat path el))
+	  (php/get-source-directories)))
 
-(defun code/parse-block-open ()
-  )
+(defun php/find-composer-dir (path)
+  (locate-dominating-file path "composer.json"))
 
-(defun code/parse-block-close ()
-      )
-
-(defun code/parse-characters ()
-  (cl-loop for i from 0 to (- (buffer-size) 1) do
-	   (if (char-after i)
-	       (message (string (char-after i))))))
-
-;; php assist
-(defun php-assist-get-current-class-name ()
-  (interactive))
-
-(defun php-assist-go-to-beginning-of-class ()
-  (interactive))
-
-(defun php-assist-insert-constructor ()
-  (interactive)
-  (insert "public function __construct("))
+;; testing playground:
+(lambda ()
+  (defun php/test ()
+    (grep-find (concat "ack --follow --no-heading --no-color -r \""
+		       (shell-quote-argument "class ProductRepository ") "\" " (apply 'concat (mapcar (lambda (path)
+												(concat "\"" path "\" "))
+											      (php/get-source-paths (php/get-project-root))
+											      )
+										      )
+		       )
+	       )
+    )
+)

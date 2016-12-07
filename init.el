@@ -84,6 +84,8 @@
 		"notes"
 		"buffers-and-files-navigation"
 		"indentation"
+		"yaml"
+		"git-support"
 		))
 
 (cl-loop for config in configs
