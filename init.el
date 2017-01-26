@@ -86,6 +86,8 @@
 		"indentation"
 		"yaml"
 		"git-support"
+		"litable"
+		"comments"
 		))
 
 (cl-loop for config in configs
