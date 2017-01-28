@@ -10,7 +10,7 @@
  '(linum-format (quote " %3d "))
  '(package-selected-packages
    (quote
-    (litable rainbow-mode magit helm-spotify emms deft multi-term color-theme xterm-color powerline mode-icons-mode highlight-symbol workgroups2 all-the-icons hlinum "hlinum" neotree popwin pop-win direx "direx" smart-mode-line rainbow-delimiters project-explorer yaml-mode workgroups twig-mode tabbar smartparens php-auto-yasnippets perspective js3-mode highlight-parentheses helm-projectile flymake-php ac-php))))
+    (js2-mode litable rainbow-mode magit helm-spotify emms deft multi-term color-theme xterm-color powerline mode-icons-mode highlight-symbol workgroups2 all-the-icons hlinum "hlinum" neotree popwin pop-win direx "direx" smart-mode-line rainbow-delimiters project-explorer yaml-mode workgroups twig-mode tabbar smartparens php-auto-yasnippets perspective js3-mode highlight-parentheses helm-projectile flymake-php ac-php))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

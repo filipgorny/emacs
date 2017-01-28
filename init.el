@@ -24,10 +24,16 @@
 (scroll-bar-mode -1)
 (setq-default line-spacing 6)
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#1b1b1b")
-;;(set-face-attribute 'default (selected-frame) :height 95 :family "DejaVu Sans Mono")
-(set-frame-font "DejaVu Sans Mono-9.5")
+(set-face-background 'hl-line "#0c0c0c")
+;;(set-face-attribute 'default (selected-frame) :height 90 :family "DejaVu Sans Mono")
+;;(set-frame-font "DejaVu Sans Mono-9.5")
 ;;(set-face-attribute 'default nil :family "Inconsolata" :height 100)
+;; Set default font
+(set-face-attribute 'default nil
+                    :family "Source Code Pro"
+                    :height 100
+                    :weight 'normal
+                    :width 'normal)
 
 ;; turn off alarm bell
 (setq ring-bell-function 'ignore)
@@ -69,6 +75,7 @@
 		"line-numbers"
 		"autocomplete"
 		"php"
+		"javascript"
 		"setup-hlm"
 		"homerow-navigation"
 		"projects"
@@ -82,11 +89,11 @@
 		"orgmode"
 		"organizer"
 		"notes"
-		"buffers-and-files-navigation"
+		;; "buffers-and-files-navigation"
 		"indentation"
 		"yaml"
 		"git-support"
-		"litable"
+		;; "litable"
 		"comments"
 		))
 

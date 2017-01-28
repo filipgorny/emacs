@@ -30,7 +30,7 @@
 (defun sidebar-update-style ()
   (setq sidebar-font-size 90)
 
-  (setq neo-window-width 42)
+  (setq neo-window-width 38)
   (neotree-toggle)
   (neotree-toggle)
 
@@ -38,8 +38,8 @@
 
   (custom-set-faces
    (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#555" :background "#f00")
-   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#aa5" :background "#220")
-   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#aaa" :weight 'bold :background "#222")
+   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#aa5" :background "#111")
+   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#aaa" :weight 'bold :background "#111")
    (set-face-attribute 'neo-header-face      nil :height sidebar-font-size)
    (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#666")
    )
