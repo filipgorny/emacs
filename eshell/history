@@ -9,3 +9,8 @@ ls
 ls
 ls
 ssh devell.co
+cd ~/Projects/devell/center
+ls
+cd web-app
+gulp watch
+ls 

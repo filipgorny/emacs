@@ -28,7 +28,7 @@
     (select-window (sidebar-get-window))))
 
 (defun sidebar-update-style ()
-  (setq sidebar-font-size 90)
+  (setq sidebar-font-size 100)
 
   (setq neo-window-width 38)
   (neotree-toggle)
@@ -37,9 +37,9 @@
   (setq line-spacing 3)
 
   (custom-set-faces
-   (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#555" :background "#f00")
-   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#aa5" :background "#111")
-   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#aaa" :weight 'bold :background "#111")
+   (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#222" :background "#090909")
+   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#bbb" :background "#090909")
+   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#555" :weight 'bold :background "#090909")
    (set-face-attribute 'neo-header-face      nil :height sidebar-font-size)
    (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#666")
    )
@@ -66,3 +66,36 @@
 (sidebar-update-style)
 
 (global-set-key (kbd "M-q") 'sidebar-toggle-focus)
+
+;; keys
+(progn
+  (define-key neotree-mode-map (kbd "k") 'neotree-previous-line)
+  (define-key neotree-mode-map (kbd "j") 'neotree-next-line)
+  (define-key neotree-mode-map (kbd "M-k") 'neotree-previous-line)
+  (define-key neotree-mode-map (kbd "M-j") 'neotree-next-line))
+
+;; overwrite a built in function to remove the unwanted headers
+
+(defun neo-buffer--insert-root-entry (node)
+  (if (boundp 'projects/current-project-directory)
+      (insert projects/current-project-directory))
+  (neo-buffer--newline-and-begin))
+
+;; cursor
+
+(defun sidebar/enable-line-cursor ()
+  (interactive)
+  (setq cursor-type 
+  ))
+
+(defun sidebar/disable-line-cursor ()
+  (interactive)
+  )
+
+(add-hook 'neotree-mode-hook
+          (lambda ()
+            (setq cursor-type 'nil)
+            (message "dupa")
+            ))
+
+(global-set-key (kbd "S-C-q") 'neotree-toggle)

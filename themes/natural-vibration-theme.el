@@ -43,7 +43,7 @@
        (builtin "#fafafa") ;; dasdsdasdas
        (keyword "#ff1d1d")
        (const   "#d9d9d9")
-       (comment "#afa8aa")
+       (comment "#292")
        (func    "#ffffff")
        (str     "#ffd600")
        (type    "#ebebeb")
@@ -252,4 +252,6 @@
 ;; no-byte-compile: t
 ;; End:
 
-;;; natural-vibration-theme.el ends here
+;; window border
+(set-face-background 'vertical-border "#111")
+(set-face-foreground 'vertical-border (face-background 'vertical-border))

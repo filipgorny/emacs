@@ -9,11 +9,11 @@
 (require-package 'php-mode)
 
 ;; find class
-(defun php/get-current-path ()
-  "/home/filip/Projects/oro/monolithic/application/commerce/app/cache")
+(defun php/get-current-file-path ()
+  "/home/filip/Projects/devell/center/symfony-app/src/AppBundle/AppBundle.php")
 
 (defun php/get-project-root ()
-  (replace-regexp-in-string "\~\/" "/home/filip/" (php/find-composer-dir (php/get-current-path))))
+  (php/find-composer-dir))
 
 (defun php/get-source-directories ()
   '("vendor" "src"))
@@ -24,18 +24,16 @@
 	  (php/get-source-directories)))
 
 (defun php/find-composer-dir (path)
-  (locate-dominating-file path "composer.json"))
+  (concat (locate-dominating-file path "src") "vendor/autoload.php"))
 
-;; testing playground:
+(add-hook 'php-mode-hook (lambda ()
+                           (electric-pair-mode 1)
+                           ))
+
 (lambda ()
-  (defun php/test ()
-    (grep-find (concat "ack --follow --no-heading --no-color -r \""
-		       (shell-quote-argument "class ProductRepository ") "\" " (apply 'concat (mapcar (lambda (path)
-												(concat "\"" path "\" "))
-											      (php/get-source-paths (php/get-project-root))
-											      )
-										      )
-		       )
-	       )
-    )
-)
+  (let ((autoload-dir (php/find-composer-dir (php/get-current-file-path)))
+       (classnames (if autoload-dir
+           (progn
+             ))))
+    ()))
+

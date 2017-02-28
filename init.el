@@ -1,5 +1,9 @@
 (package-initialize)
 
+;; maximized frame
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
 ;; hide welcome screen
 (setq inhibit-startup-screen t)
 
@@ -49,16 +53,26 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
-;; maximized frame
-(custom-set-variables
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
 
 ;; yasnippet
 ;(require-package 'yasnippet)
 ;(yas-global-mode 1)
 
-;; whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; use spaces
+(setq-default indent-tabs-mode nil)
+
+;; whitespace and saving
+(add-hook 'before-save-hook '(lambda () (
+                                         (if (string= (string (following-char)) " ")
+                                             (let ((wasspace t))
+                                               (progn
+                                                 (delete-trailing-whitespace)
+                                                 (if '(wasspace)
+                                                     (insert " "))))
+                                         (delete-trailing-whitespace)))))
+
+
 
 ;; scrolling
 (progn
@@ -75,6 +89,8 @@
 		"line-numbers"
 		"autocomplete"
 		"php"
+                "php-assistant"
+                "php-navigation"
 		"javascript"
 		"setup-hlm"
 		"homerow-navigation"
@@ -95,6 +111,8 @@
 		"git-support"
 		;; "litable"
 		"comments"
+                "header"
+                "minibuffer"
 		))
 
 (cl-loop for config in configs
