@@ -1,4 +1,4 @@
-(require-package 'multi-term)
+;;(require-package 'multi-term)
 (require 'cl)
 
 (setq terminal/index 0)
@@ -24,10 +24,9 @@
 (progn
   (setq c 0)
   (while (<= (incf c) terminal/count)
-    (let ((tc (symbol-value 'c)))
       (global-set-key (kbd (concat "M-" (number-to-string c))) '(lambda ()
                                                                   (interactive)
-                                                                  (terminal/toggle tc))))))
+                                                                  (terminal/toggle (symbol-value 'c))))))
 
 (defun terminal/buffer-name-by-index (index)
   (concat "*eshell*<" (number-to-string terminal/index) ">"))
@@ -39,6 +38,14 @@
     (eshell-send-input))
   (get-buffer (terminal/buffer-name-by-index terminal/index)))
 
-(lambda ()
-  (terminal/run "ls")
-  )
+;; disable linum
+(add-hook 'eshell-mode-hook (lambda () (linum-mode -1)))
+
+
+;; helm completion
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (eshell-cmpl-initialize)
+            (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
+            (define-key eshell-mode-map (kbd "M-p") 'helm-eshell-history)
+            (setq helm-autoresize-max-height 10)))

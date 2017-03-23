@@ -76,8 +76,8 @@
 (setq paf/attached-processes-buffers '())
 
 (defun paf/clear-attached-processes ()
-  (mapcar (lambda (process)
-            (message process)
+  (mapcar (lambda (buffer)
+            (kill-buffer buffer)
             ) paf/attached-processes-buffers))
 
 (defun paf/run (cmd)
@@ -89,3 +89,10 @@
   (paf/clear-attached-processes))
 
 (add-hook 'projectile-switch-project 'paf/clear-attached-processes)
+
+(defun paf/register-process (index cmd)
+  (interactive)
+  (let ((buf (paf/run cmd)))
+    (add-to-list 'paf/attached-processes-buffers '(index . buf))
+    (previous-buffer)))
+  

@@ -14,3 +14,80 @@ ls
 cd web-app
 gulp watch
 ls 
+cd ./web-app/ && gulp watch
+cd ~/Projects/devell/center/web-app/ && gulp watch
+ls
+gulp watch
+ls
+gulp run
+npm install --save-dev vinyl-source-stream
+gulp run
+gulp run
+gulp run
+gulp run
+ls
+npm install gulp-concat --save-dev
+gulp run
+gulp run
+gulp run
+npm install gulp-exec --save-dev
+gulp run
+gulp run
+gulp run
+gulp run
+gulp run
+gulp run
+gulp run
+node app/start.js
+ls
+ls app
+gulp run
+gulp run
+ls
+cd ~/Projects/devell/center
+./bin/devup.sh 
+cd web-app/
+gulp watch
+cd /ssh:filip@devell.co:~
+cd /ssh:filip@devell.co:~
+ls
+ls
+ls
+ls Documents
+ls
+more nohup.out
+cd ..
+ls
+cd kafka
+ls
+ls log
+clear
+
+clear
+
+cd ~/Projects/devell/center
+./bin/devup.sh
+cd web-app
+gulp watch
+cd /ssh:filip@devell.co:~
+clear
+
+cdoro
+cd ~/Projects
+cd oro
+cd ~/Projects/oro/oro_monolithic_dev/application/commerce/
+git status
+git checkout feature/BB-5356
+git pull
+git checkout -b ticket/BB-8393
+rm app/cache/* -Rf
+cd ~/Projects/aspello/gis
+git status
+git add -A
+git stash
+git checkout -b templates
+cd ~/Projects/aspello/gis/
+ls
+git status
+git branch
+git stash apply

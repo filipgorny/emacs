@@ -28,12 +28,13 @@
 (scroll-bar-mode -1)
 (setq-default line-spacing 6)
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#0c0c0c")
+(set-face-background 'hl-line "#0b0b08")
 ;;(set-face-attribute 'default (selected-frame) :height 90 :family "DejaVu Sans Mono")
 ;;(set-frame-font "DejaVu Sans Mono-9.5")
 ;;(set-face-attribute 'default nil :family "Inconsolata" :height 100)
 ;; Set default font
 (set-face-attribute 'default nil
+                    ;;:family "Consolas"
                     :family "Source Code Pro"
                     :height 100
                     :weight 'normal
@@ -113,6 +114,9 @@
 		"comments"
                 "header"
                 "minibuffer"
+                "html"
+                "machines"
+                "planning"
 		))
 
 (cl-loop for config in configs

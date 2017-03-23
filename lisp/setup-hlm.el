@@ -31,3 +31,10 @@
 (set-face-attribute 'helm-selection nil
                     :background "purple"
                     :foreground "black")
+
+(setq helm-display-header-line nil) ;; t by default
+(set-face-attribute 'helm-source-header nil :height 0.1)
+
+;; (add-hook 'helm-after-initialize-hook (lambda ()
+;;                              (progn
+;;                                (linum-mode -1))))

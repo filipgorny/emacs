@@ -77,9 +77,7 @@
 ;; overwrite a built in function to remove the unwanted headers
 
 (defun neo-buffer--insert-root-entry (node)
-  (if (boundp 'projects/current-project-directory)
-      (insert projects/current-project-directory))
-  (neo-buffer--newline-and-begin))
+  ())
 
 ;; cursor
 
@@ -95,7 +93,6 @@
 (add-hook 'neotree-mode-hook
           (lambda ()
             (setq cursor-type 'nil)
-            (message "dupa")
             ))
 
 (global-set-key (kbd "S-C-q") 'neotree-toggle)

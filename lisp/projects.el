@@ -1,10 +1,10 @@
-;;(require-package 'projectile)
+(require-package 'projectile)
 ;;(require-package 'helm-projectile)
 (require-package 'workgroups2)
 ;;(workgroups-mode 1)
 ;;(setq wg-session-file "~/.emacs.d/.emacs_workgroups")
 ;; (setq projectile-completion-system 'helm)
-;; (projectile-mode)
+(projectile-mode)
 
 ;; (setq projects/sessions-dir "/home/filip/.emacs.d/projects-data/")
 ;; (setq projects/current-directory nil)

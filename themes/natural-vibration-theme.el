@@ -30,14 +30,14 @@
 
  (deftheme natural-vibration)
  (let ((class '((class color) (min-colors 89)))
-       (fg1 "#fafafa")
-       (fg2 "#ffaa99")
+       (fg1 "#eeeac0")
+       (fg2 "#111111")
        (fg3 "#232323")
-       (fg4 "#bbbb00")
-       (bg1 "#090909")
-       (bg2 "#090909")
-       (bg3 "#0f0f0f")
-       (bg4 "#111")
+       (fg4 "#555")
+       (bg1 "#080805")
+       (bg2 "#090901")
+       (bg3 "#0f0f01")
+       (bg4 "#110")
        (key2 "#028a7f")
        (key3 "#e06d63")
        (builtin "#fafafa") ;; dasdsdasdas
@@ -253,5 +253,9 @@
 ;; End:
 
 ;; window border
-(set-face-background 'vertical-border "#111")
+(set-face-background 'vertical-border "#221")
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
+
+(progn
+  (set-face-attribute 'fringe nil :background "#080805"))
+;;  (set-face-attribute 'linum nil :background "#0f0f00"))

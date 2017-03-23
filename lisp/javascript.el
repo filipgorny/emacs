@@ -12,5 +12,4 @@
   "Face to display sigils in.")
 
 (add-hook 'js2-mode-hook (lambda()
-                           (message "js mode")
                            (font-lock-add-keywords 'js2-mode '(("\\<self\\>" . 'font-lock-sigil-face)))))

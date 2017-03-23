@@ -1,1 +1,1 @@
-("~/.emacs.d/" "~/Projects/oro/monolithic/" "~/Projects/devell/center/" "~/Projects/filipgorny/skype/" "~/Projects/oro/academic/platform/" "~/Projects/devell/drafts/website/" "~/Projects/automation/php-project-assistant/" "~/Projects/devell/center")
+("~/Projects/aspello/gis/" "~/.emacs.d/" "~/Projects/devell/center/" "~/Projects/oro/monolithic/" "~/Projects/filipgorny/skype/" "~/Projects/oro/academic/platform/" "~/Projects/devell/drafts/website/" "~/Projects/automation/php-project-assistant/" "~/Projects/devell/center")
