@@ -28,14 +28,16 @@
 
 ;;; Code:
 
+(setq main-background-color "#1d1d17")
+
  (deftheme natural-vibration)
  (let ((class '((class color) (min-colors 89)))
        (fg1 "#eeeac0")
        (fg2 "#111111")
        (fg3 "#232323")
        (fg4 "#555")
-       (bg1 "#080805")
-       (bg2 "#090901")
+       (bg1 main-background-color)
+       (bg2 "#191919")
        (bg3 "#0f0f01")
        (bg4 "#110")
        (key2 "#028a7f")
@@ -257,5 +259,5 @@
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
 
 (progn
-  (set-face-attribute 'fringe nil :background "#080805"))
-;;  (set-face-attribute 'linum nil :background "#0f0f00"))
+  (set-face-attribute 'fringe nil :background main-background-color))
+;;  (set-face-attribute 'linum nil :background main-background-color))

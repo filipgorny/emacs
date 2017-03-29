@@ -23,13 +23,16 @@
 ;; package loader
 (load "packaging")
 
+;; this is required on my desktop
+
+
 ;; theme
 (load "natural-vibration-theme")
 (scroll-bar-mode -1)
 (setq-default line-spacing 6)
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "#0b0b08")
-;;(set-face-attribute 'default (selected-frame) :height 90 :family "DejaVu Sans Mono")
+;;(set-face-attribute 'default (selected-frame) :height 95 :family "DejaVu Sans Mono") ;
 ;;(set-frame-font "DejaVu Sans Mono-9.5")
 ;;(set-face-attribute 'default nil :family "Inconsolata" :height 100)
 ;; Set default font
@@ -53,8 +56,6 @@
       `((".*" ,temporary-file-directory t)))
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-
-
 
 ;; yasnippet
 ;(require-package 'yasnippet)

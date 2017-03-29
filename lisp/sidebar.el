@@ -28,7 +28,7 @@
     (select-window (sidebar-get-window))))
 
 (defun sidebar-update-style ()
-  (setq sidebar-font-size 100)
+  (setq sidebar-font-size 95)
 
   (setq neo-window-width 38)
   (neotree-toggle)
@@ -39,7 +39,7 @@
   (custom-set-faces
    (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#222" :background "#090909")
    (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#bbb" :background "#090909")
-   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#555" :weight 'bold :background "#090909")
+   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#cb5" :weight 'bold :background "#090909")
    (set-face-attribute 'neo-header-face      nil :height sidebar-font-size)
    (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#666")
    )
