@@ -5,4 +5,8 @@ recentf
 session*
 *.dat
 projects-data
+custom.el
+eshell/history
+eshell/lastdir
+projectile-bookmarks.eld
 

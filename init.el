@@ -36,7 +36,7 @@
 (set-face-attribute 'default nil
                     ;;:family "Consolas"
                     :family "Source Code Pro"
-                    :height 100
+                    :height 95
                     :weight 'normal
                     :width 'normal)
 
@@ -117,6 +117,7 @@
                 "html"
                 "machines"
                 "planning"
+                "snippets"
 		))
 
 (cl-loop for config in configs

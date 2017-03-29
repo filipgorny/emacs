@@ -91,3 +91,10 @@ ls
 git status
 git branch
 git stash apply
+cdgis
+cd ~/Projects/aspello/gis
+git branch
+git checkout -b documents
+git add -A
+git stash
+app/console generate:bundle

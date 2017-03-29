@@ -253,7 +253,7 @@
 ;; End:
 
 ;; window border
-(set-face-background 'vertical-border "#221")
+(set-face-background 'vertical-border "#0d0d0d")
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
 
 (progn

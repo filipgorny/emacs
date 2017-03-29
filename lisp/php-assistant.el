@@ -50,3 +50,11 @@
   ;(setq str "public function foo(Bar $bar, Biz $biz, $fiz)")
   ;(php-assistant/docblock-str (php-assistant/merge-new-lines (php-assistant/method-args-str str)))
 )
+
+(defun php-assistant/get-class-members ()
+  (let* (
+         (buffer-str (buffer-substring 1 (point-max)))
+         (parts (split-string buffer-str "\n"))
+         )
+    (mapcar (lambda (line)
+              ) parts)))
