@@ -91,3 +91,5 @@ ls
 git status
 git branch
 git stash apply
+ls
+mv ./src/Aspello/TemplatesBundle/Resources/public/js/app/views/templatel-variable-view.js ./src/Aspello/TemplatesBundle/Resources/public/js/app/views/template-variable-view.js
