@@ -3,10 +3,6 @@
   (cl-position "src" path)
   )
 
-(lambda ()
-  (message (php-assistant/find-namespace-for-file (buffer-file-name)))
-  )
-
 (defun php-assistant/current-line ()
   (thing-at-point 'line t))
 
@@ -45,8 +41,9 @@
                             ""
                             str))
 
-(progn
+(lambda ()
 
+  (php-assistant/find-namespace-for-file "/home/filip/.emacs.d/tmp/php-test/src/TestPhp/PackageOne/Entity/Comment.php")
   ;(setq str "public function foo(Bar $bar, Biz $biz, $fiz)")
   ;(php-assistant/docblock-str (php-assistant/merge-new-lines (php-assistant/method-args-str str)))
 )
@@ -58,3 +55,5 @@
          )
     (mapcar (lambda (line)
               ) parts)))
+
+;; line parsers

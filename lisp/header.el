@@ -1,13 +1,15 @@
+
+
 (defun header/display-header ()
   (if (not (string= (buffer-name (current-buffer)) " *NeoTree*"))
       (setq header-line-format
             '("" ;; invocation-name
-              (:eval (buffer-file-name) :weight normal :background "111")))
+              (:eval (buffer-file-name) :weight normal)))
     (progn
       (setq header-line-format '("" (:eval (concat "" projects/current-project-directory))))
       )))
 
-(custom-set-faces '(header-line ((t :background "#111" :foreground "#aaa"))))
+(custom-set-faces '(header-line ((t :background "#333" :foreground "#eec" :weight bold))))
 
 
 (add-hook 'buffer-list-update-hook

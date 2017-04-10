@@ -38,12 +38,12 @@
 
   (custom-set-faces
    (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#222" :background "#090909")
-   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#bbb" :background "#090909")
-   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#cb5" :weight 'bold :background "#090909")
+   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#bbb" :background main-background-color)
+   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#cb5" :weight 'bold :background main-background-color)
    (set-face-attribute 'neo-header-face      nil :height sidebar-font-size)
-   (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#666")
+   (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#fff"
    )
-  )
+  ))
 
 (defun sidebar-open-project-dir ()
   "Open NeoTree using the git root."
@@ -56,13 +56,12 @@
 	      ;(neotree-find file-name))))
   (message "Could not find git project root."))
 
-;;(setq projectile-switch-project-action 'sidebar-open-project-dir)
 
+;; activation
 (neotree-show)
 
 (sidebar-disable-mode-line)
 (sidebar-disable-linum)
-
 (sidebar-update-style)
 
 (global-set-key (kbd "M-q") 'sidebar-toggle-focus)
@@ -79,20 +78,20 @@
 (defun neo-buffer--insert-root-entry (node)
   ())
 
-;; cursor
-
-(defun sidebar/enable-line-cursor ()
-  (interactive)
-  (setq cursor-type 
-  ))
-
-(defun sidebar/disable-line-cursor ()
-  (interactive)
-  )
-
-(add-hook 'neotree-mode-hook
-          (lambda ()
-            (setq cursor-type 'nil)
-            ))
-
+;; other keybinds
 (global-set-key (kbd "S-C-q") 'neotree-toggle)
+
+;; advicing
+;;(advice-add 'neotree-next-line :after 'my-message)
+
+;; current line
+(defun sidebar-hl-line-color ()
+  (copy-face 'hl-line 'hl-line-sidebar-face)
+  (set-face-attribute 'hl-line-agenda-face nil
+                      :box '(:color "deep pink" :background "#88a"))
+  (add-hook 'neotree-mode-hook '(lambda ()
+                                  (set (make-local-variable 'hl-line-face)
+                                       'hl-line-sidebar-face)
+                                  (hl-line-mode 1))))
+
+(sidebar-hl-line-color)

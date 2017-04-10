@@ -1,0 +1,1 @@
+(require-package 'bug-hunter)

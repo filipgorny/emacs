@@ -23,15 +23,13 @@
 ;; package loader
 (load "packaging")
 
-;; this is required on my desktop
-
-
 ;; theme
 (load "natural-vibration-theme")
 (scroll-bar-mode -1)
 (setq-default line-spacing 6)
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#0b0b08")
+(set-face-background 'hl-line "#111")
+
 ;;(set-face-attribute 'default (selected-frame) :height 95 :family "DejaVu Sans Mono") ;
 ;;(set-frame-font "DejaVu Sans Mono-9.5")
 ;;(set-face-attribute 'default nil :family "Inconsolata" :height 100)
@@ -87,12 +85,14 @@
 ;; subconfig files
 (setq configs '(
 		"common"
+                "base-keybinds"
 		"packaging"
+                "cycle-buffers"
 		"line-numbers"
 		"autocomplete"
 		"php"
                 "php-assistant"
-                "php-navigation"
+               ; "php-navigation"
 		"javascript"
 		"setup-hlm"
 		"homerow-navigation"
@@ -118,7 +118,7 @@
                 "html"
                 "machines"
                 "planning"
-                "snippets"
+                ;; "snippets"
 		))
 
 (cl-loop for config in configs
