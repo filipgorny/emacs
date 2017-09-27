@@ -3,8 +3,8 @@
 (defun indentation-highlight ()
   (interactive)
   (highlight-indentation-mode 1)
-  (set-face-background 'highlight-indentation-face "#0a0a0a")
-  (set-face-background 'highlight-indentation-current-column-face "#2c2c2c")
+  (set-face-background 'highlight-indentation-face "#111112")
+  (set-face-background 'highlight-indentation-current-column-face "#191919")
   )
 
 (add-hook 'php-mode 'indentation-highlight)

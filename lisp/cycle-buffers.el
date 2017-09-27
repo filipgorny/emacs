@@ -39,3 +39,9 @@ Version 2016-06-19"
           (progn (previous-buffer)
                  (setq i (1+ i)))
         (progn (setq i 100))))))
+
+
+(global-set-key (kbd "M-=") 'xah-next-user-buffer)
+(global-set-key (kbd "M--") 'xah-previous-user-buffer)
+
+(global-set-key (kbd "M-`") 'helm-buffers-list)

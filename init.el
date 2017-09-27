@@ -28,16 +28,16 @@
 (scroll-bar-mode -1)
 (setq-default line-spacing 6)
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#111")
+(set-face-background 'hl-line "#131313")
 
-;;(set-face-attribute 'default (selected-frame) :height 95 :family "DejaVu Sans Mono") ;
+;;(set-face-attribute 'default (selected-frame) :height 110 :family "DejaVu Sans Mono")
 ;;(set-frame-font "DejaVu Sans Mono-9.5")
-;;(set-face-attribute 'default nil :family "Inconsolata" :height 100)
+;;(set-face-attribute 'default nil :family "Inconsolata" :height 110)
 ;; Set default font
 (set-face-attribute 'default nil
                     ;;:family "Consolas"
                     :family "Source Code Pro"
-                    :height 95
+                    :height 90
                     :weight 'normal
                     :width 'normal)
 
@@ -91,11 +91,12 @@
 		"line-numbers"
 		"autocomplete"
 		"php"
-                "php-assistant"
+               ; "php-assistant"
                ; "php-navigation"
 		"javascript"
 		"setup-hlm"
 		"homerow-navigation"
+                "kill-buffers"
 		"projects"
 		"cursor"
 		"recent-files"
@@ -119,7 +120,15 @@
                 "machines"
                 "planning"
                 ;; "snippets"
+                "transparency"
+                ;;"neotree-addons"
+                "dash"
 		))
 
 (cl-loop for config in configs
 	 collect (load config))
+
+;;(find-file "~/todo.org")
+(global-set-key (kbd "M-\\") '(lambda ()
+                                (interactive)
+                                (find-file "~/todo.org")))

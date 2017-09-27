@@ -28,14 +28,14 @@
 
 ;;; Code:
 
-(setq main-background-color "#121110")
+(setq main-background-color "#101010")
 
  (deftheme natural-vibration)
  (let ((class '((class color) (min-colors 89)))
        (fg1 "#eeeac0")
-       (fg2 "#dd9")
-       (fg3 "#aa8")
-       (fg4 "#555")
+       (fg2 "#f00")
+       (fg3 "#8aa")
+       (fg4 "#888")
        (bg1 main-background-color)
        (bg2 "#191919")
        (bg3 "#2f2120")
@@ -45,7 +45,7 @@
        (builtin "#fafafa") ;; dasdsdasdas
        (keyword "#ff1d1d")
        (const   "#d9d9d9")
-       (comment "#292")
+       (comment "#59f")
        (func    "#ffffff")
        (str     "#ffd600")
        (type    "#ebebeb")
@@ -69,7 +69,7 @@
         `(region ((,class (:background ,fg1 :foreground ,bg1))))
         `(highlight ((,class (:foreground ,fg3 :background ,bg3))))
 	`(hl-line ((,class (:background  ,bg2))))
-	`(fringe ((,class (:background ,bg2 :foreground ,fg4))))
+	`(fringe ((,class (:background ,bg2 :foreground ,fg1))))
 	`(cursor ((,class (:background ,bg3))))
         `(show-paren-match-face ((,class (:background ,warning))))
         `(isearch ((,class (:bold t :foreground ,warning :background ,bg3))))
@@ -255,11 +255,11 @@
 ;; End:
 
 ;; window border
-(set-face-background 'vertical-border "#0d0d0d")
+(set-face-background 'vertical-border "#242424")
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
 
 (progn
   (set-face-attribute 'fringe nil :background main-background-color))
-;;  (set-face-attribute 'linum nil :background main-background-color))
+  ;;(set-face-attribute 'linum nil :background main-background-color)
 
 

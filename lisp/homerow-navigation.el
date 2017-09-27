@@ -39,8 +39,6 @@
       (define-key map (kbd "M-d") 'end-of-line)
       (define-key map (kbd "M-a") 'cur-move-beginning)
       (define-key map (kbd "M-s") 'back-to-indentation)
-      (define-key map (kbd "M-=") 'xah-next-user-buffer)
-      (define-key map (kbd "M--") 'xah-previous-user-buffer)
       (define-key map (kbd "M-u") '(lambda () (scroll-down 20)))
       (define-key map (kbd "M-i") '(lambda () (scroll-up 20)))
       (define-key map (kbd "M-w") '(lambda () (forward-word)))

@@ -28,7 +28,7 @@
     (select-window (sidebar-get-window))))
 
 (defun sidebar-update-style ()
-  (setq sidebar-font-size 95)
+  (setq sidebar-font-size 90)
 
   (setq neo-window-width 38)
   (neotree-toggle)
@@ -39,9 +39,9 @@
   (custom-set-faces
    (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#222" :background "#090909")
    (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#bbb" :background main-background-color)
-   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#cb5" :weight 'bold :background main-background-color)
+   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#55f" :weight 'bold :background main-background-color)
    (set-face-attribute 'neo-header-face      nil :height sidebar-font-size)
-   (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#fff"
+   (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#aaf"
    )
   ))
 
@@ -87,7 +87,7 @@
 ;; current line
 (defun sidebar-hl-line-color ()
   (copy-face 'hl-line 'hl-line-sidebar-face)
-  (set-face-attribute 'hl-line-agenda-face nil
+  (set-face-attribute 'hl-line-sidebar-face nil
                       :box '(:color "deep pink" :background "#88a"))
   (add-hook 'neotree-mode-hook '(lambda ()
                                   (set (make-local-variable 'hl-line-face)
@@ -95,3 +95,5 @@
                                   (hl-line-mode 1))))
 
 (sidebar-hl-line-color)
+
+(neotree-hide)

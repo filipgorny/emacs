@@ -30,10 +30,14 @@
                            (electric-pair-mode 1)
                            ))
 
-(lambda ()
+(lambda () 
   (let ((autoload-dir (php/find-composer-dir (php/get-current-file-path)))
        (classnames (if autoload-dir
            (progn
              ))))
     ()))
 
+(load-file "~/.emacs.d/lisp/php/generators.el")
+;(load-file "./php/findclass.el")
+;(load-file "./php/classbody.el")
+;(load-file "./php/phpunit.el")

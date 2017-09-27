@@ -44,7 +44,7 @@
   (setq projects (mapcar (lambda (source)
 			    (replace-regexp-in-string ".git" "" source))
 			  (split-string
-			   (shell-command-to-string "find -L /home/filip/Projects -name .git -type d -prune -maxdepth 3"))))
+			   (shell-command-to-string "find -L /home/filip/Projects -name .git -type d -prune -maxdepth 4"))))
     (setq helm-projects-source
 	  '((name . "Projects catalog")
 	    (candidates . projects)
@@ -54,10 +54,10 @@
                         (cd projects/current-project-directory)
                         (projectile-switch-project-by-name  projects/current-project-directory)
 			(other-window 1)
+                        (switch-to-buffer "*scratch*")
+                        (kill-other-buffers)
 			))))
   (helm :sources helm-projects-source))
-
-(lambda () (projects-catalog-list))
 
 (global-set-key (kbd "C-x C-p") 'projects/open-new)
 (global-set-key (kbd "C-x p") 'projects/open-new)
