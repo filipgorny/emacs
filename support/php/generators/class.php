@@ -37,9 +37,13 @@ function resolveClassName($fileName)
     return $className;
 }
 
-$namespace = resolveNamespace($fileName);
-$className = resolveClassName($fileName);
+try {
+    $namespace = resolveNamespace($fileName);
+    $className = resolveClassName($fileName);
 
-$body = '<?php'."\n\nnamespace $namespace;\n\nclass $className\n{\n    \n}\n\n";
+    $body = '<?php'."\n\nnamespace $namespace;\n\nclass $className\n{\n    \n}\n\n";
 
-echo $body;
+    echo $body;
+} catch (\Exception $e) {
+    $body = "<?php\n\n";
+}

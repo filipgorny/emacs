@@ -1,4 +1,4 @@
-(add-hook 'find-file-hook 'php-generator/hook-starter)
+;;(add-hook 'find-file-hook 'php-generator/hook-starter)
 
 (defun php-generator/hook-starter ()
   (when (string= (file-name-extension buffer-file-name) "php")

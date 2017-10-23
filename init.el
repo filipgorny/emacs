@@ -84,12 +84,12 @@
 
 ;; subconfig files
 (setq configs '(
-		"common"
-                "base-keybinds"
+	;;	"common"
+        ;;        "base-keybinds"
 		"packaging"
                 "cycle-buffers"
 		"line-numbers"
-		"autocomplete"
+;;		"autocomplete"
 		"php"
                ; "php-assistant"
                ; "php-navigation"
@@ -98,35 +98,35 @@
 		"homerow-navigation"
                 "kill-buffers"
 		"projects"
-		"cursor"
-		"recent-files"
+;;		"cursor"
+;;		"recent-files"
 		"brackets"
-		"modeline"
+;;		"modeline"
 		"sidebar"
-		"highlight-symbol"
+	;;	"highlight-symbol"
 		"terminal"
-		"orgmode"
-		"organizer"
-		"notes"
+;;		"orgmode"
+	       ;;"organizer"
+	   ;;"notes"
 		;; "buffers-and-files-navigation"
-		"indentation"
-		"yaml"
-		"git-support"
+		;;"indentation"
+	;;	"yaml"
+	;;	"git-support"
 		;; "litable"
-		"comments"
-                "header"
-                "minibuffer"
-                "html"
-                "machines"
-                "planning"
+	;;"comments"
+             ;; "header"
+           ;;     "minibuffer"
+              ;; "html"
+              ;;"machines"
+             ;; "planning"
                 ;; "snippets"
                 "transparency"
                 ;;"neotree-addons"
-                "dash"
+                ;;"dash"
 		))
 
-(cl-loop for config in configs
-	 collect (load config))
+;;(cl-loop for config in configs
+;;	 collect (load config))
 
 ;;(find-file "~/todo.org")
 (global-set-key (kbd "M-\\") '(lambda ()

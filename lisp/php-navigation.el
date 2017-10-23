@@ -89,12 +89,12 @@
   (php-fill/resolve-namespace (php-fill/current-file))
 
 
-  (progn
-    (php-class-info/store "Document" "use" '("test" "ddd"))
-    (message (php-class-info/get "Document" "use"))
-    (print-elements-of-list php-classes-info))
+  ;; (progn
+  ;;   (php-class-info/store "Document" "use" '("test" "ddd"))
+  ;;   (message (php-class-info/get "Document" "use"))
+  ;;   (print-elements-of-list php-classes-info))
   
-  (php-parser/parse-class)
-  (string-match-p "^class\\\s\\\w+\\\s?" "class LayerController extends Controller")
-  (string-match "^class\\\s\\w+" "class LayerController extends Controller")
-  (message (php-navigation/find-class-file "Aspello\\\TemplatesBundle\\\Entity\\\DocumentTemplate")))
+  ;; (php-parser/parse-class)
+  ;; (string-match-p "^class\\\s\\\w+\\\s?" "class LayerController extends Controller")
+  ;; (string-match "^class\\\s\\w+" "class LayerController extends Controller")
+  ;; (message (php-navigation/find-class-file "Aspello\\\TemplatesBundle\\\Entity\\\DocumentTemplate")))
