@@ -25,7 +25,10 @@
   (interactive)
   (if (eq (current-buffer) (get-buffer sidebar-buffer-name))
       (other-window 1)
-    (select-window (sidebar-get-window))))
+    (progn
+      (select-window (sidebar-get-window))
+      (neotree-refresh)
+           ))
 
 (defun sidebar-update-style ()
   (setq sidebar-font-size 90)
