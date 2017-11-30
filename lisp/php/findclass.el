@@ -3,7 +3,7 @@
 (defun fphp-find-class (name &optional is-interface)
   (let* (
          ;;(sourcedirectory "panel/symfony-app/src/")
-         (sourcedirectory "src")
+         (sourcedirectory "")
          (classname name)
          ;(setq is-interface nil)
          ;(setq classname "NotificationService")
@@ -16,9 +16,9 @@
     ;;(message command)
     ;;(message grepresults))))
 
-     (cl-remove-if (lambda (el) (string-equal "" el)) (mapcar (lambda (result)
-               (first (split-string result ":"))) results))
-     ))
+     ;;(cl-remove-if (lambda (el) (string-equal "" el)) (mapcar (lambda (result)
+    ;;(first (split-string result ":"))) results))
+    (message results)))
 
 (defun fphp-jump-to-class (name)
   (interactive)
@@ -33,6 +33,7 @@
 (lambda ()
   "testing"
 
+  (fphp-find-class "TestCase")
   (fphp-jump-to-class "InviteManager")
   (fphp-class "RegistrationData" (
                                   (implement "DtoInterface")

@@ -28,7 +28,7 @@
 (scroll-bar-mode -1)
 (setq-default line-spacing 6)
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#131313")
+(set-face-background 'hl-line "#191919")
 
 ;;(set-face-attribute 'default (selected-frame) :height 110 :family "DejaVu Sans Mono")
 ;;(set-frame-font "DejaVu Sans Mono-9.5")
@@ -37,7 +37,7 @@
 (set-face-attribute 'default nil
                     ;;:family "Consolas"
                     :family "Source Code Pro"
-                    :height 90
+                    :height 110
                     :weight 'normal
                     :width 'normal)
 
@@ -123,6 +123,8 @@
                 "transparency"
                 ;;"neotree-addons"
                 "dash"
+                "music"
+                "wget"
 		))
 
 (cl-loop for config in configs

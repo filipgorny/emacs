@@ -28,23 +28,23 @@
     (progn
       (select-window (sidebar-get-window))
       (neotree-refresh)
-           ))
+           )))
 
 (defun sidebar-update-style ()
-  (setq sidebar-font-size 90)
+  (setq sidebar-font-size 110)
 
   (setq neo-window-width 38)
   (neotree-toggle)
   (neotree-toggle)
 
-  (setq line-spacing 3)
+  (setq line-spacing 4)
 
   (custom-set-faces
-   (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#222" :background "#090909")
-   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#bbb" :background main-background-color)
-   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#55f" :weight 'bold :background main-background-color)
+   (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#424" :background "#090909")
+   (set-face-attribute 'neo-file-link-face   nil :height sidebar-font-size :foreground "#aaf" :background main-background-color)
+   (set-face-attribute 'neo-dir-link-face    nil :height sidebar-font-size :foreground "#a3a" :weight 'bold :background main-background-color)
    (set-face-attribute 'neo-header-face      nil :height sidebar-font-size)
-   (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#aaf"
+   (set-face-attribute 'neo-expand-btn-face  nil :height sidebar-font-size :foreground "#aaa"
    )
   ))
 

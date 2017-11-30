@@ -28,7 +28,7 @@
 
 ;;; Code:
 
-(setq main-background-color "#101010")
+(setq main-background-color "#151515")
 
  (deftheme natural-vibration)
  (let ((class '((class color) (min-colors 89)))
@@ -45,7 +45,7 @@
        (builtin "#fafafa") ;; dasdsdasdas
        (keyword "#ff1d1d")
        (const   "#d9d9d9")
-       (comment "#59f")
+       (comment "#999")
        (func    "#ffffff")
        (str     "#ffd600")
        (type    "#ebebeb")

@@ -40,4 +40,4 @@
 (load-file "~/.emacs.d/lisp/php/generators.el")
 ;(load-file "./php/findclass.el")
 ;(load-file "./php/classbody.el")
-;(load-file "./php/phpunit.el")
+(load-file "~/.emacs.d/lisp/php/phpunit.el")
