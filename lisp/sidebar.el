@@ -68,6 +68,7 @@
 (sidebar-update-style)
 
 (global-set-key (kbd "M-q") 'sidebar-toggle-focus)
+(global-set-key (kbd "M-e") 'sidebar-toggle-focus)
 
 ;; keys
 (progn

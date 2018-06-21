@@ -13,6 +13,11 @@
   (end-of-line)
   )
 
+;; testing
+(lambda ()
+  (fphp-genereate-class-body "~/Projects/devell/center/services/draft/cms/src/Devell/Cms/Cms.php")
+  )
+
 (defun fphp-generate-property-from-current-line ()
   (interactive)
   (setq name (string-trim (replace-regexp-in-string "\n" "" (thing-at-point 'line t))))

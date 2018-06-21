@@ -1,1 +1,0 @@
-filip@filip-thinkpad.7007:1507241288

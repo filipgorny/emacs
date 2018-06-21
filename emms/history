@@ -1,9 +1,9 @@
 ;;; emms history -*- mode: emacs-lisp; coding: utf-8; -*-
 (
 ;; active playlist
-" *EMMS Playlist*"
+" *temp*"
 ;; playlists: ((BUFFER_NAME SELECT_POSITION TRACKS) ...)
-((" *EMMS Playlist*" 1 ((*track* (type . streamlist) (name . "http://www.somafm.com/groovesalad.pls") (metadata)))))
+nil
 ;; play method
 ((emms-repeat-track) (emms-repeat-playlist))
 )
