@@ -1,0 +1,6 @@
+* php emacs integration steps
+- interactive function returning list of found classes full names based on single input
+- inserting selected class as use statement
+- inserting use statement from class of the selected row
+- do not insert duplicates
+
