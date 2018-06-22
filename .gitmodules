@@ -1,0 +1,9 @@
+[submodule "lsp/lspmode"]
+	path = lsp/lspmode
+	url = git@github.com:emacs-lsp/lsp-mode.git
+[submodule "lsp/ui"]
+	path = lsp/ui
+	url = git@github.com:emacs-lsp/lsp-ui.git
+[submodule "lsp/lspphp"]
+	path = lsp/lspphp
+	url = git@github.com:emacs-lsp/lsp-php.git
