@@ -1,3 +1,2 @@
-;;(require-package "dash-functional")
-
-(load "dash")
+(require-package 'dash-functional)
+(require-package 'dash)

@@ -26,7 +26,7 @@
 ;; theme
 (load "natural-vibration-theme")
 (scroll-bar-mode -1)
-(setq-default line-spacing 6)
+(setq-default line-spacing 3)
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "#191919")
 
@@ -125,6 +125,7 @@
                 "dash"
                 "music"
                 "wget"
+                "windows"
 		))
 
 (cl-loop for config in configs

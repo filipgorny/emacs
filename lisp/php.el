@@ -41,3 +41,19 @@
 ;(load-file "./php/findclass.el")
 ;(load-file "./php/classbody.el")
 (load-file "~/.emacs.d/lisp/php/phpunit.el")
+
+;; lsp
+(require-package "lsp-mode")
+(add-to-list 'load-path "~/.emacs.d/lspphp/lsp-php")
+(add-to-list 'load-path "~/.emacs.d/lsp/lsp-mode")
+(add-to-list 'load-path "~/.emacs.d/lsp/lsp-ui")
+
+(require 'lsp-mode)
+
+(require-package 'flycheck)
+(require-package 'markdown-mode)
+(require 'lsp-ui)
+(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+
+(require 'lsp-php)
+(add-hook 'php-mode-hook #'lsp-mode)
