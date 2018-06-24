@@ -1,42 +1,76 @@
-((("raw" .
-   [1 0 0])
-  ("file_put_contents" .
-   [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0])
-  ("saveto" .
-   [3 0 0 0 0 0])
-  ("httpcode" .
-   [1 0 0 0 0 0 0 0])
-  ("data" .
-   [1 0 0 0])
-  ("stock" .
+((("store" .
    [1 0 0 0 0])
-  ("_POST" .
-   [5 0 0 0 0])
-  ("this" .
-   [1 0 0 0])
-  ("configuration" .
-   [1 0 0 0 0 0 0 0 0 0 0 0 0])
-  ("matchView" .
-   [1 0 0 0 0 0 0 0 0])
-  ("request" .
-   [2 0 0 0 0 0 0])
-  ("match" .
-   [4 0 0 0 0])
-  ("matcher" .
-   [1 0 0 0 0 0 0])
-  ("view" .
-   [3 0 0 0])
-  ("Response" .
-   [1 0 0 0 0 0 0 0])
-  ("not" .
-   [1 0 0])
-  ("found" .
-   [1 0 0 0 0])
-  ("lambda" .
-   [1 0 0 0 0 0])
-  ("dash" .
-   [0 0 0 2])
+  ("post-self-insert-hook" .
+   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0])
   ("remove-hook" .
    [1 0 0 0 0 0 0 0 0 0 0])
-  ("post-self-insert-hook" .
-   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0])))
+  ("dash" .
+   [0 0 0 2])
+  ("lambda" .
+   [1 0 0 0 0 0])
+  ("found" .
+   [1 0 0 0 0])
+  ("not" .
+   [1 0 0])
+  ("Response" .
+   [1 0 0 0 0 0 0 0])
+  ("view" .
+   [3 0 0 0])
+  ("matcher" .
+   [1 0 0 0 0 0 0])
+  ("match" .
+   [4 0 0 0 0])
+  ("request" .
+   [2 0 0 0 0 0 0])
+  ("matchView" .
+   [1 0 0 0 0 0 0 0 0])
+  ("configuration" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("this" .
+   [2 0 0 0])
+  ("_POST" .
+   [5 0 0 0 0])
+  ("stock" .
+   [1 0 0 0 0])
+  ("data" .
+   [1 0 0 0])
+  ("httpcode" .
+   [1 0 0 0 0 0 0 0])
+  ("saveto" .
+   [3 0 0 0 0 0])
+  ("file_put_contents" .
+   [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0])
+  ("raw" .
+   [1 0 0])
+  ("eglot" .
+   [2 0 0 0 0])
+  ("require-package" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("require" .
+   [1 0 0 0 0 0 0])
+  ("defun" .
+   [2 0 0 0 0])
+  ("fphp/insert-docblock" .
+   [0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0])
+  ("line" .
+   [2 0 0 0])
+  ("concat" .
+   [1 0 0 0 0 0])
+  ("interactive" .
+   [0 0 0 0 0 0 3 0 0 0 0])
+  ("goto-char" .
+   [1 0 0 0 0 0 0 0 0])
+  ("point-max" .
+   [1 0 0 0 0 0 0 0 0])
+  ("re-search-backward" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0])
+  ("end-of-line" .
+   [0 0 0 0 0 0 0 0 0 1 0])
+  ("insert" .
+   [1 0 0 0 0 0])
+  ("fphp/generate-getter" .
+   [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0])
+  ("current-word" .
+   [1 0 0 0 0 0 0 0 0 0 0 0])
+  ("fphp/generate-getter-at-point" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0])))

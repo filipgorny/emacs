@@ -7,3 +7,9 @@
 [submodule "lsp/lspphp"]
 	path = lsp/lspphp
 	url = git@github.com:emacs-lsp/lsp-php.git
+[submodule "emacs-php-doc-block"]
+	path = emacs-php-doc-block
+	url = git@github.com:moskalyovd/emacs-php-doc-block.git
+[submodule "use-package"]
+	path = use-package
+	url = git@github.com:jwiegley/use-package.git

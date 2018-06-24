@@ -1,5 +1,8 @@
 (package-initialize)
 
+(setq max-lisp-eval-depth 100000000)
+(setq max-specpdl-size 100000000) 
+
 ;; maximized frame
 (custom-set-variables
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
@@ -26,7 +29,7 @@
 ;; theme
 (load "natural-vibration-theme")
 (scroll-bar-mode -1)
-(setq-default line-spacing 3)
+(setq-default line-spacing 2)
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "#191919")
 
@@ -87,9 +90,11 @@
 		"common"
                 "base-keybinds"
                 "packaging"
+                "usepackage"
                 "cycle-buffers"
+                "company"
 		"line-numbers"
-		"autocomplete"
+		;;"autocomplete"
 		"php"
                ; "php-assistant"
                ; "php-navigation"
@@ -117,7 +122,6 @@
                 "header"
                 "minibuffer"
                 "html"
-                "machines"
                 "planning"
                 ;; "snippets"
                 "transparency"
@@ -126,6 +130,8 @@
                 "music"
                 "wget"
                 "windows"
+                "phplsp"
+                "phpdocblock"
 		))
 
 (cl-loop for config in configs

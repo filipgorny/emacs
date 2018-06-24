@@ -41,19 +41,44 @@
 ;(load-file "./php/findclass.el")
 ;(load-file "./php/classbody.el")
 (load-file "~/.emacs.d/lisp/php/phpunit.el")
+(load-file "~/.emacs.d/lisp/php/common.el")
+(load-file "~/.emacs.d/lisp/php/docblock.el")
+(load-file "~/.emacs.d/lisp/php/getterssetters.el")
 
 ;; lsp
-(require-package "lsp-mode")
-(add-to-list 'load-path "~/.emacs.d/lspphp/lsp-php")
-(add-to-list 'load-path "~/.emacs.d/lsp/lsp-mode")
-(add-to-list 'load-path "~/.emacs.d/lsp/lsp-ui")
+(setq lsp-php-server-install-dir "~/.emacs.d/php-language-server") 
 
-(require 'lsp-mode)
+(add-to-list 'load-path "~/.emacs.d/lsp/lspphp")
+(add-to-list 'load-path "~/.emacs.d/lsp/lspmode")
+(add-to-list 'load-path "~/.emacs.d/lsp/ui")
 
-(require-package 'flycheck)
-(require-package 'markdown-mode)
-(require 'lsp-ui)
-(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+;(require 'lsp-mode)                     ;
 
-(require 'lsp-php)
-(add-hook 'php-mode-hook #'lsp-mode)
+;(require-package 'flycheck)
+;(require-package 'markdown-mode)
+;(require 'lsp-ui)
+;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+
+;(require 'lsp-php)
+;(add-hook 'php-mode-hook #'lsp-mode)
+
+;(require-package 'company-lsp)
+
+;;; other config
+;; For php-language-server
+;(require 'flycheck)
+
+;(require 'lsp-php) ;if you want to enable php-language-server
+
+;(require 'php-mode)
+;(require 'lsp-mode)
+
+;; for flycheck integration, which lets you see errors in your editor
+;(require 'lsp-ui)                       ;
+;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+;(add-hook 'php-mode-hook 'flycheck-mode)
+;; Not sure if lsp-mode is necessary if lsp-ui-mode
+;(add-hook 'php-mode-hook 'lsp-mode)
+
+;(add-hook 'php-mode-hook #'lsp-php-enable)
+
