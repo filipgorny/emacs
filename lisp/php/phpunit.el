@@ -1,29 +1,33 @@
-;; /usr/bin/php /home/filip/Projects/eatpoint/backend/vendor/phpunit/phpunit/phpunit --no-configuration --filter "/::testRegistration( .*)?$/" Tests\Functional\Registration\CustomerRegistrationTest /home/filip/Projects/eatpoint/backend/tmp/functional/Registraion/CustomerRegistrationTest.php --teamcity
-
 (setq fphp-phpunit-setup '(
                            ("options" "--bootstrap ./vendor/autoload.php")
                            ("cmd" "/usr/bin/php /home/filip/Projects/eatpoint/backend/vendor/phpunit/phpunit/phpunit")
                        ))
 
-(defun fphp-phpunit-setup-get (key)
- (first (cdr (assoc key fphp-phpunit-setup)))
-  )
+(defun fphp-phpunit-find-vendor ()
+  (let* (
+         (starting-dir default-directory)
+         )
+     (progn
+        (locate-dominating-file starting-dir "vendor")
+        )
+      ))
 
 (defun fphp-phpunit-run (file)
   (interactive)
   (let* (
-        (command (concat (fphp-phpunit-setup-get "cmd") " " (fphp-phpunit-setup-get "options") " " file))
+        (command (concat "/usr/bin/php ~/.emacs.d/phpunit/vendor/bin/phpunit" " " (concat "--bootstrap " (fphp-phpunit-find-vendor) "vendor" "/autoload.php") " " file))
         (default-directory (fphp-phpunit-root-directory))
         (outputbuffer (generate-new-buffer "phpunit"))
         (commandoutput (shell-command-to-string command))
         )
     (progn
-     (split-window-vertically)
-     (other-window 1)
-     (switch-to-buffer outputbuffer)
-     (ftests-mode)
-     (insert commandoutput)
-     (scroll-down)
+      (message command)
+      (split-window-vertically)
+      (other-window 1)
+      (switch-to-buffer outputbuffer)
+      (ftests-mode)
+      (insert commandoutput)
+      (scroll-down)
     )
     )
   )

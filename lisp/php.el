@@ -44,7 +44,8 @@
 (load-file "~/.emacs.d/lisp/php/common.el")
 (load-file "~/.emacs.d/lisp/php/docblock.el")
 (load-file "~/.emacs.d/lisp/php/getterssetters.el")
-
+(load-file "~/.emacs.d/lisp/php/namespace.el")
+(load-file "~/.emacs.d/lisp/php/classes.el")
 ;; lsp
 (setq lsp-php-server-install-dir "~/.emacs.d/php-language-server") 
 

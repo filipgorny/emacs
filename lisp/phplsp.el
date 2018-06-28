@@ -18,7 +18,7 @@
 
 ; for flycheck integration, which lets you see errors in your editor
 (require 'lsp-ui)
-(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
 (add-hook 'php-mode-hook 'flycheck-mode)
 ; Not sure if lsp-mode is necessary if lsp-ui-mode
 (add-hook 'php-mode-hook 'lsp-mode)

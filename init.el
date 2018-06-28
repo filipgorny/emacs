@@ -132,6 +132,7 @@
                 "windows"
                 "phplsp"
                 "phpdocblock"
+                "markdown"
 		))
 
 (cl-loop for config in configs
