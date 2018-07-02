@@ -13,3 +13,12 @@
 [submodule "use-package"]
 	path = use-package
 	url = git@github.com:jwiegley/use-package.git
+[submodule "phpstan"]
+	path = phpstan
+	url = git@github.com:phpstan/phpstan.git
+[submodule "phpstan.el"]
+	path = phpstan.el
+	url = git@github.com:emacs-php/phpstan.el.git
+[submodule "ov.el"]
+	path = ov.el
+	url = git@github.com:ShingoFukuyama/ov.el.git

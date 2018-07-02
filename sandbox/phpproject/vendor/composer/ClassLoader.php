@@ -57,7 +57,7 @@ class ClassLoader
     private $missingClasses = array();
     private $apcuPrefix;
 
-    public function getPrefixes()
+    public function getPrefixes(Task $task)
     {
         if (!empty($this->prefixesPsr0)) {
             return call_user_func_array('array_merge', $this->prefixesPsr0);

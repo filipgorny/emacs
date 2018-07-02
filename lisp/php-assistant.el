@@ -1,4 +1,4 @@
-(defun php-assistant/find-namespace-for-file (file)
+xf(defun php-assistant/find-namespace-for-file (file)
   (setq path (split-string file "/"))
   (cl-position "src" path)
   )
