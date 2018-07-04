@@ -13,6 +13,9 @@
 ;; cua mode
 (cua-mode t)
 
+;; case sensitive search
+(setq case-fold-search t)
+
 ;; load common lisp
 (require 'cl)
 
@@ -133,6 +136,7 @@
                 "phplsp"
                 "phpdocblock"
                 "markdown"
+                "smartcopy"
 		))
 
 (cl-loop for config in configs

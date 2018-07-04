@@ -16,7 +16,8 @@ class TaskService
      */
     public function foo(array $argument, Task $task, Bar $bar)
     {
-        $task = new Task();
+        $task;
+        $task = new Task;
     }
 
     /**

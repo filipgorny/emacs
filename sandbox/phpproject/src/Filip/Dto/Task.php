@@ -4,7 +4,7 @@ namespace Filip\Dto;
 
 use Filip\Service\TaskService;
 use Ddd\Login;
-use BUrak\Burak;
+use Ddd\Burak;
 
 class Task
 {
@@ -15,6 +15,7 @@ class Task
         $s = new \DateTime();
         $taskService = new TaskService();
         $taskServive->foo();
+        $login ;
     }
 }
 
