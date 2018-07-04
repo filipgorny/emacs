@@ -1,5 +1,5 @@
 (package-initialize)
-
+7
 (setq max-lisp-eval-depth 100000000)
 (setq max-specpdl-size 100000000) 
 
@@ -37,13 +37,13 @@
 (set-face-background 'hl-line "#191919")
 
 ;;(set-face-attribute 'default (selected-frame) :height 110 :family "DejaVu Sans Mono")
-;;(set-frame-font "DejaVu Sans Mono-9.5")
+;;(set-frame-font "DejaVu Sans Mono-10")
 ;;(set-face-attribute 'default nil :family "Inconsolata" :height 110)
 ;; Set default font
 (set-face-attribute 'default nil
                     ;;:family "Consolas"
                     :family "Source Code Pro"
-                    :height 110
+                    :height 105
                     :weight 'normal
                     :width 'normal)
 
@@ -95,7 +95,7 @@
                 "packaging"
                 "usepackage"
                 "cycle-buffers"
-                "company"
+                "companymode"
 		"line-numbers"
 		;;"autocomplete"
 		"php"
