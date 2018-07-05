@@ -38,6 +38,7 @@
 (load-file "~/.emacs.d/lisp/php/namespace.el")
 (load-file "~/.emacs.d/lisp/php/classes.el")
 (load-file "~/.emacs.d/lisp/php/constructor.el")
+(load-file "~/.emacs.d/lisp/php/unimportedclasses.el")
 
 ;; lsp
 (setq lsp-php-server-install-dir "~/.emacs.d/php-language-server") 

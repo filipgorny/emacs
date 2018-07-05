@@ -31,13 +31,13 @@
            )))
 
 (defun sidebar-update-style ()
-  (setq sidebar-font-size 110)
+  (setq sidebar-font-size 100)
 
   (setq neo-window-width 38)
   (neotree-toggle)
   (neotree-toggle)
 
-  (setq line-spacing 4)
+  (setq line-spacing 2)
 
   (custom-set-faces
    (set-face-attribute 'neo-button-face      nil :height sidebar-font-size :foreground "#424" :background "#090909")

@@ -25,6 +25,15 @@
   (interactive)
   (backward-char))
 
+(defun cur-jump-up ()
+  (interactive)
+  (scroll-down 20))
+
+(defun cur-jump-down ()
+  (interactive)
+  (scroll-up 20)
+  )
+
 (global-set-key (kbd "C-x p") 'cur-move-up)
 
 ;; common keybindings
@@ -39,9 +48,8 @@
       (define-key map (kbd "M-d") 'end-of-line)
       (define-key map (kbd "M-a") 'cur-move-beginning)
       (define-key map (kbd "M-s") 'back-to-indentation)
-      (define-key map (kbd "M-u") '(lambda () (scroll-down 20)))
-      (define-key map (kbd "M-i") '(lambda () (scroll-up 20)))
-      (define-key map (kbd "M-w") '(lambda () (forward-word)))
+      (define-key map (kbd "M-u") 'cur-jump-down)
+      (define-key map (kbd "M-i") 'cur-jump-up)
       (define-key map (kbd "C-d") 'kill-whole-line)
       (define-key map (kbd "C-a") 'mark-whole-buffer)
       (define-key map (kbd "C-x j") 'end-of-buffer)

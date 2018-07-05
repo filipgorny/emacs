@@ -4,4 +4,7 @@
 - mouse back
 - comment uncomment and indent - check with php code
 
-- scrolling <u> <i>
+- move word fwd
+
+- php imports bugs
+

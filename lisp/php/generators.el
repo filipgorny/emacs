@@ -1,19 +1,19 @@
 (require 'subr-x)
 
-(defun fphp-genereate-class-body (fileName)
+(defun fphp/genereate-class-body (fileName)
   (shell-command-to-string (concat "php ~/.emacs.d/support/php/generators/class.php " fileName))
   )
 
-(defun fphp-generate-current-file-class-body ()
+(defun fphp/generate-current-file-class-body ()
   (interactive)
-  (insert (fphp-genereate-class-body (buffer-file-name)))
+  (insert (fphp/genereate-class-body (buffer-file-name)))
   (previous-line)
   (previous-line)
   (previous-line)
   (end-of-line)
   )
 
-(defun fphp-generate-property-from-current-line ()
+(defun fphp/generate-property-from-current-line ()
   (interactive)
   (setq name (string-trim (replace-regexp-in-string "\n" "" (thing-at-point 'line t))))
   (kill-whole-line)

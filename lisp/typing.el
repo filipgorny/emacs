@@ -31,6 +31,3 @@
 (lambda ()
       (typing/current-indendation-level)
   )
-
-//todo
-// - asdf - moving inside/outside left/right block/parenthesis

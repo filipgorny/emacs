@@ -1,4 +1,5 @@
 (defun fphp/create-constructor-select-properties ()
+  (interactive)
   (let (properties '())
     (save-excursion
       (goto-char (point-min))
@@ -14,7 +15,6 @@
 
 
 (defun fphp/create-constructor-marked-candidates (candidate)
-  (message "action")
   (insert "public function __construct(")
   ;;(insert (string-join (helm-marked-candidates) ", "))
   (setq properties '())
